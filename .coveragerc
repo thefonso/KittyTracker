@@ -1,0 +1,5 @@
+[run]
+include = kittytracker/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
