@@ -37,6 +37,7 @@ class Cat(models.Model):
                                             "It is used to make it easy to find the animal in a URL lookup.")
 
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
+    color = models.CharField(max_length=255, blank=True, null=True)
     weight_unit = models.CharField(max_length=2, choices=Weight.MEASURE_CHOICES, default=Weight.GRAMS)
     weight = models.IntegerField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
