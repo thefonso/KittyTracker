@@ -1,0 +1,48 @@
+from __future__ import unicode_literals
+from django.contrib import admin
+from jsoneditor.forms import JSONEditor
+from django.contrib.postgres.fields import JSONField
+
+from . import models as tracker_models
+
+
+class FeedingInline(admin.TabularInline):
+    model = tracker_models.Feeding
+    extra = 1
+    exclude = ['modified']
+    readonly_fields = ['created']
+
+
+class FeedingAdmin(admin.ModelAdmin):
+    search_fields = ['cat__name', 'amount_of_food_taken', 'notes']
+    list_display = ['cat', 'weight_unit_measure', 'weight_before_food', 'food_unit_measure', 'amount_of_food_taken',
+                    'food_type', 'weight_after_food', 'stimulated', 'stimulation_type', 'notes', 'photo',
+                    'created', 'modified']
+
+
+class CatAdmin(admin.ModelAdmin):
+    search_fields = ['name', 'reference_id', 'short_name', 'gender', 'notes']
+    list_display = ['name', 'reference_id', 'short_name', 'gender', 'weight_unit', 'weight', 'notes', 'birthday', 'photo',
+                    'alert_feeder', 'critical_notes', 'first_weight_loss', 'second_weight_loss', 'third_weight_loss',
+                    'many_weight_losses', 'created', 'modified']
+    inlines = [
+        FeedingInline
+    ]
+
+
+__custom_admins__ = {
+    'Cat': CatAdmin,
+    'Feeding': FeedingAdmin
+}
+
+for model in tracker_models.__admin__:
+    params = [getattr(tracker_models, model)]
+    if model in __custom_admins__:
+        params.append(__custom_admins__[model])
+    else:
+        _dyn_class = type('%sAdmin' % ( model,), (admin.ModelAdmin,), {})
+        params.append(_dyn_class)
+    admin.site.register(*params)
+
+admin.site.site_title = 'KittyTracker Admin'
+admin.site.site_header = 'KittyTracker Admin'
