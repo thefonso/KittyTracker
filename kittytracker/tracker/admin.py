@@ -2,8 +2,21 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from jsoneditor.forms import JSONEditor
 from django.contrib.postgres.fields import JSONField
-
 from . import models as tracker_models
+from import_export.admin import ImportExportModelAdmin
+
+from import_export import resources
+
+class FeedingResource(resources.ModelResource):
+
+    class Meta:
+        model = tracker_models.Feeding
+
+class CatResource(resources.ModelResource):
+
+    class Meta:
+        model = tracker_models.Cat
+
 
 
 class FeedingInline(admin.TabularInline):
@@ -13,14 +26,15 @@ class FeedingInline(admin.TabularInline):
     readonly_fields = ['created']
 
 
-class FeedingAdmin(admin.ModelAdmin):
+class FeedingAdmin(ImportExportModelAdmin):
     search_fields = ['cat__name', 'amount_of_food_taken', 'notes']
     list_display = ['cat', 'weight_unit_measure', 'weight_before_food', 'food_unit_measure', 'amount_of_food_taken',
                     'food_type', 'weight_after_food', 'stimulated', 'stimulation_type', 'notes', 'photo',
                     'created', 'modified']
+    resource_class = FeedingResource
 
 
-class CatAdmin(admin.ModelAdmin):
+class CatAdmin(ImportExportModelAdmin):
     search_fields = ['name', 'reference_id', 'short_name', 'gender', 'notes']
     list_display = ['name', 'reference_id', 'short_name', 'gender', 'weight_unit', 'weight', 'notes', 'birthday', 'photo',
                     'alert_feeder', 'critical_notes', 'first_weight_loss', 'second_weight_loss', 'third_weight_loss',
@@ -28,6 +42,7 @@ class CatAdmin(admin.ModelAdmin):
     inlines = [
         FeedingInline
     ]
+    resource_class = CatResource
 
 
 __custom_admins__ = {
