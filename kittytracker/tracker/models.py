@@ -4,6 +4,7 @@ import requests, json, datetime
 from django.core.files.base import ContentFile
 from requests.exceptions import ConnectionError
 from django.utils.text import slugify
+import itertools
 
 __admin__ = ['Cat', 'Feeding', ]
 
@@ -31,6 +32,8 @@ class Cat(models.Model):
     FEMALE = 'F'
 
     name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+
     reference_id = models.CharField(max_length=255, blank=True, null=True)
     short_name = models.SlugField(max_length=255, blank=True, null=True,
                                   help_text="This name is auto generated from the name and reference ID. "
@@ -56,6 +59,15 @@ class Cat(models.Model):
     many_weight_losses = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
+
+        # Check to see if slug exists, if it does, make a counter
+        self.slug = orig = slugify(self.name)
+
+        for x in itertools.count(1):
+            if not Cat.objects.filter(slug=self.slug).exists():
+                break
+            self.slug = '%s-%d' % (orig, x)
+
         self.modified = datetime.datetime.now()
         if not self.created:
             self.created = datetime.datetime.now()
@@ -63,6 +75,9 @@ class Cat(models.Model):
 
         super(Cat, self).save(*args, **kwargs)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return 'tracker:cat', (self.slug,)
 
     def __str__(self):
         return self.name

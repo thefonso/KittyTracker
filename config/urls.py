@@ -13,6 +13,8 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
 
+    url(r'^api/v1/', include('kittytracker.tracker.urls', namespace='tracker_api')),
+
     # User management
     url(r'^users/', include('kittytracker.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
