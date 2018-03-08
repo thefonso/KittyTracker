@@ -19,3 +19,4 @@ class FeedingViewSet(viewsets.ModelViewSet):
     filter_fields = ('cat__slug', 'cat__name',)
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
+
