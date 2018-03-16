@@ -8,7 +8,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import environ
-import datetime
 
 ROOT_DIR = environ.Path(__file__) - 3  # (kittytracker/config/settings/base.py - 3 = kittytracker/)
 APPS_DIR = ROOT_DIR.path('kittytracker')
@@ -59,7 +58,7 @@ REST_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
-    'corsheaders',
+   # 'corsheaders',
 
 ]
 
@@ -77,8 +76,8 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + REST_APPS + LOCAL_APPS
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
-        # 'rest_framework.permissions.IsAdminUser',
-        # 'rest_framework.permissions.IsAuthenticated',
+        #'rest_framework.permissions.IsAdminUser',
+        #'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -92,38 +91,17 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 200
 }
 
-# So you know, you can get a new JWT thingie
-JWT_AUTH = {
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-}
-
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-# For allowing external Vuejs client to connect
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8080',
-)
-
-# because we want this CSRF cookie name
-CSRF_COOKIE_NAME = "csrftoken"
-# CSRF_COOKIE_SECURE = True
-
-SESSION_COOKIE_DOMAIN = "localhost:8000"
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
