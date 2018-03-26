@@ -1,4 +1,4 @@
-from .models import Cat, Feeding, Medication
+from .models import Cat, Feeding, Medication, MedicalRecord
 from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 
@@ -32,6 +32,7 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
 
 class FeedingSerializer(serializers.HyperlinkedModelSerializer):
     cat = CatSerializer()
+
     class Meta:
         model = Feeding
         fields = (
@@ -54,6 +55,7 @@ class FeedingSerializer(serializers.HyperlinkedModelSerializer):
 
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
     cat = CatSerializer()
+
     class Meta:
         model = Medication
         fields = (
@@ -67,4 +69,21 @@ class MedicationSerializer(serializers.HyperlinkedModelSerializer):
             'notes',
             'created',
             'modified',
+        )
+
+
+class MedicalRecordSerializer(serializers.HyperlinkedModelSerializer):
+    cat = CatSerializer()
+
+    class Meta:
+        model = MedicalRecord
+        fields = (
+            'id',
+            'cat',
+            'care_given',
+            'date',
+            'vet_practice',
+            'doc_name',
+            'follow_up_date',
+            'notes',
         )
