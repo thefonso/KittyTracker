@@ -52,11 +52,6 @@ class FeedingSerializer(serializers.HyperlinkedModelSerializer):
             'photo',
         )
 
-    # def create(self, validated_data):
-    #     cat_data = validated_data.pop('cat')
-    #     feeding = Feeding.objects.create(**validated_data)
-    #     Cat.objects.create(feeding=feeding, **cat_data)
-    #     return feeding
 
 
     def create(self, validated_data):
