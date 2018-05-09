@@ -115,6 +115,7 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[KittyTracker
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Anymail with Mailgun
+# FONSO turned this off for now
 # INSTALLED_APPS += ['anymail', ]
 # ANYMAIL = {
 #     'MAILGUN_API_KEY': env('DJANGO_MAILGUN_API_KEY'),
