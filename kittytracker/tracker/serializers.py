@@ -52,6 +52,21 @@ class FeedingSerializer(serializers.HyperlinkedModelSerializer):
             'photo',
         )
 
+    # def create(self, validated_data):
+    #     cat_data = validated_data.pop('cat')
+    #     feeding = Feeding.objects.create(**validated_data)
+    #     Cat.objects.create(feeding=feeding, **cat_data)
+    #     return feeding
+
+
+    def create(self, validated_data):
+        cat_data = validated_data.pop('cat')
+        cat_obj = Cat.objects.get(**cat_data)
+        feeding = Feeding.objects.create(cat=cat_obj, **validated_data)
+        return feeding
+
+
+
 
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
     cat = CatSerializer()
@@ -71,6 +86,12 @@ class MedicationSerializer(serializers.HyperlinkedModelSerializer):
             'modified',
         )
 
+    def create(self, validated_data):
+        cat_data = validated_data.pop('cat')
+        cat_obj = Cat.objects.get(**cat_data)
+        medication = Medication.objects.create(cat=cat_obj, **validated_data)
+        return medication
+
 
 class MedicalRecordSerializer(serializers.HyperlinkedModelSerializer):
     cat = CatSerializer()
@@ -87,3 +108,10 @@ class MedicalRecordSerializer(serializers.HyperlinkedModelSerializer):
             'follow_up_date',
             'notes',
         )
+
+    def create(self, validated_data):
+        cat_data = validated_data.pop('cat')
+        cat_obj = Cat.objects.get(**cat_data)
+        medicalrecord = MedicalRecord.objects.create(cat=cat_obj, **validated_data)
+        return medicalrecord
+
