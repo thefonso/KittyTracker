@@ -16,7 +16,7 @@ class CatViewSet(viewsets.ModelViewSet):
 class FeedingViewSet(viewsets.ModelViewSet):
     queryset = Feeding.objects.all()
     serializer_class = FeedingSerializer
-    filter_fields = ('cat__slug', 'cat__name',)
+    filter_fields = ('cat__slug', 'cat__name', 'food_type')
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
 
