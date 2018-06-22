@@ -4,8 +4,13 @@ from jsoneditor.forms import JSONEditor
 from django.contrib.postgres.fields import JSONField
 from . import models as tracker_models
 from import_export.admin import ImportExportModelAdmin
-
 from import_export import resources
+
+
+class LitterResource(resources.ModelResource):
+
+    class Meta:
+        model = tracker_models.Litter
 
 
 class MedicationResource(resources.ModelResource):
@@ -24,6 +29,12 @@ class CatResource(resources.ModelResource):
 
     class Meta:
         model = tracker_models.Cat
+
+
+class LitterAdmin(ImportExportModelAdmin):
+    search_fields = ['name']
+    list_display = ['name', 'created', 'modified']
+    resource_class = LitterResource
 
 
 class MedicationAdmin(ImportExportModelAdmin):
@@ -63,6 +74,7 @@ __custom_admins__ = {
     'Cat': CatAdmin,
     'Feeding': FeedingAdmin,
     'Medication': MedicationAdmin,
+    'Litter': LitterAdmin,
 }
 
 for model in tracker_models.__admin__:

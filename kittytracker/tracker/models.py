@@ -6,7 +6,7 @@ from requests.exceptions import ConnectionError
 from django.utils.text import slugify
 import itertools
 
-__admin__ = ['Cat', 'Feeding', 'Medication', 'MedicalRecord']
+__admin__ = ['Cat', 'Feeding', 'Medication', 'MedicalRecord', 'Litter']
 
 class Weight:
     MEASURE_CHOICES = (
@@ -23,13 +23,42 @@ class Weight:
     GRAMS = 'G'
 
 
+class Litter(models.Model):
+    name = models.CharField(max_length=255)
+    notes = models.CharField(max_length=2048, blank=True, null=True)
+
+    created = models.DateTimeField(blank=True, null=True)
+    modified = models.DateTimeField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # Save time Litter object modified and created times
+        self.modified = datetime.datetime.now()
+        if not self.created:
+            self.created = datetime.datetime.now()
+
+        super(Litter, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class Cat(models.Model):
+    litter = models.ManyToManyField(Litter)
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female')
     )
     MALE = 'M'
     FEMALE = 'F'
+
+    CAT_TYPE = (
+        ('O','Orphan'),
+        ('P','Pregnant'),
+        ('N','Nursing')
+    )
+    Orphan = 'O'
+    Pregnant = 'P'
+    Nursing = 'N'
 
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True, null=True)
@@ -40,6 +69,7 @@ class Cat(models.Model):
                                             "It is used to make it easy to find the animal in a URL lookup.")
 
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
+    cat_type = models.CharField(max_length=1, choices=CAT_TYPE, default=Orphan)
     color = models.CharField(max_length=255, blank=True, null=True)
     weight_unit = models.CharField(max_length=2, choices=Weight.MEASURE_CHOICES, default=Weight.GRAMS)
     weight = models.IntegerField(blank=True, null=True)

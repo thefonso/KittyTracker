@@ -1,15 +1,21 @@
-from .models import Cat, Feeding, Medication, MedicalRecord
+from .models import Litter, Cat, Feeding, Medication, MedicalRecord
 from rest_framework import viewsets
-from .serializers import CatSerializer, FeedingSerializer, MedicationSerializer, MedicalRecordSerializer
+from .serializers import LitterSerializer, CatSerializer, FeedingSerializer, MedicationSerializer, MedicalRecordSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 import django_filters
 
 
+class LitterViewSet(viewsets.ModelViewSet):
+    queryset = Litter.objects.all()
+    serializer_class = LitterSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+
+
 class CatViewSet(viewsets.ModelViewSet):
     queryset = Cat.objects.all()
     serializer_class = CatSerializer
-    filter_fields = ('slug', 'name',)
+    filter_fields = ('slug', 'name', 'litter__name')
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
 
