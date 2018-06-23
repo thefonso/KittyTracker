@@ -15,7 +15,7 @@ class LitterViewSet(viewsets.ModelViewSet):
 class CatViewSet(viewsets.ModelViewSet):
     queryset = Cat.objects.all()
     serializer_class = CatSerializer
-    filter_fields = ('slug', 'name', 'litter__name')
+    filter_fields = ('slug', 'name')
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
 
 

@@ -3,18 +3,7 @@ from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 
 
-class LitterSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Litter
-        fields = (
-            'id',
-            'name'
-        )
-
-
 class CatSerializer(serializers.HyperlinkedModelSerializer):
-    litter = LitterSerializer()
-
     class Meta:
         model = Cat
         fields = (
@@ -25,7 +14,7 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
             'short_name',
             'gender',
             'cat_type',
-            'litter',
+            'litter_mates',
             'color',
             'weight_unit',
             'weight',
@@ -40,6 +29,15 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
             'second_weight_loss',
             'third_weight_loss',
             'many_weight_losses'
+        )
+
+
+class LitterSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Litter
+        fields = (
+            'id',
+            'name'
         )
 
 
