@@ -13,10 +13,11 @@ class LitterSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CatSerializer(serializers.HyperlinkedModelSerializer):
-    litter_mates = LitterSerializer(many=True)
+    litter_set = LitterSerializer(many=True)
 
     class Meta:
         model = Cat
+        depth = 1
         fields = (
             'id',
             'name',
@@ -25,7 +26,7 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
             'short_name',
             'gender',
             'cat_type',
-            'litter_mates',
+            'litter_set',
             'color',
             'weight_unit',
             'weight',

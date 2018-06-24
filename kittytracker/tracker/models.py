@@ -44,7 +44,7 @@ class Litter(models.Model):
 
 
 class Cat(models.Model):
-    litter_mates = models.ForeignKey(Litter, on_delete=None, default=None)
+    litter = models.ForeignKey(Litter, on_delete=None, default=None)
 
     GENDER_CHOICES = (
         ('M', 'Male'),
