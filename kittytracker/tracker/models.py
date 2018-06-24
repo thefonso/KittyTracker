@@ -8,6 +8,7 @@ import itertools
 
 __admin__ = ['Cat', 'Feeding', 'Medication', 'MedicalRecord', 'Litter']
 
+
 class Weight:
     MEASURE_CHOICES = (
         ('ML', '(ml) Milliliters'),
@@ -23,7 +24,28 @@ class Weight:
     GRAMS = 'G'
 
 
+class Litter(models.Model):
+    name = models.CharField(max_length=255)
+    notes = models.CharField(max_length=2048, blank=True, null=True)
+
+    created = models.DateTimeField(blank=True, null=True)
+    modified = models.DateTimeField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # Save time Litter object modified and created times
+        self.modified = datetime.datetime.now()
+        if not self.created:
+            self.created = datetime.datetime.now()
+
+        super(Litter, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class Cat(models.Model):
+    litter_mates = models.ForeignKey(Litter, on_delete=None, default=None)
+
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female')
@@ -88,32 +110,6 @@ class Cat(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return 'tracker:cat', (self.slug,)
-
-    def __str__(self):
-        return self.name
-
-
-class Litter(models.Model):
-    DEFAULT_VALUE = 1
-    cat = models.ForeignKey(Cat, related_name='litter_mates', on_delete=models.CASCADE, default=DEFAULT_VALUE)
-    name = models.CharField(max_length=255)
-    notes = models.CharField(max_length=2048, blank=True, null=True)
-
-    created = models.DateTimeField(blank=True, null=True)
-    modified = models.DateTimeField(blank=True, null=True)
-
-    @staticmethod
-    def get_littermates():
-        cats = Cat.objects.get(id=1).litter_mates.all()
-        return cats
-
-    def save(self, *args, **kwargs):
-        # Save time Litter object modified and created times
-        self.modified = datetime.datetime.now()
-        if not self.created:
-            self.created = datetime.datetime.now()
-
-        super(Litter, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
