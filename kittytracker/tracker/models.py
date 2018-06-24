@@ -62,6 +62,11 @@ class Cat(models.Model):
     Pregnant = 'P'
     Nursing = 'N'
 
+    AGE_CHOICES = (
+        ('adult'),
+        ('kitten')
+    )
+
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True, null=True)
 
@@ -71,6 +76,7 @@ class Cat(models.Model):
                                             "It is used to make it easy to find the animal in a URL lookup.")
 
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
+    age = models.CharField(max_length=255, choices=AGE_CHOICES, default=None)
     cat_type = models.CharField(max_length=1, choices=CAT_TYPE, default=Orphan)
     color = models.CharField(max_length=255, blank=True, null=True)
     weight_unit = models.CharField(max_length=2, choices=Weight.MEASURE_CHOICES, default=Weight.GRAMS)

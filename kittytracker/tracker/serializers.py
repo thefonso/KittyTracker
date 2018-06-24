@@ -25,6 +25,7 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
             'reference_id',
             'short_name',
             'gender',
+            'age',
             'cat_type',
             'litter_set',
             'color',
