@@ -25,7 +25,8 @@ class Weight:
 
 
 class Litter(models.Model):
-    name = models.CharField(max_length=255)
+    cat = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
     notes = models.CharField(max_length=2048, blank=True, null=True)
 
     created = models.DateTimeField(blank=True, null=True)
@@ -44,7 +45,6 @@ class Litter(models.Model):
 
 
 class Cat(models.Model):
-    litter = models.ForeignKey(Litter, on_delete=None, default=None)
 
     GENDER_CHOICES = (
         ('M', 'Male'),
@@ -78,6 +78,7 @@ class Cat(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
     age = models.CharField(max_length=1, choices=AGE_CHOICES, default=None)
     cat_type = models.CharField(max_length=1, choices=CAT_TYPE, default=Orphan)
+    litter_mates = models.CharField(max_length=255, blank=True, null=True)
     color = models.CharField(max_length=255, blank=True, null=True)
     weight_unit = models.CharField(max_length=2, choices=Weight.MEASURE_CHOICES, default=Weight.GRAMS)
     weight = models.IntegerField(blank=True, null=True)
