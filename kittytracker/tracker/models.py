@@ -25,8 +25,8 @@ class Weight:
 
 
 class Litter(models.Model):
-    cat = models.CharField(max_length=255, blank=True, null=True)
-    name = models.CharField(max_length=255, blank=True, null=True)
+    mom_cat = models.CharField(max_length=255, blank=True, null=True)
+    litter_name = models.CharField(max_length=255, blank=True, null=True)
     notes = models.CharField(max_length=2048, blank=True, null=True)
 
     created = models.DateTimeField(blank=True, null=True)
