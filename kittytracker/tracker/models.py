@@ -125,6 +125,7 @@ class Cat(models.Model):
 class Feeding(models.Model):
     FOOD_TYPE_CHOICES = (
         ('NA', 'None / Not Entered'),
+        ('MN', 'Mom (Nursing)'),
         ('BO', 'Bottle'),
         ('BS', 'Bottle / Syringe'),
         ('SG', 'Syringe Gruel'),
