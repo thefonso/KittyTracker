@@ -41,7 +41,7 @@ class Litter(models.Model):
         super(Litter, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.litter_name
 
 
 class Cat(models.Model):
