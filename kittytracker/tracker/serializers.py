@@ -8,8 +8,8 @@ class LitterSerializer(serializers.HyperlinkedModelSerializer):
         model = Litter
         fields = (
             'id',
-            'name',
-            'cat'
+            'litter_name',
+            'mom_cat'
         )
 
 
