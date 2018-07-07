@@ -9,7 +9,8 @@ class LitterSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
             'id',
             'litter_name',
-            'mom_cat'
+            'mom_cat',
+            'showRow'
         )
 
 
@@ -41,7 +42,8 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
             'first_weight_loss',
             'second_weight_loss',
             'third_weight_loss',
-            'many_weight_losses'
+            'many_weight_losses',
+            'showRow'
         )
 
 
@@ -65,6 +67,7 @@ class FeedingSerializer(serializers.HyperlinkedModelSerializer):
             'created',
             'modified',
             'photo',
+            'showRow',
         )
 
     def create(self, validated_data):
@@ -114,6 +117,7 @@ class MedicalRecordSerializer(serializers.HyperlinkedModelSerializer):
             'doc_name',
             'follow_up_date',
             'notes',
+            'showRow'
         )
 
     def create(self, validated_data):
