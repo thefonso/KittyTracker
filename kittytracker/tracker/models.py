@@ -223,6 +223,7 @@ class Medication(models.Model):
 
     created = models.DateTimeField(blank=True, null=True)
     modified = models.DateTimeField(blank=True, null=True)
+    showRow = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # Save time Medication object modified and created times
