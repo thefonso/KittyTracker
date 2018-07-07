@@ -31,6 +31,7 @@ class Litter(models.Model):
 
     created = models.DateTimeField(blank=True, null=True)
     modified = models.DateTimeField(blank=True, null=True)
+    showRow = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         # Save time Litter object modified and created times
@@ -96,6 +97,7 @@ class Cat(models.Model):
     second_weight_loss = models.BooleanField(default=False)
     third_weight_loss = models.BooleanField(default=False)
     many_weight_losses = models.BooleanField(default=False)
+    showRow = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
 
@@ -167,6 +169,8 @@ class Feeding(models.Model):
     modified = models.DateTimeField(blank=True, null=True)
 
     photo = models.FileField(upload_to="kitty_photos", blank=True, null=True)
+
+    showRow = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         # Update Cat's weight if 'Weight After Food' is updated
@@ -254,6 +258,7 @@ class MedicalRecord(models.Model):
 
     created = models.DateTimeField(blank=True, null=True)
     modified = models.DateTimeField(blank=True, null=True)
+    showRow = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         # Save time Medication object modified and created times
