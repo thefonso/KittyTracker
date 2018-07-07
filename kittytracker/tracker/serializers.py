@@ -90,6 +90,7 @@ class MedicationSerializer(serializers.HyperlinkedModelSerializer):
             'notes',
             'created',
             'modified',
+            'showRow',
         )
 
     def create(self, validated_data):
