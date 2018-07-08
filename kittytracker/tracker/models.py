@@ -237,6 +237,8 @@ class Medication(models.Model):
 
         super(Medication, self).save(*args, **kwargs)
 
+
+
     def __str__(self):
         if self.cat:
             cat_name = self.cat.name
