@@ -48,7 +48,7 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class FeedingSerializer(serializers.HyperlinkedModelSerializer):
-    cat = CatSerializer()
+    cat = CatSerializer(read_only=True)
 
     class Meta:
         model = Feeding
@@ -78,7 +78,7 @@ class FeedingSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
-    cat = CatSerializer()
+    cat = CatSerializer(read_only=True)
 
     class Meta:
         model = Medication
@@ -101,6 +101,9 @@ class MedicationSerializer(serializers.HyperlinkedModelSerializer):
         cat_obj = Cat.objects.get(**cat_data)
         medication = Medication.objects.create(cat=cat_obj, **validated_data)
         return medication
+
+
+
 
 
 class MedicalRecordSerializer(serializers.HyperlinkedModelSerializer):
