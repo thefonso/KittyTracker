@@ -48,7 +48,8 @@ class CatSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class FeedingSerializer(serializers.HyperlinkedModelSerializer):
-    cat = CatSerializer(read_only=True)
+    cat = CatSerializer()
+    # cat = CatSerializer(read_only=True) this allows put BUT TURNS OFF POST
 
     class Meta:
         model = Feeding
@@ -78,7 +79,8 @@ class FeedingSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
-    cat = CatSerializer(read_only=True)
+    cat = CatSerializer()
+    # cat = CatSerializer(read_only=True)
 
     class Meta:
         model = Medication
