@@ -70,12 +70,30 @@ class FeedingSerializer(serializers.HyperlinkedModelSerializer):
             'photo',
             'showRow',
         )
+        extra_kwargs = {
+            'cat':{
+                'read_only': True,
+                'required': False
+            }
+        }
 
     def create(self, validated_data):
         cat_data = validated_data.pop('cat')
         cat_obj = Cat.objects.get(**cat_data)
         feeding = Feeding.objects.create(cat=cat_obj, **validated_data)
         return feeding
+
+    def update(self, instance, validated_data):
+        instance.weight_unit_measure = validated_data['weight_unit_measure']
+        instance.weight_before_food = validated_data['weight_before_food']
+        instance.food_unit_measure = validated_data['food_unit_measure']
+        instance.amount_of_food_taken = validated_data['amount_of_food_taken']
+        instance.food_type = validated_data['food_type']
+        instance.weight_after_food = validated_data['weight_after_food']
+        instance.stimulated = validated_data['stimulated']
+        instance.stimulation_type = validated_data['stimulation_type']
+        instance.notes = validated_data['notes']
+        instance.save()
 
 
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
