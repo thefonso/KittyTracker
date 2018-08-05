@@ -57,11 +57,15 @@ class Cat(models.Model):
     CAT_TYPE = (
         ('O','Orphan'),
         ('P','Pregnant'),
-        ('N','Nursing')
+        ('NK','Nursing Kitten'),
+        ('NM','Nursing Mom'),
+        ('A','Adult')
     )
     Orphan = 'O'
     Pregnant = 'P'
-    Nursing = 'N'
+    Nursing_Kitten = 'NK'
+    Nursing_Mom = 'NM'
+    Adult = 'A'
 
     AGE_CHOICES = (
         ('A','Adult'),
