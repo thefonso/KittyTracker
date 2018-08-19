@@ -16,6 +16,11 @@ services:
     environment:
       - USE_DOCKER=yes
       - DATABASE_URL=postgres://kittytracker:password@postgres:5432/kittytracker
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=kittytracker
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=kittytracker
     ports:
       - "8000:8000"
     # command: /start.sh
