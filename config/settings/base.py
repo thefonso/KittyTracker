@@ -52,6 +52,12 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',  # registration
     'import_export',
     'oauth2_provider',
+    'guardian',
+    'reversion',
+    'graphene_django',
+    'django_autoslugfield',
+    'bootstrapform',
+    'bootstrap_datepicker',
 ]
 
 REST_APPS = [
@@ -72,6 +78,12 @@ LOCAL_APPS = [
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + REST_APPS + LOCAL_APPS
+
+GRAPHENE = {
+    'SCHEMA': 'kittytracker.schema.schema'
+}
+
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -149,7 +161,7 @@ MANAGERS = ADMINS
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///kittytracker'),
+    'default': env.db('DATABASE_URL', default='postgres://kittytracker:password@postgres:5432/kittytracker'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
@@ -285,6 +297,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
 ]
 
 # Some really nice defaults
