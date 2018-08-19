@@ -3,6 +3,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views import defaults as default_views
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from graphene_django.views import GraphQLView
@@ -10,7 +11,8 @@ from django.contrib.auth.decorators import login_required
 from kittytracker.tracker.views import PrivateGraphQLView
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
+    # url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
+    url(r'^$', TemplateView.as_view(template_name='pages/index.html'), name='uHome'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
@@ -30,6 +32,8 @@ urlpatterns = [
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += staticfiles_urlpatterns()
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
