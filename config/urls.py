@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from graphene_django.views import GraphQLView
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
@@ -14,7 +15,7 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
-    url(r'^graphql', GraphQLView.as_view(graphiql=True)),
+    url(r'^graphql', login_required(GraphQLView.as_view(graphiql=True))),
 
     url(r'^api/v1/', include('kittytracker.tracker.api.urls', namespace='tracker_api')),
 
