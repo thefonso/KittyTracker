@@ -5,11 +5,11 @@
     <title>kt-one</title>
   </head>
   <body>
-
+  {% load render_bundle from webpack_loader %}
     <div id="app">
       <app> </app>
     </div>
+  {% render_bundle 'main' %}
 
-    <script src="/dist/build.js"></script>
   </body>
 </html>

@@ -246,7 +246,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     str(APPS_DIR.path('static')),
     # os.path.join(BASE_DIR, 'dist'),
-    str(ROOT_DIR.path('dist')),
+    # str(ROOT_DIR.path('dist')),
 ]
 
 WEBPACK_LOADER = {
