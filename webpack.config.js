@@ -6,8 +6,8 @@ var WriteFilePlugin = require('write-file-webpack-plugin')
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './public'),
-    publicPath: '/public/',
+    path: path.resolve(__dirname, './staticfiles'),
+    publicPath: '/static/',
     filename: 'bundle.js'
   },
   plugins: [
