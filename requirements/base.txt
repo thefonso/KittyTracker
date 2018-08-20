@@ -76,4 +76,4 @@ django-organizations==2.0.0a5
 graphene-django>=2.0
 
 django-bootstrap-form==3.4
-django-bootstrap-datepicker-widget==0.1
+git+https://github.com/pattyjogal/django-bootstrap4-datetimepicker.git

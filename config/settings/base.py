@@ -57,7 +57,7 @@ THIRD_PARTY_APPS = [
     'graphene_django',
     'django_autoslugfield',
     'bootstrapform',
-    'bootstrap_datepicker',
+    'bootstrap4_datetime',
 ]
 
 REST_APPS = [
