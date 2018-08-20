@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"status":"error","publicPath":"/static/","error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve 'src/components/Cards/ChartCard.vue' in '/Users/aleph/projects/millerstuff/KittyTracker/src/pages/Dashboard/Dashboard'"}
+=======
+{"status":"error","publicPath":"/static/","error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve 'src/components/Cards/ChartCard.vue' in '/home/miller/Projects/KittyTracker/src/pages/Dashboard/Dashboard'"}
+>>>>>>> f8113fe7d9c1df614848b06b3aea488fa276ec8b

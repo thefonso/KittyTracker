@@ -459,7 +459,7 @@
   import swal from 'sweetalert2'
   import { Dialog, Table, TableColumn, Select, Option, Collapse, CollapseItem, Row, Aside, Main, Button, MessageBox} from 'element-ui'
   import {Pagination as LPagination} from 'src/components/index'
-  import GattoChart from 'src/components/GattoChart'
+  import GattoChart from 'components/GattoChart'
   import GattoInfo from 'src/components/GattoInfo'
   import Fuse from 'fuse.js'
   import LSwitch from 'src/components/Switch.vue'
