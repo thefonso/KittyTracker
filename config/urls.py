@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
-    url(r'^graphql', PrivateGraphQLView.as_view(graphiql=True)),
+    url(r'^graphql', GraphQLView.as_view(graphiql=True)),
 
     url(r'^api/v1/', include('kittytracker.tracker.api.urls', namespace='tracker_api')),
     url(r'^tracker/', include('kittytracker.tracker.urls', namespace='tracker_crud')),
