@@ -11,9 +11,21 @@
                     v-model="searchQuery"
                     aria-controls="datatables"/>
           <!--NOTE: add-a-cat button-->
-          <b-btn v-b-toggle.collapse1 class="rectangle-255" id="rectangle-255">
-            <span class="a-cat-text">+ CAT</span>
-          </b-btn>
+
+
+            <div class="btn-group-md" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#" v-b-toggle.collapse1>Cat</a>
+                <a class="dropdown-item" href="#">Litter</a>
+                <a class="dropdown-item" href="#">Medication</a>
+                <a class="dropdown-item" href="#">Care Log</a>
+              </div>
+            </div>
+
+
         </div>
         <!--TODO: install new Add-a-Cat here-->
         <b-collapse id="collapse1" class="mt-2">
