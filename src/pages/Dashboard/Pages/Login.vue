@@ -122,7 +122,7 @@
         });
       },
       login () {
-        axios.post(`${process.env.KITTY_URL}/api/v1/auth/obtain_token/`,
+        axios.post(`/api/v1/auth/obtain_token/`,
           { username: this.username, password: this.password },
           { headers: {'X-Requested-With': 'XMLHttpRequest'}})
           .then(request => this.loginSuccessful(request))
