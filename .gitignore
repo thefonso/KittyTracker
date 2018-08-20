@@ -1,5 +1,7 @@
 ### Python template
 # Byte-compiled / optimized / DLL files
+webpack-stats.json
+staticfiles
 __pycache__/
 *.py[cod]
 *$py.class

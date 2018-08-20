@@ -9,7 +9,7 @@
       <div class="logo">
         <router-link to="/" class="logo-mini">
           <div class="logo-img">
-            <img src="../../assets/images/logo_boxed.png" alt="logo">
+            <img src="../../assets/logo.svg" alt="logo">
           </div>
         </router-link>
         <a href="" class="simple-text logo-normal">
