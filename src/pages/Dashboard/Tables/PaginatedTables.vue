@@ -81,7 +81,7 @@
   import axios from 'axios';
   import { Observable } from 'rxjs';
   import { Table, TableColumn, Select, Option } from 'element-ui'
-  import {Pagination as LPagination} from 'src/components/index'
+  import {Pagination as LPagination} from '../../../components/index'
   import Fuse from 'fuse.js'
 
   export default {

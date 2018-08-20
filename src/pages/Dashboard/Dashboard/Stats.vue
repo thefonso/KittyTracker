@@ -228,7 +228,7 @@
   import TimeLine from './Stats/TimeLine.vue'
   import TimeLineItem from './Stats/TimeLineItem.vue'
   import TaskList from './Stats/TaskList'
-  import ChartCard from 'src/components/Cards/ChartCard.vue'
+  import ChartCard from '../../../components/Cards/ChartCard.vue'
 
   export default {
     components: {

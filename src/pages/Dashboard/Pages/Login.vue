@@ -52,7 +52,7 @@
 <script>
   import axios from 'axios';
   import { mapGetters } from 'vuex'
-  import { Checkbox as LCheckbox, FadeRenderTransition } from 'src/components/index'
+  import { Checkbox as LCheckbox, FadeRenderTransition } from '../../../components/index'
   import AuthLayout from './AuthLayout.vue'
   export default {
     components: {

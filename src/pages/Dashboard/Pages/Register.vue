@@ -70,7 +70,7 @@
   </auth-layout>
 </template>
 <script>
-  import { FadeRenderTransition } from 'src/components/index'
+  import { FadeRenderTransition } from '../../../components/index'
   import AuthLayout from './AuthLayout.vue'
 
   export default {

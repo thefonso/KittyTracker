@@ -143,7 +143,7 @@
   </div>
 </template>
 <script>
-  import {ChartCard, StatsCard, Card, Table as LTable, Checkbox} from 'src/components/index'
+  import {ChartCard, StatsCard, Card, Table as LTable, Checkbox} from '../../../components/index'
 
   export default {
     components: {

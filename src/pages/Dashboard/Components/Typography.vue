@@ -172,7 +172,7 @@
   </div>
 </template>
 <script>
-  import {Breadcrumb, BreadcrumbItem} from 'src/components/index'
+  import {Breadcrumb, BreadcrumbItem} from '../../../components/index'
   export default {
     components: {
       Breadcrumb,
