@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^graphql', PrivateGraphQLView.as_view(graphiql=True)),
 
     url(r'^api/v1/', include('kittytracker.tracker.api.urls', namespace='tracker_api')),
+    url(r'^tracker/', include('kittytracker.tracker.urls', namespace='tracker_crud')),
 
     # User management
     url(r'^users/', include('kittytracker.users.urls', namespace='users')),

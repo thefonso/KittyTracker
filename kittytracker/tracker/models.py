@@ -1,7 +1,9 @@
 from django.db import models
 import requests, datetime
+from django.urls import reverse
 from django_autoslugfield import AutoSlugField
 from kittytracker.users.models import User
+
 
 
 __admin__ = ['Medication', 'Litter', 'Cat', 'CareLog', 'FosterAlert', 'VetVisit']
@@ -41,6 +43,9 @@ class Medication(models.Model):
 
         super(Medication, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('medication-detail', kwargs={'slug': self.slug})
+
     def __str__(self):
         return "{medication}: {manufacturer}".format(medication=self.name, manufacturer=self.manufacturer)
 
@@ -59,7 +64,7 @@ class Litter(models.Model):
         super(Litter, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.litter_name
+        return self.name
 
 
 class Cat(models.Model):
