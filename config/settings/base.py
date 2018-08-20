@@ -241,7 +241,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 # STATIC_ROOT = str(ROOT_DIR('dist'))
-STATIC_ROOT = os.path.join(BASE_DIR, 'public')
+STATIC_ROOT = os.path.join(BASE_DIR, '../public')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 # STATIC_URL = '/static/'
@@ -250,7 +250,7 @@ STATIC_URL = '/public/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     # str(APPS_DIR.path('static')),
-    os.path.join(BASE_DIR, 'dist'),
+    os.path.join(BASE_DIR, '../dist'),
     # str(ROOT_DIR.path('dist')),
 ]
 
@@ -258,8 +258,8 @@ WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': '',
-        # 'STATS_FILE': str(ROOT_DIR.path('webpack-stats.json')),
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'STATS_FILE': str(ROOT_DIR.path('webpack-stats.json')),
+        # 'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
         'IGNORE': ['.+\.hot-update.js', '.+\.map']
