@@ -220,14 +220,14 @@
     },
     methods:{
       getFeedingsAgain(value) {
-        axios.get(`${process.env.KITTY_URL}/api/v1/feedings/?cat__slug&cat__name=${value}`)
+        axios.get(`/api/v1/feedings/?cat__slug&cat__name=${value}`)
           .then(response => {console.log("getFeedingsAgain: ");console.log(response.data.results);
             this.catFeedingsAgain = response.data.results
           })
           .catch(error => console.log(error));
       },
       getMedicationsAgain(value) {
-        axios.get(`${process.env.KITTY_URL}/api/v1/medications/?cat__slug=&cat__name=${value}`)
+        axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
           .then(response => {console.log("catMedicationsAgain: ");console.log(response.data.results);
             this.catMedicationsAgain = response.data.results})
           .catch(error => console.log(error));

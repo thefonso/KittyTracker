@@ -97,7 +97,7 @@
         const formData = new FormData();
         formData.append('name', this.singleCat.name);
         formData.append('photo', this.selectedFile, this.selectedFile.name);
-        axios.put(`${process.env.KITTY_URL}/api/v1/cats/${this.singleCat.id}/`,formData,{
+        axios.put(`/api/v1/cats/${this.singleCat.id}/`,formData,{
           onUploadProgress: progressEvent => {
             console.log('Upload progress: ' + Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
           }
@@ -116,7 +116,7 @@
           })
       },
       fetchCatsList: function() {
-        axios.get(`${process.env.KITTY_URL}/api/v1/cats/`)
+        axios.get(`/api/v1/cats/`)
           .then(request => {this.catArray = request.data.results;
             // this.singleCat = catArray[catArray.length - 1];
             this.singleCat = this.sortedCats[this.sortedCats.length -1];

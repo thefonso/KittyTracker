@@ -670,7 +670,7 @@
       this.getCats();
     },
     created () {
-      axios.get(`${process.env.KITTY_URL}/api/v1/cats/`)
+      axios.get(`/api/v1/cats/`)
         .then((response) => {
           console.log("before: "+ this.cats);
           this.cats = response.data.results;
@@ -689,7 +689,7 @@
     },
     methods: {
       updateSearch(){
-        axios.get(`${process.env.KITTY_URL}/api/v1/cats/`)
+        axios.get(`/api/v1/cats/`)
           .then((response) => {
             console.log("update-before: "+ this.cats);
             this.cats = response.data.results;
@@ -860,7 +860,7 @@
         return this.errors.first(fieldName)
       },
       getOneCat (catID) {
-        axios.get(`${process.env.KITTY_URL}/api/v1/cats/${catID}/`)
+        axios.get(`/api/v1/cats/${catID}/`)
           .then(response => {
             // console.log(response.data);
             this.cat = response.data;
@@ -877,12 +877,12 @@
         this.getOneCat(row.id)
       },
       getCats () {
-        axios.get(`${process.env.KITTY_URL}/api/v1/cats/`)
+        axios.get(`/api/v1/cats/`)
           .then(response => {this.cats = response.data.results})
           .catch(error => console.log(error));
       },
       deleteCat (catID) {
-        axios.delete(`${process.env.KITTY_URL}/api/v1/cats/${catID}/`)
+        axios.delete(`/api/v1/cats/${catID}/`)
           .then(response => {
             console.log("un Gatto gone:");
             // this.cat = response.data.results // NOTE: this line caused pagination on catlist page to hault when deleting a cat
@@ -891,23 +891,23 @@
           .catch(error => console.log(error));
       },
       deleteFeeding (feedID) {
-        axios.delete(`${process.env.KITTY_URL}/api/v1/feedings/${feedID}/`)
+        axios.delete(`/api/v1/feedings/${feedID}/`)
           .then(response => {console.log("feeding gone:"); console.log(response);})
           .catch(error => console.log(error));
       },
       deleteMedication (medID) {
-        axios.delete(`${process.env.KITTY_URL}/api/v1/medications/${medID}/`)
+        axios.delete(`/api/v1/medications/${medID}/`)
           .then(response => {console.log("medication gone:"); console.log(response);})
           .catch(error => console.log(error));
       },
       getFeedings(value) {
-        axios.get(`${process.env.KITTY_URL}/api/v1/feedings/?cat__slug&cat__name=${value}`)
+        axios.get(`/api/v1/feedings/?cat__slug&cat__name=${value}`)
           .then(response => {console.log("getFeedings: ");
           console.log(response.data.results); this.catFeedings = response.data.results})
           .catch(error => console.log(error));
       },
       postFeedings(catID, catName) {
-        axios.post(`${process.env.KITTY_URL}/api/v1/feedings/`,{
+        axios.post(`/api/v1/feedings/`,{
           cat: {id: catID, name: catName},
           weight_unit_measure: 'G',
           weight_before_food: this.weight_before_food,
@@ -930,7 +930,7 @@
           })
       },
       postFeedingsMom(catID, catName) {
-        axios.post(`${process.env.KITTY_URL}/api/v1/feedings/`,{
+        axios.post(`/api/v1/feedings/`,{
           cat: {id: catID, name: catName},
           weight_unit_measure: 'G',
           weight_before_food: '0',
@@ -954,13 +954,13 @@
           })
       },
       getMedications(value) {
-        axios.get(`${process.env.KITTY_URL}/api/v1/medications/?cat__slug=&cat__name=${value}`)
+        axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
           .then(response => {console.log("getMedications: ");
           console.log(response.data.results); this.catMedications = response.data.results})
           .catch(error => console.log(error));
       },
       addMedications(catID, catName){
-        axios.post(`${process.env.KITTY_URL}/api/v1/medications/`,{
+        axios.post(`/api/v1/medications/`,{
           cat: {id: catID, name: catName},
           name: this.name,
           duration: this.duration,
@@ -982,7 +982,7 @@
       },
       editMedications(medID, medName, catID, catName){
         console.log("edit meds called:");
-        axios.put(`${process.env.KITTY_URL}/api/v1/medications/${medID}/`,{
+        axios.put(`/api/v1/medications/${medID}/`,{
           cat: {id: catID, name: catName},
           name: this.name,
           duration: this.duration,
@@ -1004,7 +1004,7 @@
       },
       editFeedings(medID, medName, catID, catName) {
         // TODO: PUT and PATCH will not work...something is wrong on millers code
-        axios.patch(`${process.env.KITTY_URL}/api/v1/feedings/${medID}/`,{
+        axios.patch(`/api/v1/feedings/${medID}/`,{
           cat: {id: catID, name: catName},
           weight_unit_measure: 'G',
           weight_before_food: this.weight_before_food,

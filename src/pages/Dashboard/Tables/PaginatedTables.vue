@@ -178,7 +178,7 @@
       }
     },
     beforeMount () {
-      axios.get(`${process.env.KITTY_URL}/api/v1/cats/`)
+      axios.get(`/api/v1/cats/`)
         .then(response => {console.log(response.data.results.length); this.cats = response.data.results})
         .catch(error => console.log(error));
     },

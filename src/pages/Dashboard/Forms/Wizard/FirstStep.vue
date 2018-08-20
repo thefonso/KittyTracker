@@ -270,7 +270,7 @@
         const formData = new FormData();
         formData.append('name', this.name);
         formData.append('photo', this.selectedFile, this.selectedFile.name);
-        axios.put(`${process.env.KITTY_URL}/api/v1/cats/${this.$route.params.catID}/`,formData,{
+        axios.put(`/api/v1/cats/${this.$route.params.catID}/`,formData,{
           onUploadProgress: progressEvent => {
             console.log('Upload progress: ' + Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
           }
@@ -286,7 +286,7 @@
           })
       },
       onSubmitted() {
-        axios.post(`${process.env.KITTY_URL}/api/v1/cats/`, {
+        axios.post(`/api/v1/cats/`, {
           name: this.name,
           age: this.age,
           gender: this.gender,
@@ -315,7 +315,7 @@
         });
       },
       onSubmittedLitter() {
-        axios.post(`${process.env.KITTY_URL}/api/v1/litter/`, {
+        axios.post(`/api/v1/litter/`, {
           litter_name: this.litter_name,
           mom_cat: this.name,
         })
@@ -339,7 +339,7 @@
         });
       },
       getLitterNames() {
-        axios.get(`${process.env.KITTY_URL}/api/v1/litter/`)
+        axios.get(`/api/v1/litter/`)
           .then(request => {
             console.log("litter_value: ");
             this.litter = request.data.results;
@@ -348,7 +348,7 @@
           .catch(error => console.log(error));
       },
       getLitterNamesObserv() {
-        const litter$ = Observable.from(axios.get(`${process.env.KITTY_URL}/api/v1/litter/`)
+        const litter$ = Observable.from(axios.get(`/api/v1/litter/`)
           .catch(error => console.log(error)))
           .pluck("data", "results");
         console.log(litter$);
