@@ -156,7 +156,7 @@
     Radio as LRadio,
     Checkbox as LCheckbox,
     FormGroupInput as FgInput
-  } from 'src/components/index'
+  } from '../../../components/index'
 
   export default {
     components: {
