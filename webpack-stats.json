@@ -1,1 +1,1 @@
-{"status":"error","publicPath":"/static/","error":"ModuleBuildError","message":"Module build failed: \n  @import \"~assets/sass/lbd/variables\";\n^\n      File to import not found or unreadable: ~assets/sass/lbd/variables.\n      in /Users/aleph/projects/millerstuff/KittyTracker/src/components/Dropdown.vue (line 56, column 1)"}
+{"status":"error","publicPath":"/static/","error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve './pages/Dashboard/Components/GridSystem.vue' in '/Users/aleph/projects/millerstuff/KittyTracker/src/routes'"}

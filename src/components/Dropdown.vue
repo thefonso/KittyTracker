@@ -53,8 +53,8 @@
   }
 </script>
 <style scoped lang="scss">
-  @import "~assets/sass/lbd/variables";
-  @import "~assets/sass/lbd/mixins";
+  @import "../assets/sass/lbd/variables";
+  @import "../assets/sass/lbd/mixins";
   li.dropdown {
     list-style-type: none;
   }
