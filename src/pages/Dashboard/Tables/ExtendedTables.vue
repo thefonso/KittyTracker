@@ -470,6 +470,20 @@
 
   Vue.use(VueTabs);
   Vue.prototype.$confirm = MessageBox.confirm;
+
+
+
+  const schema = buildSchema(`
+    type Query {
+      allCats{
+        name
+        photo
+        gender
+        catType
+      }
+    }
+  `)
+
   export default{
     components: {
       AddCat,
@@ -664,7 +678,7 @@
       this.getCats();
     },
     created () {
-      axios.get(`/api/v1/cats/`)
+      axios.get(`/graphql`)
         .then((response) => {
           console.log("before: "+ this.cats);
           this.cats = response.data.results;
