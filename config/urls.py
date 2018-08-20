@@ -12,7 +12,7 @@ from kittytracker.tracker.views import PrivateGraphQLView
 
 urlpatterns = [
     # url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-    url(r'^$', TemplateView.as_view(template_name='pages/index.html'), name='uHome'),
+    url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS

@@ -12,6 +12,8 @@ import os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (kittytracker/config/settings/base.py - 3 = kittytracker/)
 APPS_DIR = ROOT_DIR.path('kittytracker')
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Load operating system environment variables and then prepare to use them
@@ -205,6 +207,7 @@ TEMPLATES = [
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
             str(APPS_DIR.path('templates')),
+            BASE_DIR,
         ],
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -237,15 +240,17 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(ROOT_DIR('dist'))
+# STATIC_ROOT = str(ROOT_DIR('dist'))
+STATIC_ROOT = os.path.join(BASE_DIR, 'public')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
+STATIC_URL = '/public/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    str(APPS_DIR.path('static')),
-    # os.path.join(BASE_DIR, 'dist'),
+    # str(APPS_DIR.path('static')),
+    os.path.join(BASE_DIR, 'dist'),
     # str(ROOT_DIR.path('dist')),
 ]
 
@@ -253,7 +258,8 @@ WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
         'BUNDLE_DIR_NAME': '',
-        'STATS_FILE': str(ROOT_DIR.path('webpack-stats.json')),
+        # 'STATS_FILE': str(ROOT_DIR.path('webpack-stats.json')),
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
         'IGNORE': ['.+\.hot-update.js', '.+\.map']
