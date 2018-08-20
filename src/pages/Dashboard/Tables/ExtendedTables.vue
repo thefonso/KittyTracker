@@ -1,14 +1,5 @@
 <template>
   <div>
-    <h3>Example 2</h3>
-    <div>
-      Data:
-      <div v-for="cat in cats">
-        {{ cat }}
-      </div>
-    </div>
-    <button @click="getCats">Get Cats</button>
-
     <!--NOTE: paginated table-->
     <card title="">
       <div>
@@ -31,7 +22,15 @@
               <div class="divTable">
                 <div class="divTableHeading">
                   <!--<Wizard v-show="handleAdd"></Wizard>-->
-                  <AddCat></AddCat>
+                  <!--<AddCat></AddCat>-->
+                  <h3>Example 2</h3>
+                  <div>
+                    Data:
+                    <div v-for="cat in cats">
+                      {{ cat }}
+                    </div>
+                  </div>
+                  <button @click="getCats">Get Cats</button>
                 </div>
               </div>
             </div>
@@ -481,31 +480,6 @@
   Vue.prototype.$confirm = MessageBox.confirm;
 
 
-  // const schema = buildSchema(`
-  //   type Query {
-  //     allCats{
-  //       name
-  //       photo
-  //       gender
-  //       catType
-  //     }
-  //   }
-  // `)
-
-const schema = buildSchema(`
-  type Query {
-    language: String
-    getCats: [Cat]
-  }
-
-  type Cat {
-    name: String
-    photo: String
-    gender: String
-    cat_type: String
-  }
-`)
-
   export default{
     components: {
       AddCat,
@@ -916,7 +890,7 @@ const schema = buildSchema(`
         const res = axios.post(
           'http://localhost:8000/graphql', {
           query: `{
-            getCats {
+            allCats {
               name
             }
           }`
