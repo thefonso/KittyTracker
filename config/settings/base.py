@@ -80,7 +80,10 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + REST_APPS + LOCAL_APPS
 
 GRAPHENE = {
-    'SCHEMA': 'kittytracker.schema.schema'
+    'SCHEMA': 'kittytracker.schema.schema',
+    'MIDDLEWARE': (
+        'graphene_django.debug.DjangoDebugMiddleware',
+    )
 }
 
 
