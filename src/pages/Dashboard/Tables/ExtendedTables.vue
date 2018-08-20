@@ -1,5 +1,14 @@
 <template>
   <div>
+    <h3>Example 2</h3>
+    <div>
+      Data:
+      <div v-for="cat in cats">
+        {{ cat }}
+      </div>
+    </div>
+    <button @click="getCats">Get Cats</button>
+
     <!--NOTE: paginated table-->
     <card title="">
       <div>
@@ -472,17 +481,30 @@
   Vue.prototype.$confirm = MessageBox.confirm;
 
 
+  // const schema = buildSchema(`
+  //   type Query {
+  //     allCats{
+  //       name
+  //       photo
+  //       gender
+  //       catType
+  //     }
+  //   }
+  // `)
 
-  const schema = buildSchema(`
-    type Query {
-      allCats{
-        name
-        photo
-        gender
-        catType
-      }
-    }
-  `)
+const schema = buildSchema(`
+  type Query {
+    language: String
+    getCats: [Cat]
+  }
+
+  type Cat {
+    name: String
+    photo: String
+    gender: String
+    cat_type: String
+  }
+`)
 
   export default{
     components: {
@@ -570,6 +592,7 @@
         variableAtParent: 'DATA FROM PARENT!',
         activeName: 'first',
         cat: '',
+        example1: [],
         cats: [],
         thisCat: [],
         currentSort:'name',
@@ -884,10 +907,21 @@
       openCat (index, row) {
         this.getOneCat(row.id)
       },
+      // getCats () {
+      //   axios.get(`/api/v1/cats/`)
+      //     .then(response => {this.cats = response.data.results})
+      //     .catch(error => console.log(error));
+      // },
       getCats () {
-        axios.get(`/api/v1/cats/`)
-          .then(response => {this.cats = response.data.results})
-          .catch(error => console.log(error));
+        const res = axios.post(
+          'http://localhost:8000/graphql', {
+          query: `{
+            getCats {
+              name
+            }
+          }`
+        });
+        this.cats = res.data.data
       },
       deleteCat (catID) {
         axios.delete(`/api/v1/cats/${catID}/`)
