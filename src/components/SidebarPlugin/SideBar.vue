@@ -12,8 +12,8 @@
             <img src="../../assets/logo.svg" alt="logo">
           </div>
         </router-link>
-        <a href="" class="simple-text logo-normal">
-          {{ title }}
+        <a href="" class="simple-text logo-normal text-white">
+          {{ title }} <b class="text-info">{{ title2 }}</b>
         </a>
       </div>
       <slot>
@@ -42,7 +42,11 @@
     props: {
       title: {
         type: String,
-        default: 'Kitty Tracker'
+        default: 'Kitty'
+      },
+      title2: {
+        type: String,
+        default: 'Tracker'
       },
       backgroundColor: {
         type: String,
