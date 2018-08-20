@@ -27,7 +27,7 @@
                   <div>
                     Data:
                     <div v-for="cat in cats">
-                      {{ cat }}
+                      {{ cat.name }}
                     </div>
                   </div>
                   <button @click="getCats">Get Cats</button>
@@ -894,8 +894,9 @@
               name
             }
           }`
+        }).then((result) => {
+          console.log(result.data)
         });
-        this.cats = res.data.data
       },
       deleteCat (catID) {
         axios.delete(`/api/v1/cats/${catID}/`)
