@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.views.generic import TemplateView, CreateView, DeleteView, UpdateView, ListView
 from .models import Medication, Litter, Cat, CareLog, FosterAlert, VetVisit
 from django.urls import reverse_lazy
@@ -125,7 +124,7 @@ class CareLogList(ListView):
 
 
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+sfrom django.contrib.auth.mixins import LoginRequiredMixin
 from graphene_django.views import GraphQLView
 
 
