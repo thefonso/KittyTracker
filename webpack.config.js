@@ -72,6 +72,70 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+          test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+              {
+                  loader: 'file-loader',
+                  options: {
+                      name: 'fonts/[name]_[hash:6].[ext]',
+                      publicPath: ''
+                  }
+              }
+          ]
+      },
+      {
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+              {
+                  loader: 'file-loader',
+                  options: {
+                      name: 'fonts/[name]_[hash:6].[ext]',
+                      publicPath: '',
+                      mimetype: 'image/svg+xml'
+                  }
+              }
+          ]
+      },
+      {
+          test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+              {
+                  loader: 'file-loader',
+                  options: {
+                      name: 'fonts/[name]_[hash:6].[ext]',
+                      publicPath: '',
+                      mimetype: 'application/font-woff'
+                  }
+              }
+          ]
+      },
+      {
+          test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+              {
+                  loader: 'file-loader',
+                  options: {
+                      name: 'fonts/[name]_[hash:6].[ext]',
+                      publicPath: '',
+                      mimetype: 'application/font-woff'
+                  }
+              }
+          ]
+      },
+      {
+          test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+              {
+                  loader: 'file-loader',
+                  options: {
+                      name: 'fonts/[name]_[hash:6].[ext]',
+                      publicPath: '',
+                      mimetype: 'application/octet-stream'
+                  }
+              }
+          ]
       }
     ]
   },

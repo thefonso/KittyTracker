@@ -2,7 +2,7 @@ import DashboardLayout from '../pages/Dashboard/Layout/DashboardLayout.vue'
 // GeneralViews
 import NotFound from '../pages/GeneralViews/NotFoundPage.vue'
 // Dashboard pages
-import Overview from './pages/Dashboard/Dashboard/Overview.vue'
+import Overview from '../pages/Dashboard/Dashboard/Overview.vue'
 import Stats from '../pages/Dashboard/Dashboard/Stats.vue'
 
 // Pages
@@ -15,7 +15,7 @@ import Lock from '../pages/Dashboard/Pages/Lock.vue'
 
 // Components pages
 import Buttons from '../pages/Dashboard/Components/Buttons.vue'
-import GridSystem from './pages/Dashboard/Components/GridSystem.vue'
+import GridSystem from '../pages/Dashboard/Components/GridSystem.vue'
 import Panels from '../pages/Dashboard/Components/Panels.vue'
 const SweetAlert = () => import('../pages/Dashboard/Components/SweetAlert.vue')
 import Notifications from '../pages/Dashboard/Components/Notifications.vue'
