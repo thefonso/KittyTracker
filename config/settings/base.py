@@ -207,7 +207,7 @@ TEMPLATES = [
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
             str(APPS_DIR.path('templates')),
-            BASE_DIR,
+            os.path.join(BASE_DIR, '../../src'),
         ],
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -249,8 +249,8 @@ STATIC_URL = '/public/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    # str(APPS_DIR.path('static')),
-    os.path.join(BASE_DIR, '../dist'),
+    str(APPS_DIR.path('static')),
+    # os.path.join(BASE_DIR, '../public'),
     # str(ROOT_DIR.path('dist')),
 ]
 

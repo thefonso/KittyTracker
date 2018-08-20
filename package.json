@@ -1,8 +1,8 @@
 {
   "name": "kittytracker",
-  "description": "cat app front",
+  "description": "A Vue.js project",
   "version": "1.0.0",
-  "author": "miller hooks <millerhooks@mechanicalpanda.com> and alfonso rush <thefonso@thefonso.com>",
+  "author": "thefonso <thefonso@thefonso.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
