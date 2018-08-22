@@ -110,7 +110,7 @@ class Cat(models.Model):
     weight_unit = models.CharField(max_length=2, choices=MEASURE_CHOICES, default=GRAMS)
     weight = models.IntegerField(blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-
+    # TODO: where does kitty_photos go to?
     photo = models.FileField(upload_to="kitty_photos", blank=True, null=True)
 
     first_weight_loss = models.BooleanField(default=False)

@@ -18,7 +18,7 @@
                 Add
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#" v-b-toggle.collapse1>Cat</a>
+                <a class="dropdown-item" href="#" id="rectangle-255" v-b-toggle.collapse1>Cat</a>
                 <a class="dropdown-item" href="#">Litter</a>
                 <a class="dropdown-item" href="#">Medication</a>
                 <a class="dropdown-item" href="#">Care Log</a>
@@ -34,15 +34,7 @@
               <div class="divTable">
                 <div class="divTableHeading">
                   <!--<Wizard v-show="handleAdd"></Wizard>-->
-                  <!--<AddCat></AddCat>-->
-                  <h3>Example 2</h3>
-                  <div>
-                    Data:
-                    <div v-for="cat in cats">
-                      {{ cat.name }}
-                    </div>
-                  </div>
-                  <button @click="getCats">Get Cats</button>
+                  <AddCat></AddCat>
                 </div>
               </div>
             </div>
@@ -71,14 +63,14 @@
                   <div style="display: table-cell">-</div>
                   <div style="display: table-cell">{{ scope.item.weight }}</div>
                   <div style="display: table-cell">{{ scope.item.gender }}</div>
-                  <div style="display: table-cell">{{ scope.item.cat_type }}</div>
+                  <div style="display: table-cell">{{ scope.item.catType }}</div>
                 </div>
               </div>
             </template>
             <template slot="photo" slot-scope="scope">
               <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                <div class="img-container photo-thumb-sm" v-if="scope.value !== null">
-                  <img class="rounded-circle img-fluid" :src="scope.value" alt="thumb">
+                <div class="img-container photo-thumb-sm" v-if="scope.item.photo !== null">
+                  <img class="rounded-circle img-fluid" :src="'media/' + scope.item.photo" alt="thumb">
                 </div>
                 <div class="img-container photo-thumb-sm" v-else>
                   <img class="rounded-circle img-fluid" src="/static/img/cat_n_mouse.png" alt="bastet">
@@ -105,9 +97,9 @@
                 {{ scope.item.birthday | moment("from", "now", true) }}
               </div>
             </template>
-            <template slot="cat_type" slot-scope="scope">
+            <template slot="catType" slot-scope="scope">
               <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                {{ scope.item.cat_type }}
+                {{ scope.item.catType }}
               </div>
             </template>
             <template slot="actions" slot-scope="scope">
@@ -147,7 +139,7 @@
                                       <div style="display: table-cell">-</div>
                                       <div style="display: table-cell">{{scope.item.weight}}</div>
                                       <div style="display: table-cell">{{scope.item.gender}}</div>
-                                      <div style="display: table-cell">{{scope.item.cat_type}}</div>
+                                      <div style="display: table-cell">{{scope.item.catType}}</div>
                                     </div>
                                   </div>
                                 </div>
@@ -601,7 +593,7 @@
         sortDirection: 'asc',
         filter: null,
         searchQuery: '',
-        propsToSearch: ['name', 'gender', 'age', 'id', 'birthday', 'cat_type'],
+        propsToSearch: ['name', 'gender', 'age', 'id', 'birthday', 'catType'],
         tableColumns: [
           {
             key: 'id',
@@ -644,8 +636,8 @@
             sortable: false
           },
           {
-            key: 'cat_type',
-            prop: 'cat_type',
+            key: 'catType',
+            prop: 'catType',
             label: 'Type',
             minWidth: 60,
             sortable: true
@@ -899,16 +891,19 @@
       //     .catch(error => console.log(error));
       // },
       getCats () {
-        const res = axios.post(
-          'http://localhost:8000/graphql', {
+        axios.post('http://localhost:8000/graphql', {
           query: `{
             allCats {
+              weight
               name
+              photo
+              birthday
+              gender
+              catType
             }
           }`
-        }).then((result) => {
-          console.log(result.data)
-        });
+        }).then((result) => {this.cats = result.data.data.allCats})
+          .catch(error => console.log(error));
       },
       deleteCat (catID) {
         axios.delete(`/api/v1/cats/${catID}/`)
@@ -919,6 +914,11 @@
           })
           .catch(error => console.log(error));
       },
+      // deletCat(catID){
+      //   axios.delete('http://localhost:8000/graphql', {
+      //    What is the delete sequence???
+      //   })
+      // },
       deleteFeeding (feedID) {
         axios.delete(`/api/v1/feedings/${feedID}/`)
           .then(response => {console.log("feeding gone:"); console.log(response);})
@@ -982,10 +982,24 @@
             console.log("fail");
           })
       },
+      // getMedications(value) {
+      //   axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
+      //     .then(response => {console.log("getMedications: ");
+      //     console.log(response.data.results); this.catMedications = response.data.results})
+      //     .catch(error => console.log(error));
+      // },
       getMedications(value) {
-        axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
-          .then(response => {console.log("getMedications: ");
-          console.log(response.data.results); this.catMedications = response.data.results})
+        axios.get('http://localhost:8000/graphql', {
+          query:`{
+            allMedication{
+              name
+              notes
+              duration
+              frequency
+            }
+          }`
+        }).then(response => {console.log("getMedications: ");
+          console.log(response.data.data.allMedications); this.catMedications = response.data.data.allMedications})
           .catch(error => console.log(error));
       },
       addMedications(catID, catName){
@@ -1229,6 +1243,7 @@
       gender: '',
       age: '',
       cat_type: '',
+      catType: '',
       litter: [],
       litter_mates: null,
       litter_name: '',
