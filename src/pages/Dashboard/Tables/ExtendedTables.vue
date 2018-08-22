@@ -982,26 +982,26 @@
             console.log("fail");
           })
       },
-      // getMedications(value) {
-      //   axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
-      //     .then(response => {console.log("getMedications: ");
-      //     console.log(response.data.results); this.catMedications = response.data.results})
-      //     .catch(error => console.log(error));
-      // },
       getMedications(value) {
-        axios.get('http://localhost:8000/graphql', {
-          query:`{
-            allMedication{
-              name
-              notes
-              duration
-              frequency
-            }
-          }`
-        }).then(response => {console.log("getMedications: ");
-          console.log(response.data.data.allMedications); this.catMedications = response.data.data.allMedications})
+        axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
+          .then(response => {console.log("getMedications: ");
+          console.log(response.data.results); this.catMedications = response.data.results})
           .catch(error => console.log(error));
       },
+      // getMedications(value) {
+      //   axios.get('http://localhost:8000/graphql', {
+      //     query:`{
+      //       allMedication{
+      //         name
+      //         notes
+      //         duration
+      //         frequency
+      //       }
+      //     }`
+      //   }).then(response => {console.log("getMedications: ");
+      //     console.log(response.data.data.allMedications); this.catMedications = response.data.data.allMedications})
+      //     .catch(error => console.log(error));
+      // },
       addMedications(catID, catName){
         axios.post(`/api/v1/medications/`,{
           cat: {id: catID, name: catName},

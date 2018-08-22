@@ -25,3 +25,4 @@ urlpatterns = [
     url('meds/<slug:slug>/', MedicationUpdate.as_view(), name='meds-update'),
     url('meds/<slug:slug>/delete/', MedicationDelete.as_view(), name='meds-delete'),
 ]
+# What IS THIS FILE ?

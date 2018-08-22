@@ -3,8 +3,7 @@ import graphene
 
 from graphene_django.types import DjangoObjectType
 
-from .models import Medication, Litter, Cat, CareLog, FosterAlert, VetVisit
-from kittytracker.users.models import User
+from .models import Medication, Litter, Cat, CareLog, FosterAlert, VetVisit, User
 
 
 class UserType(DjangoObjectType):
@@ -26,6 +25,7 @@ class CatType(DjangoObjectType):
     class Meta:
         model = Cat
 
+
 class CareLogType(DjangoObjectType):
     class Meta:
         model = CareLog
@@ -40,13 +40,13 @@ class VetVisitType(DjangoObjectType):
     class Meta:
         model = VetVisit
 
+
 class Query(object):
     all_users = graphene.List(UserType)
-    all_medication = graphene.List(MedicationType)
+    all_medications = graphene.List(MedicationType)
     all_litters = graphene.List(LitterType)
     all_cats = graphene.List(CatType)
     all_carelogs = graphene.List(CareLogType)
-
 
     def resolve_all_users(self, info, **kwargs):
         return User.objects.all()
@@ -61,6 +61,6 @@ class Query(object):
         # We can easily optimize query count in the resolve method
         return Cat.objects.select_related('litter').all()
 
-    def resolve_all_carelogss(self, info, **kwargs):
+    def resolve_all_carelogs(self, info, **kwargs):
         # We can easily optimize query count in the resolve method
         return CareLog.objects.select_related('cat').all()
