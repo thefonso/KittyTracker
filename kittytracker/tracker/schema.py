@@ -64,3 +64,39 @@ class Query(object):
     def resolve_all_carelogs(self, info, **kwargs):
         # We can easily optimize query count in the resolve method
         return CareLog.objects.select_related('cat').all()
+
+    def resolve_medication(self, info, **kwargs):
+        id = kwargs.get('id')
+        name = kwargs.get('name')
+
+        if id is not None:
+            return Medication.objects.get(pk=id)
+
+        if name is not None:
+            return Medication.objects.get(name=name)
+
+        return None
+
+    def resolve_cat(self, info, **kwargs):
+        id = kwargs.get('id')
+        name = kwargs.get('name')
+
+        if id is not None:
+            return Cat.objects.get(pk=id)
+
+        if name is not None:
+            return Cat.objects.get(name=name)
+
+        return None
+
+    def resolve_carelog(self, info, **kwargs):
+        id = kwargs.get('id')
+        name = kwargs.get('name')
+
+        if id is not None:
+            return Cat.objects.get(pk=id)
+
+        if name is not None:
+            return Cat.objects.get(name=name)
+
+        return None
