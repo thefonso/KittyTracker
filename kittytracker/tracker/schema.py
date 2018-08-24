@@ -47,6 +47,9 @@ class Query(object):
     all_litters = graphene.List(LitterType)
     all_cats = graphene.List(CatType)
     all_carelogs = graphene.List(CareLogType)
+    medication = graphene.Field(MedicationType, id=graphene.Int())
+    cat = graphene.Field(CatType, slug=graphene.String())
+    carelog = graphene.Field(CareLogType, id=graphene.Int())
 
     def resolve_all_users(self, info, **kwargs):
         return User.objects.all()
@@ -78,11 +81,11 @@ class Query(object):
         return None
 
     def resolve_cat(self, info, **kwargs):
-        id = kwargs.get('id')
+        slug = kwargs.get('slug')
         name = kwargs.get('name')
 
-        if id is not None:
-            return Cat.objects.get(pk=id)
+        if slug is not None:
+            return Cat.objects.get(slug=slug)
 
         if name is not None:
             return Cat.objects.get(name=name)

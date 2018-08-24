@@ -124,8 +124,8 @@
                         <div class="container-fluid col-12">
                           <div class="divTable">
                             <div class="d-flex justify-content-around primary-cat-row row" role="button">
-                              <div class="col-auto img-container-lg photo-thumb-sm" v-if="scope.item.photo !== null">
-                                <img :src="scope.item.photo" alt="thumb" class="rounded-circle img-fluid">
+                              <div class="col-auto img-container-lg photo-thumb-sm" v-if="'media/' + scope.item.photo !== null">
+                                <img :src="'media/' + scope.item.photo" alt="thumb" class="rounded-circle img-fluid">
                               </div>
                               <div class="col-auto img-container-lg photo-thumb-sm" v-else>
                                 <img src="/static/img/cat_n_mouse.png" alt="default pic" class="rounded-circle img-fluid">
@@ -344,8 +344,8 @@
                                       <span v-if="med.showRow">{{med.frequency}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="!med.showRow" :form="'form'+med.id" name="dosage" v-validate="'required|integer'" v-model="dosage" :error="getError('dosage')" type="text" :placeholder="med.dosage"></fg-input>
-                                      <span v-if="med.showRow">{{med.dosage}}</span>
+                                      <fg-input v-if="!med.showRow" :form="'form'+med.id" name="dosage" v-validate="'required|integer'" v-model="dosage" :error="getError('dosage')" type="text" :placeholder="med.dosageGuidelines"></fg-input>
+                                      <span v-if="med.showRow">{{med.dosageGuidelines}}</span>
                                     </div>
                                     <div class="col-2">
                                       <fg-input v-if="!med.showRow" :form="'form'+med.id" name="notes" v-model="notes" :error="getError('notes')" type="textarea" :placeholder="med.notes"></fg-input>
@@ -991,13 +991,16 @@
       getMedications(value) {
         axios.post('http://localhost:8000/graphql', {
           query:`{
-            allCarelogs{
-              cat{
-                name
-              }
-              slug
-              medication{
-                name
+            cat(slug: "babby"){
+              name
+              carelogSet{
+                medication{
+                  name
+                  duration
+                  frequency
+                  dosageGuidelines
+                  notes
+                }
               }
             }
           }`
