@@ -48,7 +48,7 @@ class Query(object):
     all_cats = graphene.List(CatType)
     all_carelogs = graphene.List(CareLogType)
     medication = graphene.Field(MedicationType, id=graphene.Int())
-    cat = graphene.Field(CatType, slug=graphene.String())
+    cat = graphene.Field(CatType, name=graphene.String())
     carelog = graphene.Field(CareLogType, id=graphene.Int())
 
     def resolve_all_users(self, info, **kwargs):

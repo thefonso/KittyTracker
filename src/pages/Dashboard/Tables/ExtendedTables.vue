@@ -120,11 +120,11 @@
                     <div class="card">
                     <div class="card-header">
                       <!--TODO: CAT big one begins here-->
-                      <b-btn id="fedMed" class="col btn btn-link" v-b-toggle.collapse3 @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
+                      <b-btn id="fedMed" class="col btn btn-link" v-b-toggle.collapse3>
                         <div class="container-fluid col-12">
                           <div class="divTable">
                             <div class="d-flex justify-content-around primary-cat-row row" role="button">
-                              <div class="col-auto img-container-lg photo-thumb-sm" v-if="'media/' + scope.item.photo !== null">
+                              <div class="col-auto img-container-lg photo-thumb-sm" v-if="scope.item.photo !== null">
                                 <img :src="'media/' + scope.item.photo" alt="thumb" class="rounded-circle img-fluid">
                               </div>
                               <div class="col-auto img-container-lg photo-thumb-sm" v-else>
@@ -154,16 +154,16 @@
                                 <!--</div>-->
                               </div>
                               <div class="col-auto cat-litter">
-                                <div class="btn-group" v-if="scope.item.litter_mates !== null">
+                                <div class="btn-group" v-if="scope.item.litter !== null">
                                   <button type="button" class="btn btn-warning btn-outline">Litter:</button>
                                   <button type="button" class="btn btn-warning btn-outline">
-                                    {{scope.item.litter_mates ? scope.item.litter_mates : 'none'}}
+                                    {{scope.item.litter ? scope.item.litter : 'none'}}
                                   </button>
                                 </div>
                                 <div class="btn-group" v-else>
                                   <button type="button" class="btn btn-default btn-outline">Litter:</button>
                                   <button type="button" class="btn btn-default btn-outline">
-                                    {{scope.item.litter_mates ? scope.item.litter_mates : 'none'}}
+                                    {{scope.item.litter ? scope.item.litter : 'none'}}
                                   </button>
                                 </div>
                               </div>
@@ -193,41 +193,41 @@
                                 <form :id="'form'+fed.id" @submit.prevent="updateDeleteFeedsSubmit(fed.id, fed.name, cat.id, cat.name)">
                                   <div class="medRow d-flex justify-content-start">
                                     <div class="col-1">
-                                      <fg-input v-if="!fed.showRow" :form="'form'+fed.id" name="id" :value="fed.id">{{fed.id}}</fg-input>
-                                      <span v-if="fed.showRow">{{fed.id}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="id" :value="fed.id">{{fed.id}}</fg-input>
+                                      <span v-if="!fed.showRow">{{fed.id}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="!fed.showRow" :form="'form'+fed.id" name="food_type" v-validate="'required'" v-model="food_type" type="text" :placeholder="fed.food_type" :error="getError('food_type')"></fg-input>
-                                      <span v-if="fed.showRow">{{fed.food_type}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="food_type" v-validate="'required'" v-model="food_type" type="text" :placeholder="fed.food_type" :error="getError('food_type')"></fg-input>
+                                      <span v-if="!fed.showRow">{{fed.food_type}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="!fed.showRow" :form="'form'+fed.id" name="weight_before_food" v-validate="'required'" v-model="weight_before_food" type="text" :placeholder="fed.weight_before_food" :error="getError('weight_before_food')"></fg-input>
-                                      <span v-if="fed.showRow">{{fed.weight_before_food}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_before_food" v-validate="'required'" v-model="weight_before_food" type="text" :placeholder="fed.weight_before_food" :error="getError('weight_before_food')"></fg-input>
+                                      <span v-if="!fed.showRow">{{fed.weight_before_food}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="!fed.showRow && food_type !== 'MN'" :form="'form'+fed.id" name="amount_of_food_taken"  v-validate="'required'" v-model="amount_of_food_taken" type="text" :placeholder="fed.amount_of_food_taken" :error="getError('amount_of_food_taken')"></fg-input>
-                                      <span v-if="fed.showRow">{{fed.amount_of_food_taken}}</span>
+                                      <fg-input v-if="fed.showRow && food_type !== 'MN'" :form="'form'+fed.id" name="amount_of_food_taken"  v-validate="'required'" v-model="amount_of_food_taken" type="text" :placeholder="fed.amount_of_food_taken" :error="getError('amount_of_food_taken')"></fg-input>
+                                      <span v-if="!fed.showRow">{{fed.amount_of_food_taken}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="!fed.showRow" :form="'form'+fed.id" name="weight_after_food" v-model="weight_after_food" v-validate="'required|integer'"  :placeholder="fed.weight_after_food":error="getError('weight_after_food')"/>
-                                      <span v-if="fed.showRow">{{fed.weight_after_food}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_after_food" v-model="weight_after_food" v-validate="'required|integer'"  :placeholder="fed.weight_after_food":error="getError('weight_after_food')"/>
+                                      <span v-if="!fed.showRow">{{fed.weight_after_food}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="!fed.showRow" :form="'form'+fed.id" name="stimulated" v-validate="'required'" v-model="stimulated" :error="getError('stimulated')" type="text" :placeholder="fed.stimulated"></fg-input>
-                                      <span v-if="fed.showRow">{{fed.stimulated}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulated" v-validate="'required'" v-model="stimulated" :error="getError('stimulated')" type="text" :placeholder="fed.stimulated"></fg-input>
+                                      <span v-if="!fed.showRow">{{fed.stimulated}}</span>
                                     </div>
                                     <div class="col-2">
-                                      <fg-input v-if="!fed.showRow" :form="'form'+fed.id" name="stimulation_type" v-validate="'required'" v-model="stimulation_type" :error="getError('stimulation_type')" type="text" :placeholder="fed.stimulation_type"></fg-input>
-                                      <span v-if="fed.showRow">{{fed.stimulation_type}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulation_type" v-validate="'required'" v-model="stimulation_type" :error="getError('stimulation_type')" type="text" :placeholder="fed.stimulation_type"></fg-input>
+                                      <span v-if="!fed.showRow">{{fed.stimulation_type}}</span>
                                     </div>
                                     <div class="col-3 d-flex align-items-center cancel-submit">
-                                      <button class="btn btn-sm btn-warning" @click='fed.showRow = !fed.showRow' v-if="!fed.showRow">Cancel</button>
-                                      <button type="submit" class="btn btn-sm btn-success" v-if="!fed.showRow">Submit</button>
+                                      <button class="btn btn-sm btn-warning" @click='fed.showRow = !fed.showRow' v-if="fed.showRow">Cancel</button>
+                                      <button type="submit" class="btn btn-sm btn-success" v-if="fed.showRow">Submit</button>
 
                                       <a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"
-                                         @click='fed.showRow = !fed.showRow' v-if="fed.showRow"><i
+                                         @click='fed.showRow = !fed.showRow' v-if="!fed.showRow"><i
                                         class="fa fa-edit"></i></a>
-                                      <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link" v-if="fed.showRow"
+                                      <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link" v-if="!fed.showRow"
                                          @click="handleDelete(fed.id, fed.name, 'feedingRow')">
                                         <i class="fa fa-times"></i>
                                       </a>
@@ -679,16 +679,18 @@
     },
     beforeMount () {
       this.getCats();
+      console.log("beforeMount: " + this.cats);
     },
     created () {
-      axios.get(`/graphql`)
-        .then((response) => {
-          console.log("before: "+ this.cats);
-          this.cats = response.data.results;
-          console.log("after: "+ this.cats);
-          this.fuseSearch = new Fuse(this.cats, {keys: ['name', 'gender']})
-        })
-        .catch(error => console.log(error));
+      console.log("created: " + this.cats);
+      // axios.get(`/graphql`)
+      //   .then((response) => {
+      //     console.log("before: "+ this.cats);
+      //     this.cats = response.data.results;
+      //     console.log("after: "+ this.cats);
+      //     this.fuseSearch = new Fuse(this.cats, {keys: ['name', 'gender']})
+      //   })
+      //   .catch(error => console.log(error));
     },
     mounted () {
       console.log("mounted: " + this.cats);
@@ -895,16 +897,38 @@
       getCats () {
         axios.post('http://localhost:8000/graphql', {
           query: `{
-            allCats {
+              allCats {
               weight
               name
               photo
               birthday
               gender
               catType
+              litter{
+                name
+              }
+              carelogSet{
+                foodType
+                amountOfFoodTaken
+                stimulated
+                weightBeforeFood
+                weightAfterFood
+                stimulated
+                stimulationType
+                medication{
+                  name
+                  duration
+                  frequency
+                  dosageGuidelines
+                  notes
+                }
+              }
             }
           }`
-        }).then((result) => {this.cats = result.data.data.allCats})
+        }).then((result) => {
+          this.cats = result.data.data.allCats;
+          this.fuseSearch = new Fuse(this.cats, {keys: ['name', 'gender']})
+        })
           .catch(error => console.log(error));
       },
       deleteCat (catID) {
@@ -931,10 +955,33 @@
           .then(response => {console.log("medication gone:"); console.log(response);})
           .catch(error => console.log(error));
       },
+      // getFeedings(value) {
+      //   axios.get(`/api/v1/feedings/?cat__slug&cat__name=${value}`)
+      //     .then(response => {console.log("getFeedings: ");
+      //     console.log(response.data.results); this.catFeedings = response.data.results})
+      //     .catch(error => console.log(error));
+      // },
       getFeedings(value) {
-        axios.get(`/api/v1/feedings/?cat__slug&cat__name=${value}`)
-          .then(response => {console.log("getFeedings: ");
-          console.log(response.data.results); this.catFeedings = response.data.results})
+        axios.post('http://localhost:8000/graphql', {
+          query:`{
+            cat(name: "${value}"){
+              name
+              litter{
+                name
+              }
+              carelogSet{
+                foodType
+                amountOfFoodTaken
+                stimulated
+                weightBeforeFood
+                weightAfterFood
+                stimulated
+                stimulationType
+              }
+            }
+          }`
+        }).then(response => {console.log("getFeedings: ");
+          console.log(response.data.data.cat.carelogSet); this.catFeedings = response.data.data.cat.carelogSet})
           .catch(error => console.log(error));
       },
       postFeedings(catID, catName) {
@@ -993,8 +1040,11 @@
       getMedications(value) {
         axios.post('http://localhost:8000/graphql', {
           query:`{
-            cat(slug: "babby"){
+            cat(name: "${value}"){
               name
+              litter{
+                name
+              }
               carelogSet{
                 medication{
                   name

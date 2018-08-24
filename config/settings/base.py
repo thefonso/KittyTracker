@@ -276,7 +276,7 @@ STATICFILES_FINDERS = [
 MEDIA_ROOT = str(APPS_DIR('media'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 
 # URL Configuration
 # ------------------------------------------------------------------------------
