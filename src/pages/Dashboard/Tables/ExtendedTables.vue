@@ -328,38 +328,38 @@
                                 <form :id="'form'+med.id" @submit.prevent="updateDeleteMedsSubmit(med.medication.id, med.medication.name, cat.id, cat.name)">
                                   <div class="medRow d-flex justify-content-start">
                                     <div class="col-1">
-                                      <fg-input v-if="!med.showRow" :form="'form'+med.id" name="id" :value="med.id"></fg-input>
-                                      <span v-if="med.showRow">{{med.medication.id}}</span>
+                                      <fg-input v-if="med.showRow" :form="'form'+med.id" name="id" :value="med.id"></fg-input>
+                                      <span v-if="!med.showRow">{{med.medication.id}}</span>
                                     </div>
                                     <div class="col-2">
-                                      <fg-input v-if="!med.showRow" :form="'form'+med.id" name="name" v-validate="'required'" v-model="name" type="text" :placeholder="med.medication.name" :error="getError('requiredText')"></fg-input>
-                                      <span v-if="med.showRow">{{med.medication.name}}</span>
+                                      <fg-input v-if="med.showRow" :form="'form'+med.id" name="name" v-validate="'required'" v-model="name" type="text" :placeholder="med.medication.name" :error="getError('requiredText')"></fg-input>
+                                      <span v-if="!med.showRow">{{med.medication.name}}</span>
                                     </div>
                                     <div class="col-2">
-                                      <fg-input v-if="!med.showRow" :form="'form'+med.id" name="duration"  v-validate="'required'" v-model="duration" type="text" :placeholder="med.medication.duration" :error="getError('duration')"></fg-input>
-                                      <span v-if="med.showRow">{{med.medication.duration}}</span>
+                                      <fg-input v-if="med.showRow" :form="'form'+med.id" name="duration"  v-validate="'required'" v-model="duration" type="text" :placeholder="med.medication.duration" :error="getError('duration')"></fg-input>
+                                      <span v-if="!med.showRow">{{med.medication.duration}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="!med.showRow" :form="'form'+med.id" name="frequency" v-validate="'required|integer'" v-model="frequency" :error="getError('frequency')" type="text" :placeholder="med.medication.frequency"></fg-input>
-                                      <span v-if="med.showRow">{{med.medication.frequency}}</span>
+                                      <fg-input v-if="med.showRow" :form="'form'+med.id" name="frequency" v-validate="'required|integer'" v-model="frequency" :error="getError('frequency')" type="text" :placeholder="med.medication.frequency"></fg-input>
+                                      <span v-if="!med.showRow">{{med.medication.frequency}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="!med.showRow" :form="'form'+med.id" name="dosage" v-validate="'required|integer'" v-model="dosage" :error="getError('dosage')" type="text" :placeholder="med.medication.dosageGuidelines"></fg-input>
-                                      <span v-if="med.showRow">{{med.medication.dosageGuidelines}}</span>
+                                      <fg-input v-if="med.showRow" :form="'form'+med.id" name="dosage" v-validate="'required|integer'" v-model="dosage" :error="getError('dosage')" type="text" :placeholder="med.medication.dosageGuidelines"></fg-input>
+                                      <span v-if="!med.showRow">{{med.medication.dosageGuidelines}}</span>
                                     </div>
                                     <div class="col-2">
-                                      <fg-input v-if="!med.showRow" :form="'form'+med.id" name="notes" v-model="notes" :error="getError('notes')" type="textarea" :placeholder="med.medication.notes"></fg-input>
-                                      <span v-if="med.showRow">{{med.medication.notes}}</span>
+                                      <fg-input v-if="med.showRow" :form="'form'+med.id" name="notes" v-model="notes" :error="getError('notes')" type="textarea" :placeholder="med.medication.notes"></fg-input>
+                                      <span v-if="!med.showRow">{{med.medication.notes}}</span>
                                     </div>
                                     <div class="col-3 d-flex align-items-center cancel-submit">
-                                      <button class="btn btn-sm btn-warning" @click='med.showRow = !med.showRow' v-if="!med.showRow">Cancel</button>
+                                      <button class="btn btn-sm btn-warning" @click='med.showRow = !med.showRow' v-if="med.showRow">Cancel</button>
                                       <button type="submit" class="btn btn-sm btn-success"
-                                              v-if="!med.showRow" @click="handleAdd(med.medication.id, med.medication.name, 'medicationRow')">Submit</button>
+                                              v-if="med.showRow" @click="handleAdd(med.medication.id, med.medication.name, 'medicationRow')">Submit</button>
 
                                       <a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"
-                                         @click='med.showRow = !med.showRow' v-if="med.showRow">
+                                         @click='med.showRow = !med.showRow' v-if="!med.showRow">
                                         <i class="fa fa-edit"></i></a>
-                                      <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link" v-if="med.showRow"
+                                      <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link" v-if="!med.showRow"
                                          @click="handleDelete(med.medication.id, med.medication.name, 'medicationRow')">
                                         <i class="fa fa-times"></i>
                                       </a>
