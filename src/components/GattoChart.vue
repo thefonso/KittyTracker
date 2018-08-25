@@ -41,7 +41,7 @@
           "marginTop": 0,
           "marginBottom": 0,
           "graphs": [ {
-            "valueField": "weight_after_food",
+            "valueField": "weightAfterFood",
             "showBalloon": false,
             "lineColor": "#ffbf63",
             "negativeLineColor": "#289eaf"
@@ -50,7 +50,7 @@
             "gridAlpha": 0,
             "axisAlpha": 0,
             "guides": [ {
-              "weight_after_food": 0,
+              "weightAfterFood": 0,
               "lineAlpha": 0.1
             } ]
           } ],
@@ -72,7 +72,7 @@
           "marginTop": 0,
           "marginBottom": 0,
           "graphs": [ {
-            "valueField": "dosage",
+            "valueField": "dosageGuidelines",
             "type": "column",
             "fillAlphas": 1,
             "showBalloon": false,
@@ -100,34 +100,34 @@
         "type": "serial",
         "dataProvider": [ {
           "created": 1,
-          "weight_after_food": 120
+          "weightAfterFood": 120
         }, {
           "created": 2,
-          "weight_after_food": 54
+          "weightAfterFood": 54
         }, {
           "created": 3,
-          "weight_after_food": -18
+          "weightAfterFood": -18
         }, {
           "created": 4,
-          "weight_after_food": -12
+          "weightAfterFood": -12
         }, {
           "created": 5,
-          "weight_after_food": -51
+          "weightAfterFood": -51
         }, {
           "created": 6,
-          "weight_after_food": 12
+          "weightAfterFood": 12
         }, {
           "created": 7,
-          "weight_after_food": 56
+          "weightAfterFood": 56
         }, {
           "created": 8,
-          "weight_after_food": 113
+          "weightAfterFood": 113
         }, {
           "created": 9,
-          "weight_after_food": 142
+          "weightAfterFood": 142
         }, {
           "created": 10,
-          "weight_after_food": 125
+          "weightAfterFood": 125
         } ],
         "categoryField": "created",
         "autoMargins": false,
@@ -136,7 +136,7 @@
         "marginTop": 0,
         "marginBottom": 0,
         "graphs": [ {
-          "valueField": "weight_after_food",
+          "valueField": "weightAfterFood",
           "showBalloon": false,
           "lineColor": "#ffbf63",
           "negativeLineColor": "#289eaf"
@@ -145,7 +145,7 @@
           "gridAlpha": 0,
           "axisAlpha": 0,
           "guides": [ {
-            "weight_after_food": 0,
+            "weightAfterFood": 0,
             "lineAlpha": 0.1
           } ]
         } ],
@@ -159,39 +159,39 @@
       /**
        * Column Chart #2
        */
-      // TODO: column = dose(dosage) / day(created?)
+      // TODO: column = dose(dosageGuidelines) / day(created?)
       AmCharts.makeChart( this.$refs.column, {
         "type": "serial",
         "dataProvider": [ {
           "created": 1,
-          "dosage": -5
+          "dosageGuidelines": -5
         }, {
           "created": 2,
-          "dosage": 3
+          "dosageGuidelines": 3
         }, {
           "created": 3,
-          "dosage": 7
+          "dosageGuidelines": 7
         }, {
           "created": 4,
-          "dosage": -3
+          "dosageGuidelines": -3
         }, {
           "created": 5,
-          "dosage": 3
+          "dosageGuidelines": 3
         }, {
           "created": 6,
-          "dosage": 4
+          "dosageGuidelines": 4
         }, {
           "created": 7,
-          "dosage": 6
+          "dosageGuidelines": 6
         }, {
           "created": 8,
-          "dosage": -3
+          "dosageGuidelines": -3
         }, {
           "created": 9,
-          "dosage": -2
+          "dosageGuidelines": -2
         }, {
           "created": 10,
-          "dosage": 6
+          "dosageGuidelines": 6
         } ],
         "categoryField": "created",
         "autoMargins": false,
@@ -200,7 +200,7 @@
         "marginTop": 0,
         "marginBottom": 0,
         "graphs": [ {
-          "valueField": "dosage",
+          "valueField": "dosageGuidelines",
           "type": "column",
           "fillAlphas": 1,
           "showBalloon": false,
@@ -219,17 +219,63 @@
       } );
     },
     methods:{
+      // getFeedingsAgain(value) {
+      //   axios.get(`/api/v1/feedings/?cat__slug&cat__name=${value}`)
+      //     .then(response => {console.log("getFeedingsAgain: ");console.log(response.data.results);
+      //       this.catFeedingsAgain = response.data.results
+      //     })
+      //     .catch(error => console.log(error));
+      // },
       getFeedingsAgain(value) {
-        axios.get(`/api/v1/feedings/?cat__slug&cat__name=${value}`)
-          .then(response => {console.log("getFeedingsAgain: ");console.log(response.data.results);
-            this.catFeedingsAgain = response.data.results
-          })
+        axios.post('http://localhost:8000/graphql', {
+          query:`{
+            cat(name: "${value}"){
+              name
+              litter{
+                name
+              }
+              carelogSet{
+                foodType
+                amountOfFoodTaken
+                stimulated
+                weightBeforeFood
+                weightAfterFood
+                stimulated
+                stimulationType
+              }
+            }
+          }`
+        }).then(response => {console.log("catFeedingsAgain: ");
+          console.log(response.data.data.cat.carelogSet); this.catFeedingsAgain = response.data.data.cat.carelogSet})
           .catch(error => console.log(error));
       },
+      // getMedicationsAgain(value) {
+      //   axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
+      //     .then(response => {console.log("catMedicationsAgain: ");console.log(response.data.results);
+      //       this.catMedicationsAgain = response.data.results})
+      //     .catch(error => console.log(error));
+      // },
       getMedicationsAgain(value) {
-        axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
-          .then(response => {console.log("catMedicationsAgain: ");console.log(response.data.results);
-            this.catMedicationsAgain = response.data.results})
+        axios.post('http://localhost:8000/graphql', {
+          query:`{
+            cat(name: "${value}"){
+              name
+              litter{
+                name
+              }
+              carelogSet{
+                medication{
+                  name
+                  duration
+                  frequency
+                  dosageGuidelines
+                  notes
+                }
+              }
+            }
+          }`
+        }).then(response => {console.log("getMedicationsAgain: ");
+          console.log(response.data.data.cat.carelogSet); this.catMedicationsAgain = response.data.data.cat.carelogSet})
           .catch(error => console.log(error));
       },
     }

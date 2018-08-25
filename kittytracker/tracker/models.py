@@ -225,16 +225,17 @@ class CareLog(models.Model):
                 if feedings[0] == self:
                     feedings = feedings[1:]
 
+                # You broke it you fix it:
                 # If the feeding is a weight loss log it as the first/second/third
-                if self.weight_after_food < feedings[0].weight_after_food:
-                    if self.cat.first_weight_loss:
-                        self.cat.second_weight_loss = True
-                    elif self.cat.second_weight_loss:
-                        self.cat.third_weight_loss = True
-                    elif self.cat.third_weight_loss:
-                        self.cat.many_weight_losses = True
-                    elif not self.cat.first_weight_loss:
-                        self.cat.first_weight_loss = True
+                # if self.weight_after_food < feedings[0].weight_after_food:
+                #     if self.cat.first_weight_loss:
+                #         self.cat.second_weight_loss = True
+                #     elif self.cat.second_weight_loss:
+                #         self.cat.third_weight_loss = True
+                #     elif self.cat.third_weight_loss:
+                #         self.cat.many_weight_losses = True
+                #     elif not self.cat.first_weight_loss:
+                #         self.cat.first_weight_loss = True
 
                 # Save Cat Object
                 self.cat.save()

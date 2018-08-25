@@ -197,28 +197,28 @@
                                       <span v-if="!fed.showRow">{{fed.id}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="food_type" v-validate="'required'" v-model="food_type" type="text" :placeholder="fed.food_type" :error="getError('food_type')"></fg-input>
-                                      <span v-if="!fed.showRow">{{fed.food_type}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="food_type" v-validate="'required'" v-model="food_type" type="text" :placeholder="fed.foodType" :error="getError('food_type')"></fg-input>
+                                      <span v-if="!fed.showRow">{{fed.foodType}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_before_food" v-validate="'required'" v-model="weight_before_food" type="text" :placeholder="fed.weight_before_food" :error="getError('weight_before_food')"></fg-input>
-                                      <span v-if="!fed.showRow">{{fed.weight_before_food}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_before_food" v-validate="'required'" v-model="weight_before_food" type="text" :placeholder="fed.weightBeforeFood" :error="getError('weight_before_food')"></fg-input>
+                                      <span v-if="!fed.showRow">{{fed.weightBeforeFood}}</span>
                                     </div>
                                     <div class="col-1">
                                       <fg-input v-if="fed.showRow && food_type !== 'MN'" :form="'form'+fed.id" name="amount_of_food_taken"  v-validate="'required'" v-model="amount_of_food_taken" type="text" :placeholder="fed.amount_of_food_taken" :error="getError('amount_of_food_taken')"></fg-input>
-                                      <span v-if="!fed.showRow">{{fed.amount_of_food_taken}}</span>
+                                      <span v-if="!fed.showRow">{{fed.amountOfFoodTaken}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_after_food" v-model="weight_after_food" v-validate="'required|integer'"  :placeholder="fed.weight_after_food":error="getError('weight_after_food')"/>
-                                      <span v-if="!fed.showRow">{{fed.weight_after_food}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_after_food" v-model="weight_after_food" v-validate="'required|integer'"  :placeholder="fed.weightAfterFood":error="getError('weight_after_food')"/>
+                                      <span v-if="!fed.showRow">{{fed.weightAfterFood}}</span>
                                     </div>
                                     <div class="col-1">
                                       <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulated" v-validate="'required'" v-model="stimulated" :error="getError('stimulated')" type="text" :placeholder="fed.stimulated"></fg-input>
                                       <span v-if="!fed.showRow">{{fed.stimulated}}</span>
                                     </div>
                                     <div class="col-2">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulation_type" v-validate="'required'" v-model="stimulation_type" :error="getError('stimulation_type')" type="text" :placeholder="fed.stimulation_type"></fg-input>
-                                      <span v-if="!fed.showRow">{{fed.stimulation_type}}</span>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulation_type" v-validate="'required'" v-model="stimulation_type" :error="getError('stimulation_type')" type="text" :placeholder="fed.stimulationType"></fg-input>
+                                      <span v-if="!fed.showRow">{{fed.stimulationType}}</span>
                                     </div>
                                     <div class="col-3 d-flex align-items-center cancel-submit">
                                       <button class="btn btn-sm btn-warning" @click='fed.showRow = !fed.showRow' v-if="fed.showRow">Cancel</button>
