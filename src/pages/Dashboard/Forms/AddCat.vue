@@ -71,10 +71,10 @@
             <label>Type</label>
             <div>
               <el-select class="select-secondary"
-                         id="cat_type" name="cat_type"
+                         id="catType" name="catType"
                          v-model="selects.simple"
                          v-validate="'required'">
-                <el-option v-for="option in selects.cat_type"
+                <el-option v-for="option in selects.catType"
                            class="select-secondary"
                            :value="option.value"
                            :label="option.label"
@@ -82,10 +82,10 @@
                 </el-option>
               </el-select>
             </div>
-            <small class="help is-danger form-text" v-show="errors.has('cat_type')">{{ errors.first('cat_type') }}</small>
+            <small class="help is-danger form-text" v-show="errors.has('catType')">{{ errors.first('catType') }}</small>
           </div>
           <div class="divTableCell col center">
-            <div v-if="cat_type === 'P' || cat_type === 'NM' || cat_type === 'NK'" >
+            <div v-if="catType === 'P' || catType === 'NM' || catType === 'NK'" >
               <label>Create Litter?</label>
               <div>
                 <div class="form-check-inline">
@@ -99,7 +99,7 @@
                 </div>
               </div>
             </div>
-            <div v-else-if="cat_type !== 'P' || cat_type !=='NM' || cat_type !=='NK'">
+            <div v-else-if="catType !== 'P' || catType !=='NM' || catType !=='NK'">
               <label>Litter</label>
               <div>
                 <el-select class="select-secondary"
@@ -206,10 +206,10 @@
       </div>
       <div class="col form-group container-fluid">
         <!--NOTE: someone decided to remove the key form field that all the complex logic was related to.-->
-        <div v-if="cat_type === 'O' || cat_type === 'NK'">
+        <div v-if="catType === 'O' || catType === 'NK'">
           <input type="hidden" name="age" value="K" v-bind="age = 'K'" v-model="age" placeholder="K">
         </div>
-        <div v-if="cat_type !== 'O' || cat_type !== 'NK'">
+        <div v-if="catType !== 'O' || catType !== 'NK'">
           <input type="hidden" name="age" value="A" v-bind="age = 'A'" v-model="age" placeholder="A">
         </div>
         <div class="d-flex justify-content-center row">
@@ -258,7 +258,7 @@
         age: '',
         selects:{
           simple:'',
-          cat_type: [{value:'O', label:'Orphan Kitten'},
+          catType: [{value:'O', label:'Orphan Kitten'},
             {value:'NK', label:'Nursing Kitten'},
             {value:'NM', label:'Nursing Mom'},
             {value:'P', label:'Pregnant Mom'},
@@ -351,7 +351,7 @@
           name: this.name,
           age: this.age,
           gender: this.gender,
-          cat_type: this.cat_type,
+          catType: this.catType,
           litter_mates: this.litter_mates,
           weight: this.weight,
           birthday: this.birthday,
