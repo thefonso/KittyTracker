@@ -7,7 +7,7 @@ from .serializers import MedicationSerializer, LitterSerializer, CatSerializer, 
 class MedicationViewSet(viewsets.ModelViewSet):
     queryset = Medication.objects.all()
     serializer_class = MedicationSerializer
-    filter_fields = ('cat__slug', 'cat__name')
+    filter_fields = ('slug', 'name')
 
 
 class LitterViewSet(viewsets.ModelViewSet):
@@ -24,13 +24,13 @@ class CatViewSet(viewsets.ModelViewSet):
 class CareLogViewSet(viewsets.ModelViewSet):
     queryset = CareLog.objects.all()
     serializer_class = CareLogSerializer
-    filter_fields = ('cat__slug', 'cat__name', 'food_type')
+    filter_fields = ('slug', 'food_type')
 
 
 class FosterAlertViewSet(viewsets.ModelViewSet):
     queryset = FosterAlert.objects.all()
     serializer_class = FosterAlertSerializer
-    filter_fields = ('cat__slug', 'cat__name')
+    filter_fields = ('slug')
 
 
 class VetVisitViewSet(viewsets.ModelViewSet):

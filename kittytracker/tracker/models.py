@@ -44,7 +44,7 @@ class Medication(models.Model):
         super(Medication, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('medication-detail', kwargs={'slug': self.slug})
+        return reverse('medication', kwargs={'slug': self.slug})
 
     def __str__(self):
         return "{medication}: {manufacturer}".format(medication=self.name, manufacturer=self.manufacturer)

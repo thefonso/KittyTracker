@@ -933,7 +933,7 @@
           })
           .catch(error => console.log(error));
       },
-      // deletCat(catID){
+      // deleteCat(catID){
       //   axios.delete('http://localhost:8000/graphql', {
       //    What is the delete sequence???
       //   })
@@ -1024,12 +1024,6 @@
             console.log("fail");
           })
       },
-      // getMedications(value) {
-      //   axios.get(`/api/v1/medications/?cat__slug=&cat__name=${value}`)
-      //     .then(response => {console.log("getMedications: ");
-      //     console.log(response.data.results); this.catMedications = response.data.results})
-      //     .catch(error => console.log(error));
-      // },
       getMedications(value) {
         axios.post('http://localhost:8000/graphql', {
           query:`{
