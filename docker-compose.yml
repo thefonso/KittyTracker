@@ -14,18 +14,31 @@ services:
     volumes:
       - .:/app
     environment:
-      - POSTGRES_USER=kittytracker
       - USE_DOCKER=yes
+      - DATABASE_URL=postgres://kittytracker:password@postgres:5432/kittytracker
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=kittytracker
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=kittytracker
     ports:
       - "8000:8000"
-    command: /start.sh
+    # command: /start.sh
+    working_dir: /app
+    command: python manage.py runserver_plus 0.0.0.0:8000
+    restart: always
 
   postgres:
     image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=kittytracker
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=kittytracker
     volumes:
       - ${PWD}/.db/kittytracker/postgres:/var/lib/postgresql/data
       - ${PWD}/.db/kittytracker/postgres-backups:/backups
-    environment:
-      - POSTGRES_USER=kittytracker
+
 
 
