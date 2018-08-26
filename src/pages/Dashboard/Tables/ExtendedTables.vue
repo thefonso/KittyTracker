@@ -683,14 +683,6 @@
     },
     created () {
       console.log("created: " + this.cats);
-      // axios.get(`/graphql`)
-      //   .then((response) => {
-      //     console.log("before: "+ this.cats);
-      //     this.cats = response.data.results;
-      //     console.log("after: "+ this.cats);
-      //     this.fuseSearch = new Fuse(this.cats, {keys: ['name', 'gender']})
-      //   })
-      //   .catch(error => console.log(error));
     },
     mounted () {
       console.log("mounted: " + this.cats);
@@ -915,6 +907,7 @@
                 weightAfterFood
                 stimulated
                 stimulationType
+                medicationDosageGiven
                 medication{
                   name
                   duration
@@ -1046,6 +1039,7 @@
                 name
               }
               carelogSet{
+                medicationDosageGiven
                 medication{
                   name
                   duration

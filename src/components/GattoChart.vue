@@ -72,7 +72,7 @@
           "marginTop": 0,
           "marginBottom": 0,
           "graphs": [ {
-            "valueField": "dosageGuidelines",
+            "valueField": "medicationDosageGiven",
             "type": "column",
             "fillAlphas": 1,
             "showBalloon": false,
@@ -164,34 +164,34 @@
         "type": "serial",
         "dataProvider": [ {
           "created": 1,
-          "dosageGuidelines": -5
+          "medicationDosageGiven": -5
         }, {
           "created": 2,
-          "dosageGuidelines": 3
+          "medicationDosageGiven": 3
         }, {
           "created": 3,
-          "dosageGuidelines": 7
+          "medicationDosageGiven": 7
         }, {
           "created": 4,
-          "dosageGuidelines": -3
+          "medicationDosageGiven": -3
         }, {
           "created": 5,
-          "dosageGuidelines": 3
+          "medicationDosageGiven": 3
         }, {
           "created": 6,
-          "dosageGuidelines": 4
+          "medicationDosageGiven": 4
         }, {
           "created": 7,
-          "dosageGuidelines": 6
+          "medicationDosageGiven": 6
         }, {
           "created": 8,
-          "dosageGuidelines": -3
+          "medicationDosageGiven": -3
         }, {
           "created": 9,
-          "dosageGuidelines": -2
+          "medicationDosageGiven": -2
         }, {
           "created": 10,
-          "dosageGuidelines": 6
+          "medicationDosageGiven": 6
         } ],
         "categoryField": "created",
         "autoMargins": false,
@@ -200,7 +200,7 @@
         "marginTop": 0,
         "marginBottom": 0,
         "graphs": [ {
-          "valueField": "dosageGuidelines",
+          "valueField": "medicationDosageGiven",
           "type": "column",
           "fillAlphas": 1,
           "showBalloon": false,
@@ -264,13 +264,7 @@
                 name
               }
               carelogSet{
-                medication{
-                  name
-                  duration
-                  frequency
-                  dosageGuidelines
-                  notes
-                }
+                medicationDosageGiven
               }
             }
           }`
