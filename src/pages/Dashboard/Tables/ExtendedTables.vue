@@ -15,7 +15,7 @@
 
             <div class="btn-group-md" role="group">
               <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add
+                Add777
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a class="dropdown-item" href="#" id="rectangle-255" v-b-toggle.collapse1>Cat</a>
@@ -69,7 +69,7 @@
             </template>
             <template slot="photo" slot-scope="scope">
               <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                <div class="img-container photo-thumb-sm" v-if="scope.item.photo !== null">
+                <div class="img-container photo-thumb-sm" v-if="'media/' + scope.item.photo !== null">
                   <img class="rounded-circle img-fluid" :src="'media/' + scope.item.photo" alt="thumb">
                 </div>
                 <div class="img-container photo-thumb-sm" v-else>
@@ -103,15 +103,16 @@
               </div>
             </template>
             <template slot="actions" slot-scope="scope">
-              <div>
-                <a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"
-                   @click="handleLike(scope.$index, scope.row)">
-                  <i class="fa fa-heart"></i></a>
-                <a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"
-                   @click="handleEditCatList(scope.$index, scope.row)"><i
-                  class="fa fa-edit"></i></a>
-                <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link"
-                   @click="handleDelete(scope.$index, scope.row, 'catRow')"><i class="fa fa-times"></i></a>
+              <div><p>PING</p>
+                <!--<a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"-->
+                   <!--@click="handleLike(scope.$index, scope.row)">-->
+                  <!--<i class="fa fa-heart"></i></a>-->
+                <!--<a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"-->
+                   <!--@click="handleEditCatList(scope.$index, scope.row)">-->
+                  <!--<i class="fa fa-edit"></i></a>-->
+                <!--<a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link"-->
+                   <!--@click="handleDelete(scope.$index, scope.row, 'catRow')">-->
+                  <!--<i class="fa fa-times"></i></a>-->
               </div>
             </template>
             <template slot="row-details" slot-scope="scope">

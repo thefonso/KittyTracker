@@ -24,13 +24,13 @@ class CatViewSet(viewsets.ModelViewSet):
 class CareLogViewSet(viewsets.ModelViewSet):
     queryset = CareLog.objects.all()
     serializer_class = CareLogSerializer
-    filter_fields = ('slug', 'food_type')
+    filter_fields = ('slug', 'name', 'food_type')
 
 
 class FosterAlertViewSet(viewsets.ModelViewSet):
     queryset = FosterAlert.objects.all()
     serializer_class = FosterAlertSerializer
-    filter_fields = ('slug')
+    filter_fields = ('cat__slug', 'cat__name')
 
 
 class VetVisitViewSet(viewsets.ModelViewSet):
