@@ -60,7 +60,7 @@
               <label>BirthDate</label>
               <fg-input>
                 <el-date-picker v-model="birthday" v-validate="'required|date_format:YYYY-MM-DD'" type="date"
-                                placeholder="yyyy-mm-dd" data-date-format="yyyy/mm/dd"
+                                placeholder="yyyy-mm-dd" format="yyyy/MM/dd" value-format="yyyy-MM-dd"
                                 :picker-options="pickerOptions1">
                 </el-date-picker>
                 <small v-show="errors.has('birthday')" class="help is-danger form-text">{{ errors.first('birthday') }}</small>
@@ -249,6 +249,7 @@
     name: "AddCat",
     data () {
       return {
+        catType: '',
         profilePic: false,
         name: '',
         select_gender: {
@@ -274,6 +275,9 @@
         litter_mates: null,
         litter_name: '',
         pickerOptions1: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
           shortcuts: [{
             text: 'Today',
             onClick (picker) {
@@ -299,10 +303,9 @@
         },
         datePicker: '',
         options: {
-          format: 'DD/MM/YYYY',
+          format: 'YYYY-MM-DD',
           useCurrent: false,
         },
-        dateTimePicker: '',
         mom_cat: '',
         female: false,
         addKittens: false,

@@ -103,15 +103,15 @@
               </div>
             </template>
             <template slot="actions" slot-scope="scope">
-              <div>
+              <div><p>{{scope}}</p>
                 <a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"
-                   @click="handleLike(scope.$index, scope.row)">
+                   @click="handleLike(scope.$index, scope)">
                   <i class="fa fa-heart"></i></a>
                 <a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"
-                   @click="handleEditCatList(scope.$index, scope.row)"><i
+                   @click="handleEditCatList(scope.$index, scope)"><i
                   class="fa fa-edit"></i></a>
                 <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link"
-                   @click="handleDelete(scope.$index, scope.row, 'catRow')"><i class="fa fa-times"></i></a>
+                   @click="handleDelete(scope.$index, scope, 'catRow')"><i class="fa fa-times"></i></a>
               </div>
             </template>
             <template slot="row-details" slot-scope="scope">
@@ -928,6 +928,7 @@
         axios.delete(`/api/v1/cats/${catID}/`)
           .then(response => {
             console.log("un Gatto gone:");
+            this.showSwal('basic','un gatto gone');
             // this.cat = response.data.results // NOTE: this line caused pagination on catlist page to hault when deleting a cat
             this.updateSearch();
           })
@@ -1204,10 +1205,10 @@
         });
       },
       handleDelete (id, propRow, row) {
-        // alert(`You want to delete ${name}`);
+        // alert(`You want to delete ${propRow}`);
         // this.showSwal('basic', `You want to delete ${name}`);
         if (row === 'catRow'){
-          this.showSwal('basic','un gatto gone');
+          // this.showSwal('basic','un gatto gone');
           console.log("delete " + propRow.id);
           this.deleteCat(propRow.id);//delete cat from database
           let indexToDelete = this.cats.findIndex((tableRow) => tableRow.id === propRow.id);
