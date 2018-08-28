@@ -103,7 +103,7 @@
               </div>
             </template>
             <template slot="actions" slot-scope="scope">
-              <div><p>{{scope}}</p>
+              <div>
                 <a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"
                    @click="handleLike(scope.$index, scope)">
                   <i class="fa fa-heart"></i></a>
