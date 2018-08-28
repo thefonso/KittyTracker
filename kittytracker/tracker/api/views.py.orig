@@ -24,13 +24,21 @@ class CatViewSet(viewsets.ModelViewSet):
 class CareLogViewSet(viewsets.ModelViewSet):
     queryset = CareLog.objects.all()
     serializer_class = CareLogSerializer
+<<<<<<< HEAD
     filter_fields = ('slug', 'name', 'food_type')
+=======
+    filter_fields = ('slug', 'food_type',)
+>>>>>>> graphql
 
 
 class FosterAlertViewSet(viewsets.ModelViewSet):
     queryset = FosterAlert.objects.all()
     serializer_class = FosterAlertSerializer
+<<<<<<< HEAD
     filter_fields = ('cat__slug', 'cat__name')
+=======
+    filter_fields = ('slug', 'subject',)
+>>>>>>> graphql
 
 
 class VetVisitViewSet(viewsets.ModelViewSet):

@@ -83,13 +83,12 @@
       },
       validate () {
         return this.$validator.validateAll().then(res => {
-          this.$emit('on-validated', res, this.model)
+          this.$emit('on-validated', res, this.model);
           return res
         })
       },
       onFileChanged (event) {
         this.selectedFile = event.target.files[0];
-        // console.log(event);
         this.onUpload();
       },
       onUpload() {
@@ -97,7 +96,7 @@
         const formData = new FormData();
         formData.append('name', this.singleCat.name);
         formData.append('photo', this.selectedFile, this.selectedFile.name);
-        axios.put(`/api/v1/cats/${this.singleCat.id}/`,formData,{
+        axios.put(`api/v1/cats/${this.singleCat.id}/`,formData,{
           onUploadProgress: progressEvent => {
             console.log('Upload progress: ' + Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
           }
@@ -113,14 +112,14 @@
           .catch(error => {
             console.log(error);
             this.showDanger = true;
+            // setTimeout( () => this.$router.push('/login'), 4000);
           })
       },
       fetchCatsList: function() {
-        axios.get(`/api/v1/cats/`)
+        axios.get(`api/v1/cats/`)
           .then(request => {this.catArray = request.data.results;
             // this.singleCat = catArray[catArray.length - 1];
             this.singleCat = this.sortedCats[this.sortedCats.length -1];
-            // console.log(this.singleCat.name);
           })
           .catch(error => console.log(error));
       },
