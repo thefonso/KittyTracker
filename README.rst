@@ -32,6 +32,10 @@ Starting The Application
 
     $ docker-compose up
 
+* To run the FRONT-END, you MUST (this updates staticfiles dir upon the webrowser)
+
+    $ npm run dev
+
 Setting Up Your Users
 ^^^^^^^^^^^^^^^^^^^^^
 
