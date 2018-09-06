@@ -1,5 +1,16 @@
 from kittytracker.tracker.models import Medication, Litter, Cat, CareLog, FosterAlert, VetVisit
+from kittytracker.users.models import User
 from rest_framework import serializers
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+          'name',
+          'user_detail',
+        )
 
 
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
@@ -33,6 +44,13 @@ class LitterSerializer(serializers.HyperlinkedModelSerializer):
             'created',
             'modified',
         )
+        extra_kwargs = {
+          'foster_manager': {
+            'read_only': True,
+            'required': False,
+            'lookup_field': 'id',
+          }
+        }
 
 
 class CatSerializer(serializers.HyperlinkedModelSerializer):
@@ -93,8 +111,13 @@ class CareLogSerializer(serializers.HyperlinkedModelSerializer):
             'cat': {
                 'read_only': True,
                 'required': False,
-                'lookup_field': 'name',
-            }
+                'lookup_field': 'slug',
+            },
+            'foster_manager': {
+              'read_only': True,
+              'required': False,
+              'lookup_field': 'id',
+          }
         }
 
     @staticmethod
@@ -133,6 +156,23 @@ class FosterAlertSerializer(serializers.HyperlinkedModelSerializer):
             'created',
             'modified',
         )
+        extra_kwargs = {
+          'cat': {
+            'read_only': True,
+            'required': False,
+            'lookup_field': 'slug',
+          },
+          'created_by': {
+            'read_only': True,
+            'required': False,
+            'lookup_field': 'id',
+          },
+          'received_by': {
+            'read_only': True,
+            'required': False,
+            'lookup_field': 'id',
+          },
+        }
 
 
 class VetVisitSerializer(serializers.HyperlinkedModelSerializer):
@@ -154,6 +194,18 @@ class VetVisitSerializer(serializers.HyperlinkedModelSerializer):
             'photo',
             'created',
         )
+        extra_kwargs = {
+          'cat': {
+            'read_only': True,
+            'required': False,
+            'lookup_field': 'slug',
+          },
+          'foster_manager': {
+            'read_only': True,
+            'required': False,
+            'lookup_field': 'id',
+          }
+        }
 
     @staticmethod
     def create(validated_data):

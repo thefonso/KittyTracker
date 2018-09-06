@@ -5,7 +5,6 @@ from django_autoslugfield import AutoSlugField
 from kittytracker.users.models import User
 
 
-
 __admin__ = ['Medication', 'Litter', 'Cat', 'CareLog', 'FosterAlert', 'VetVisit']
 
 

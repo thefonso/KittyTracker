@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from rest_framework import routers
 from .views import MedicationViewSet, LitterViewSet, CatViewSet, \
-    CareLogViewSet, FosterAlertViewSet, VetVisitViewSet
+    CareLogViewSet, FosterAlertViewSet, VetVisitViewSet, UserViewSet
 
 router = routers.DefaultRouter()
 router.register(r'medications', MedicationViewSet)
@@ -10,6 +10,7 @@ router.register(r'cats', CatViewSet)
 router.register(r'carelogs', CareLogViewSet)
 router.register(r'fosteralerts', FosterAlertViewSet)
 router.register(r'vetvisit', VetVisitViewSet)
+router.register(r'users', UserViewSet)
 
 
 # Wire up our API using automatic URL routing.

@@ -1,7 +1,14 @@
 from kittytracker.tracker.models import Medication, Litter, Cat, CareLog, FosterAlert, VetVisit
+from kittytracker.users.models import User
 from rest_framework import viewsets
 from .serializers import MedicationSerializer, LitterSerializer, CatSerializer, \
-    CareLogSerializer, FosterAlertSerializer, VetVisitSerializer
+    CareLogSerializer, FosterAlertSerializer, VetVisitSerializer, UserSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    filter_fields = ('name',)
 
 
 class MedicationViewSet(viewsets.ModelViewSet):
