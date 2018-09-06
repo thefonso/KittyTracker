@@ -24,7 +24,7 @@ class CatViewSet(viewsets.ModelViewSet):
 class CareLogViewSet(viewsets.ModelViewSet):
     queryset = CareLog.objects.all()
     serializer_class = CareLogSerializer
-    filter_fields = ('slug', 'name', 'food_type')
+    filter_fields = ('cat__slug', 'cat__name', 'food_type')
 
 
 class FosterAlertViewSet(viewsets.ModelViewSet):

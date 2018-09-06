@@ -1,10 +1,31 @@
-version: '2'
+version: '3'
 
 volumes:
   postgres_data_local: {}
   postgres_backup_local: {}
 
 services:
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile (MAKE A SPECIFIC DOCKERFILE FOR THIS WEB SECTION)
+    command: npm run dev
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - USE_DOCKER=yes
+      - DATABASE_URL=postgres://kittytracker:password@postgres:5432/kittytracker
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=kittytracker
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=kittytracker
+
   django:
     build:
       context: .

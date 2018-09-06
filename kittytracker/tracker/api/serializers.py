@@ -90,9 +90,10 @@ class CareLogSerializer(serializers.HyperlinkedModelSerializer):
             'photo',
         )
         extra_kwargs = {
-            'cat':{
+            'cat': {
                 'read_only': True,
-                'required': False
+                'required': False,
+                'lookup_field': 'name',
             }
         }
 

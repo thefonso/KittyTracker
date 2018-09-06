@@ -99,7 +99,6 @@ class Cat(models.Model):
 
     name = models.CharField(max_length=255)
     slug = AutoSlugField(max_length=255, unique=True, blank=True, null=True)
-
     foster_manager = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     litter = models.ForeignKey(Litter, blank=True, null=True)
 
@@ -110,7 +109,7 @@ class Cat(models.Model):
     weight_unit = models.CharField(max_length=2, choices=MEASURE_CHOICES, default=GRAMS)
     weight = models.IntegerField(blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    # TODO: where does kitty_photos go to?
+
     photo = models.FileField(upload_to="kitty_photos", blank=True, null=True)
 
     first_weight_loss = models.BooleanField(default=False)
