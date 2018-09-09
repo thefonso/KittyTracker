@@ -8,47 +8,6 @@ from kittytracker.users.models import User
 __admin__ = ['Medication', 'Litter', 'Cat', 'CareLog', 'FosterAlert', 'VetVisit']
 
 
-class Medication(models.Model):
-    MEASURE_CHOICES = (
-        ('ML', '(ml) Milliliters'),
-        ('CC', '(cc) Cubic Centimeters'),
-        ('OZ', '(oz) Ounces'),
-        ('G', '(G) Grams')
-    )
-    MILLILITERS = 'ML'
-    CUBIC_CENTIMETERS = 'CC'
-    OUNCES = 'OZ'
-    GRAMS = 'G'
-
-    name = models.CharField(max_length=255)
-    manufacturer = models.CharField(max_length=255, blank=True, null=True)
-    slug = AutoSlugField(max_length=255, unique=True, blank=True, null=True)
-    duration = models.TextField(blank=True, null=True)
-    frequency = models.CharField(max_length=2)
-    dosage_unit = models.CharField(max_length=2, choices=MEASURE_CHOICES, blank=True, null=True)
-    dosage_guidelines = models.TextField(blank=True, null=True)
-
-    notes = models.TextField(blank=True, null=True)
-
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(blank=True, null=True)
-
-    package_photo_1 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
-    package_photo_2 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
-    package_photo_3 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        self.modified = datetime.datetime.now()
-
-        super(Medication, self).save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return reverse('medication', kwargs={'slug': self.slug})
-
-    def __str__(self):
-        return "{medication}: {manufacturer}".format(medication=self.name, manufacturer=self.manufacturer)
-
-
 class Litter(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     slug = AutoSlugField(max_length=255, unique=True, blank=True, null=True)
@@ -68,27 +27,27 @@ class Litter(models.Model):
 
 class Cat(models.Model):
     MEASURE_CHOICES = (
-        ('OZ', '(oz) Ounces'),
-        ('LB', '(lb) Pounds'),
-        ('G', '(G) Grams')
+      ('OZ', '(oz) Ounces'),
+      ('LB', '(lb) Pounds'),
+      ('G', '(G) Grams')
     )
     OUNCES = 'OZ'
     POUNDS = 'LB'
     GRAMS = 'G'
 
     GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female')
+      ('M', 'Male'),
+      ('F', 'Female')
     )
     MALE = 'M'
     FEMALE = 'F'
 
     CAT_TYPE = (
-        ('O', 'Orphan'),
-        ('P', 'Pregnant'),
-        ('NK', 'Nursing Kitten'),
-        ('NM', 'Nursing Mom'),
-        ('A', 'Adult')
+      ('O', 'Orphan'),
+      ('P', 'Pregnant'),
+      ('NK', 'Nursing Kitten'),
+      ('NM', 'Nursing Mom'),
+      ('A', 'Adult')
     )
     ORPHAN = 'O'
     PREGNANT = 'P'
@@ -139,6 +98,47 @@ class Cat(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Medication(models.Model):
+    MEASURE_CHOICES = (
+        ('ML', '(ml) Milliliters'),
+        ('CC', '(cc) Cubic Centimeters'),
+        ('OZ', '(oz) Ounces'),
+        ('G', '(G) Grams')
+    )
+    MILLILITERS = 'ML'
+    CUBIC_CENTIMETERS = 'CC'
+    OUNCES = 'OZ'
+    GRAMS = 'G'
+
+    name = models.CharField(max_length=255)
+    manufacturer = models.CharField(max_length=255, blank=True, null=True)
+    slug = AutoSlugField(max_length=255, unique=True, blank=True, null=True)
+    duration = models.TextField(blank=True, null=True)
+    frequency = models.CharField(max_length=2)
+    dosage_unit = models.CharField(max_length=2, choices=MEASURE_CHOICES, blank=True, null=True)
+    dosage_guidelines = models.TextField(blank=True, null=True)
+
+    notes = models.TextField(blank=True, null=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(blank=True, null=True)
+
+    package_photo_1 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
+    package_photo_2 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
+    package_photo_3 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.modified = datetime.datetime.now()
+
+        super(Medication, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('medication', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return "{medication}: {manufacturer}".format(medication=self.name, manufacturer=self.manufacturer)
 
 
 class CareLog(models.Model):
