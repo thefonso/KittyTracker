@@ -85,14 +85,14 @@ class LitterSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CareLogSerializer(serializers.HyperlinkedModelSerializer):
-    # cat = CatSerializer()
+    cat = CatSerializer()
     medication = MedicationSerializer()
     # cat = CatSerializer(read_only=True) this allows put BUT TURNS OFF POST
 
     class Meta:
         model = CareLog
         fields = (
-            # 'cat',
+            'cat',
             'slug',
             'foster_manager',
             'weight_unit_measure',
@@ -119,27 +119,34 @@ class CareLogSerializer(serializers.HyperlinkedModelSerializer):
                 'read_only': True,
                 'required': False,
                 'lookup_field': 'slug',
-            }
+            },
+            'cat': {
+              'read_only': True,
+              'required': False,
+              'lookup_field': 'slug',
+            },
         }
 
-    # @staticmethod
-    # def create(validated_data):
-    #     cat_data = validated_data.pop('cat')
-    #     cat_obj = Cat.objects.get(**cat_data)
-    #     return CareLog.objects.create(cat=cat_obj, **validated_data)
-    #
-    # @staticmethod
-    # def update(instance, validated_data):
-    #     instance.weight_unit_measure = validated_data['weight_unit_measure']
-    #     instance.weight_before_food = validated_data['weight_before_food']
-    #     instance.food_unit_measure = validated_data['food_unit_measure']
-    #     instance.amount_of_food_taken = validated_data['amount_of_food_taken']
-    #     instance.food_type = validated_data['food_type']
-    #     instance.weight_after_food = validated_data['weight_after_food']
-    #     instance.stimulated = validated_data['stimulated']
-    #     instance.stimulation_type = validated_data['stimulation_type']
-    #     instance.notes = validated_data['notes']
-    #     instance.save()
+    @staticmethod
+    def create(validated_data):
+        cat_data = validated_data.pop('cat')
+        cat_obj = Cat.objects.get(**cat_data)
+        med_data = validated_data.pop('medication')
+        med_obj = Medication.objects.get(**med_data)
+        return CareLog.objects.create(cat=cat_obj, medication=med_obj, **validated_data)
+
+    @staticmethod
+    def update(instance, validated_data):
+        instance.weight_unit_measure = validated_data['weight_unit_measure']
+        instance.weight_before_food = validated_data['weight_before_food']
+        instance.food_unit_measure = validated_data['food_unit_measure']
+        instance.amount_of_food_taken = validated_data['amount_of_food_taken']
+        instance.food_type = validated_data['food_type']
+        instance.weight_after_food = validated_data['weight_after_food']
+        instance.stimulated = validated_data['stimulated']
+        instance.stimulation_type = validated_data['stimulation_type']
+        instance.notes = validated_data['notes']
+        instance.save()
 
 
 class FosterAlertSerializer(serializers.HyperlinkedModelSerializer):

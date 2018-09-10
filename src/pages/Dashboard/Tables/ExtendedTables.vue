@@ -415,8 +415,8 @@
                                 <div class="col-1">
                                   <fg-input v-if="!showButton2"
                                             form="formadd" name="dosageGuidelines"
-                                            v-validate="'required|integer'" v-model="dosageGuidelines"
-                                            :error="getError('dosageGuidelines')" type="text" placeholder="dosageGuidelines"></fg-input>
+                                            v-validate="'required|integer'" v-model="dosage"
+                                            :error="getError('dosage')" type="text" placeholder="dosageGuidelines"></fg-input>
                                   <span v-if="showButton2">&nbsp;</span>
                                 </div>
                                 <div class="col-2">
@@ -1058,6 +1058,8 @@
                   dosageGuidelines
                   notes
                 }
+                medicationDosageGiven
+                medicationDosageUnit
               }
             }
           }`
@@ -1065,6 +1067,25 @@
           console.log(response.data.data.cat.carelogSet.medication);
           this.catMedications = response.data.data.cat.carelogSet.medication})
           .catch(error => console.log(error));
+      },
+      addCarelogs(catID, catName){
+        axios.post(`/api/v1/carelogs/`,{
+          cat: {id: catID, name: catName},
+          medication: {name: this.name, duration: this.duration, frequency: this.frequency},
+          medication_dosage_unit: 'ML',
+          medication_dosage_given: this.dosage,
+          notes: this.notes
+        })
+          .then(response => {
+            console.log(response);console.log(this.showButton);
+            this.showButton = true;
+            response.status === 201 ? this.showSwal('success-message','CareLog Medication added') : console.log(response);
+            this.getMedications(catName);
+          })
+          .catch(error => {
+            console.log(error);
+            this.showSwal('auto-close', error);
+          })
       },
       addMedications(catID, catName){
         axios.post(`/api/v1/medications/`,{
@@ -1178,7 +1199,8 @@
       validateMedicationsBeforeSubmit(catID, catName) {
         this.$validator.validateAll()
           .then((result) => {
-            this.addMedications(catID, catName);
+            this.addCarelogs(catID, catName);
+            // this.addMedications(catID, catName);
             // this.editMedications(medID, medName, catID, catName);
             console.log("validatedMedications: ");console.log(result);
           })
