@@ -223,7 +223,7 @@ class CareLog(models.Model):
                 if feedings[0] == self:
                     feedings = feedings[1:]
 
-                # You broke it you fix it:
+                # TODO You broke it you fix it:
                 # If the feeding is a weight loss log it as the first/second/third
                 # if self.weight_after_food < feedings[0].weight_after_food:
                 #     if self.cat.first_weight_loss:
