@@ -180,7 +180,6 @@
                           <v-tab title="Feedings">
                             <div id="fedsTable" class="table table-striped table-bordered">
                               <div class="fedRow d-flex justify-content-start top-row">
-                                <div class="col-1">#</div>
                                 <div class="col-1" v-tooltip.top-center="'food type'">FT</div>
                                 <div class="col-1" v-tooltip.top-center="'weight before food'">WBF</div>
                                 <div class="col-1" v-tooltip.top-center="'amount of food taken'">AFT</div>
@@ -194,34 +193,42 @@
                                       @submit.prevent="updateDeleteFeedsSubmit(fed.id, fed.name, scope.item.id, scope.item.name)">
                                   <div class="medRow d-flex justify-content-start">
                                     <div class="col-1">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="id" :value="fed.id">{{fed.id}}</fg-input>
-                                      <span v-if="!fed.showRow">{{fed.id}}</span>
-                                    </div>
-                                    <div class="col-1">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="food_type" v-validate="'required'" v-model="food_type" type="text" :placeholder="fed.foodType" :error="getError('food_type')"></fg-input>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="food_type"
+                                                v-validate="'required'" v-model="food_type" type="text"
+                                                :placeholder="fed.foodType" :error="getError('food_type')"></fg-input>
                                       <span v-if="!fed.showRow">{{fed.foodType}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_before_food" v-validate="'required'" v-model="weight_before_food" type="text" :placeholder="fed.weightBeforeFood" :error="getError('weight_before_food')"></fg-input>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_before_food"
+                                                v-validate="'required'" v-model="weight_before_food" type="text"
+                                                :placeholder="fed.weightBeforeFood" :error="getError('weight_before_food')"></fg-input>
                                       <span v-if="!fed.showRow">{{fed.weightBeforeFood}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="fed.showRow && food_type !== 'MN'" :form="'form'+fed.id" name="amount_of_food_taken"  v-validate="'required'" v-model="amount_of_food_taken" type="text" :placeholder="fed.amount_of_food_taken" :error="getError('amount_of_food_taken')"></fg-input>
+                                      <fg-input v-if="fed.showRow && food_type !== 'MN'" :form="'form'+fed.id" name="amount_of_food_taken"
+                                                v-validate="'required'" v-model="amount_of_food_taken" type="text"
+                                                :placeholder="fed.amount_of_food_taken" :error="getError('amount_of_food_taken')"></fg-input>
                                       <span v-if="!fed.showRow">{{fed.amountOfFoodTaken}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_after_food" v-model="weight_after_food" v-validate="'required|integer'"  :placeholder="fed.weightAfterFood":error="getError('weight_after_food')"/>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_after_food"
+                                                v-model="weight_after_food" v-validate="'required|integer'"
+                                                :placeholder="fed.weightAfterFood":error="getError('weight_after_food')"/>
                                       <span v-if="!fed.showRow">{{fed.weightAfterFood}}</span>
                                     </div>
                                     <div class="col-1">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulated" v-validate="'required'" v-model="stimulated" :error="getError('stimulated')" type="text" :placeholder="fed.stimulated"></fg-input>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulated"
+                                                v-validate="'required'" v-model="stimulated" :error="getError('stimulated')" type="text"
+                                                :placeholder="fed.stimulated"></fg-input>
                                       <span v-if="!fed.showRow">{{fed.stimulated}}</span>
                                     </div>
                                     <div class="col-2">
-                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulation_type" v-validate="'required'" v-model="stimulation_type" :error="getError('stimulation_type')" type="text" :placeholder="fed.stimulationType"></fg-input>
+                                      <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulation_type"
+                                                v-validate="'required'" v-model="stimulation_type" :error="getError('stimulation_type')" type="text"
+                                                :placeholder="fed.stimulationType"></fg-input>
                                       <span v-if="!fed.showRow">{{fed.stimulationType}}</span>
                                     </div>
-                                    <div class="col-3 d-flex align-items-center cancel-submit">
+                                    <div class="col-2 d-flex align-items-center cancel-submit">
                                       <button class="btn btn-sm btn-warning" @click='fed.showRow = !fed.showRow' v-if="fed.showRow">Cancel</button>
                                       <button type="submit" class="btn btn-sm btn-success" v-if="fed.showRow">Submit</button>
 
@@ -238,10 +245,8 @@
                                   </div>
                                 </form>
                               </div>
-                              <!--TODO: ADD a recorded FEEDING-->
-                              <!--<form id="formaddfeed">-->
+                              <!--TODO: ADD a FEEDING-->
                               <div class="fedRow d-flex justify-content-start">
-                                <div class="col-1">&nbsp;</div>
                                 <div class="col-1">
                                   <el-select v-if="!showButton"
                                              form="formaddfeed"
@@ -307,7 +312,7 @@
                                     <el-option value="UF">Urine/Feces</el-option>
                                   </el-select>
                                   <span v-if="showButton">&nbsp;</span></div>
-                                <div class="col-3 fed-submit-buttons">
+                                <div class="col-2 fed-submit-buttons">
                                   <button class="btn btn-sm btn-info btn-outline" @click='showButton = !showButton' v-if="showButton">Add</button>
                                   <button type="reset" class="btn btn-sm btn-warning" @click='showButton = !showButton' v-if="!showButton">Cancel</button>
                                   <!--TODO: make default null values for when "Mom" is selected as Type Of Food taken (TFT)-->
@@ -317,50 +322,44 @@
                                           v-on:click="validateSubmitMom(scope.item.id, scope.item.name)">Submit mom</button>
                                 </div>
                               </div>
-                              <!--</form>-->
                             </div>
                           </v-tab>
                           <v-tab title="Medications">
                             <div id="medsTable" class="table table-striped table-bordered" v-if="showRow">
                               <div class="medRow d-flex justify-content-start top-row">
-                                <div class="col-1">#</div>
                                 <div class="col-2">Name</div>
                                 <div class="col-2">Duration</div>
                                 <div class="col-1">Freq.</div>
                                 <div class="col-1">Dose</div>
-                                <div class="col-2">Notes</div>
+                                <div class="col-3">Notes</div>
                                 <div class="col-3">Actions</div>
                               </div>
                               <div id="medtable" class="" v-for="med in catMedications" :key="med.id">
                                 <form :id="'form'+med.id" @submit.prevent="updateDeleteMedsSubmit(med.id, med.name, scope.item.id, scope.item.name)">
                                   <div class="medRow d-flex justify-content-start">
-                                    <div class="col-1">
-                                      <fg-input v-if="med.showRow" :form="'form'+med.id" name="id" :value="med.id"></fg-input>
-                                      <span v-if="!med.showRow">{{med.id}}</span>
-                                    </div>
                                     <div class="col-2">
                                       <fg-input v-if="med.showRow" :form="'form'+med.id" name="name" v-validate="'required'"
                                                 v-model="name" type="text" :placeholder="med.name" :error="getError('requiredText')"></fg-input>
-                                      <span v-if="!med.showRow">{{med.name}}</span>
+                                      <span v-if="!med.showRow">{{med.medication.name}}</span>
                                     </div>
                                     <div class="col-2">
                                       <fg-input v-if="med.showRow" :form="'form'+med.id" name="duration"  v-validate="'required'"
                                                 v-model="duration" type="text" :placeholder="med.duration" :error="getError('duration')"></fg-input>
-                                      <span v-if="!med.showRow">{{med.duration}}</span>
+                                      <span v-if="!med.showRow">{{med.medication.duration}}</span>
                                     </div>
                                     <div class="col-1">
                                       <fg-input v-if="med.showRow" :form="'form'+med.id" name="frequency" v-validate="'required|integer'"
                                                 v-model="frequency" :error="getError('frequency')" type="text"
                                                 :placeholder="med.frequency"></fg-input>
-                                      <span v-if="!med.showRow">{{med.frequency}}</span>
+                                      <span v-if="!med.showRow">{{med.medication.frequency}}</span>
                                     </div>
                                     <div class="col-1">
                                       <fg-input v-if="med.showRow" :form="'form'+med.id" name="dosage" v-validate="'required|integer'"
                                                 v-model="dosage" :error="getError('dosage')" type="text"
                                                 :placeholder="med.dosageGuidelines"></fg-input>
-                                      <span v-if="!med.showRow">{{med.dosageGuidelines}}</span>
+                                      <span v-if="!med.showRow">{{med.medicationDosageGiven}}</span>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-3">
                                       <fg-input v-if="med.showRow" :form="'form'+med.id" name="notes" v-model="notes"
                                                 :error="getError('notes')" type="textarea" :placeholder="med.notes"></fg-input>
                                       <span v-if="!med.showRow">{{med.notes}}</span>
@@ -369,7 +368,6 @@
                                       <button class="btn btn-sm btn-warning" @click='med.showRow = !med.showRow' v-if="med.showRow">Cancel</button>
                                       <button type="submit" class="btn btn-sm btn-success"
                                               v-if="med.showRow" @click="handleAdd(med.id, med.name, 'medicationRow')">Submit</button>
-
                                       <a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"
                                          @click='med.showRow = !med.showRow' v-if="!med.showRow">
                                         <i class="fa fa-edit"></i></a>
@@ -384,14 +382,12 @@
                                   </div>
                                 </form>
                               </div>
-                              <!--TODO: add a MEDICATION-->
+                              <!--TODO: Add a MEDICATION begins-->
                               <!--<form id="formadd">-->
                               <div class="medRow d-flex justify-content-start">
-                                <div class="col-1">&nbsp;</div>
                                 <div class="col-2">
                                   <fg-input v-if="!showButton2"
-                                            form="formadd"
-                                            name="name"
+                                            form="formadd" name="name"
                                             v-validate="'required'" v-model="name"
                                             type="text" placeholder="name"
                                             :error="getError('requiredText')"></fg-input>
@@ -419,7 +415,7 @@
                                             :error="getError('dosage')" type="text" placeholder="dosageGuidelines"></fg-input>
                                   <span v-if="showButton2">&nbsp;</span>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-3">
                                   <fg-input v-if="!showButton2"
                                             form="formadd" name="notes"
                                             v-model="notes" :error="getError('notes')"
@@ -429,7 +425,8 @@
                                 <div class="col-3 fed-submit-buttons">
                                   <button class="btn btn-sm btn-info btn-outline" @click='showButton2 = !showButton2' v-if="showButton2">Add</button>
                                   <button type="reset" class="btn btn-sm btn-warning" @click='showButton2 = !showButton2' v-if="!showButton2">Cancel</button>
-                                  <button type="submit" class="btn btn-sm btn-success" v-if="!showButton2" v-on:click="validateMedicationsBeforeSubmit(scope.item.id, scope.item.name)" @click='showButton2 = !showButton2'>Submit</button>
+                                  <button type="submit" class="btn btn-sm btn-success" v-if="!showButton2"
+                                          v-on:click="validateMedicationsBeforeSubmit(scope.item.id, scope.item.name)" @click='showButton2 = !showButton2'>Submit</button>
                                 </div>
                               </div>
                               <!--</form>-->
@@ -448,7 +445,7 @@
       <div slot="footer" class="col-12 d-flex justify-content-center justify-content-sm-between flex-wrap">
         <div class="">
           <!--<p class="card-category">Showing {{from + 1}} to {{to}} of {{total}} entries</p>-->
-          <!--NOTE: pagination box-->
+          <!--NOTE: pagination box begins-->
           <el-select
             class="select-default mb-3"
             style="width: 70px"
@@ -690,7 +687,11 @@
         frequency: '',
         dosage_unit: 'ML',
         dosage:    '',
-        dosageGuidelines: ''
+        dosageGuidelines: '',
+        weightBeforeFood: '',
+        amountOfFoodTaken: '',
+        foodType: '',
+        stimulationType: '',
       }
     },
     beforeMount () {
@@ -956,30 +957,26 @@
       //   })
       // },
       deleteFeeding (feedID) {
-        axios.delete(`/api/v1/feedings/${feedID}/`)
+        axios.delete(`/api/v1/carelogs/${feedID}/`)
           .then(response => {console.log("feeding gone:"); console.log(response);})
           .catch(error => console.log(error));
       },
       deleteMedication (medID) {
-        axios.delete(`/api/v1/medications/${medID}/`)
+        axios.delete(`/api/v1/carelogs/${medID}/`)
           .then(response => {console.log("medication gone:"); console.log(response);})
           .catch(error => console.log(error));
       },
-      // getFeedings(value) {
-      //   axios.get(`/api/v1/feedings/?cat__slug&cat__name=${value}`)
-      //     .then(response => {console.log("getFeedings: ");
-      //     console.log(response.data.results); this.catFeedings = response.data.results})
-      //     .catch(error => console.log(error));
-      // },
       getFeedings(value) {
         axios.post('http://localhost:8000/graphql', {
           query:`{
             cat(name: "${value}"){
+              id
               name
               litter{
                 name
               }
               carelogSet{
+                id
                 foodType
                 amountOfFoodTaken
                 stimulated
@@ -1046,32 +1043,32 @@
         axios.post('http://localhost:8000/graphql', {
           query:`{
             cat(name: "${value}"){
-              name
-              litter{
-                name
-              }
+              id
               carelogSet{
+                id
                 medication{
                   name
                   duration
                   frequency
+                  dosageUnit
                   dosageGuidelines
                   notes
                 }
                 medicationDosageGiven
                 medicationDosageUnit
+                notes
               }
             }
           }`
         }).then(response => {console.log("getMedications: ");
-          console.log(response.data.data.cat.carelogSet.medication);
-          this.catMedications = response.data.data.cat.carelogSet.medication})
+          console.log(response.data.data.cat.carelogSet);
+          this.catMedications = response.data.data.cat.carelogSet})
           .catch(error => console.log(error));
       },
       addCarelogs(catID, catName){
         axios.post(`/api/v1/carelogs/`,{
           cat: {id: catID, name: catName},
-          medication: {name: this.name, duration: this.duration, frequency: this.frequency},
+          medication: {name: this.name, duration: this.duration, frequency: this.frequency, dosage: this.dosage, notes: this.notes},
           medication_dosage_unit: 'ML',
           medication_dosage_given: this.dosage,
           notes: this.notes
@@ -1110,13 +1107,11 @@
       },
       editMedications(medID, medName, catID, catName){
         console.log("edit meds called:");
-        axios.put(`/api/v1/medications/${medID}/`,{
+        axios.put(`/api/v1/carelogs/`,{
           cat: {id: catID, name: catName},
-          name: this.name,
-          duration: this.duration,
-          frequency: this.frequency,
-          dosage_unit: 'ML',
-          dosage: this.dosage,
+          medication: {id: this.id, name: this.name, duration: this.duration, frequency: this.frequency, dosage_unit: 'ML', dosage: this.dosage, notes: this.notes},
+          medication_dosage_unit: 'ML',
+          medication_dosage_given: this.dosage,
           notes: this.notes
         })
           .then(response => {
@@ -1192,7 +1187,7 @@
         this.$validator.validateAll().then((result) => {
           if (result) {
             this.editFeedings(fedID, fedName, catID, catName);
-            console.log("ping");console.log(catID, catName);
+            console.log("updateDeleteFeedsSubmit: ");console.log(catID, catName);
           }else{console.log('it blew up: ');}
         });
       },

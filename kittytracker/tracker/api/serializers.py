@@ -1,6 +1,7 @@
 from kittytracker.tracker.models import Medication, Litter, Cat, CareLog, FosterAlert, VetVisit
 from kittytracker.users.models import User
 from rest_framework import serializers
+from graphene_django.rest_framework.mutation import SerializerMutation
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -132,7 +133,7 @@ class CareLogSerializer(serializers.HyperlinkedModelSerializer):
         cat_data = validated_data.pop('cat')
         cat_obj = Cat.objects.get(**cat_data)
         med_data = validated_data.pop('medication')
-        med_obj = Medication.objects.get(**med_data)
+        med_obj = Medication.objects.create(**med_data)
         return CareLog.objects.create(cat=cat_obj, medication=med_obj, **validated_data)
 
     @staticmethod
@@ -147,6 +148,13 @@ class CareLogSerializer(serializers.HyperlinkedModelSerializer):
         instance.stimulation_type = validated_data['stimulation_type']
         instance.notes = validated_data['notes']
         instance.save()
+
+# How to use this?
+
+
+class CareLogMutation(SerializerMutation):
+    class Meta:
+        serializer_class = CareLogSerializer
 
 
 class FosterAlertSerializer(serializers.HyperlinkedModelSerializer):
