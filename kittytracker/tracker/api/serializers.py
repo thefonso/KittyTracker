@@ -149,13 +149,6 @@ class CareLogSerializer(serializers.HyperlinkedModelSerializer):
         instance.notes = validated_data['notes']
         instance.save()
 
-# How to use this?
-
-
-class CareLogMutation(SerializerMutation):
-    class Meta:
-        serializer_class = CareLogSerializer
-
 
 class FosterAlertSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
