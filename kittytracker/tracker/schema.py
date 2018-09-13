@@ -38,7 +38,7 @@ class CatNode(DjangoObjectType):
 class CareLogNode(DjangoObjectType):
     class Meta:
         model = CareLog
-        filter_fields = ['cat']
+        filter_fields = {'cat': {'name'}}
         interfaces = (relay.Node,)
 
 

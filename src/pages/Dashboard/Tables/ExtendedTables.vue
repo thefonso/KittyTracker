@@ -57,20 +57,20 @@
                    :sort-direction="sortDirection"
                    @filtered="onFiltered">
             <template slot="id" slot-scope="scope">
-              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
+              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.node.name),getMedications(scope.item.node.name)">
                 <div class="d-flex justify-content-start">
-                  <div style="display: table-cell">{{ scope.item.age}}</div>
+                  <div style="display: table-cell">{{ scope.item.node.age}}</div>
                   <div style="display: table-cell">-</div>
-                  <div style="display: table-cell">{{ scope.item.weight }}</div>
-                  <div style="display: table-cell">{{ scope.item.gender }}</div>
-                  <div style="display: table-cell">{{ scope.item.catType }}</div>
+                  <div style="display: table-cell">{{ scope.item.node.weight }}</div>
+                  <div style="display: table-cell">{{ scope.item.node.gender }}</div>
+                  <div style="display: table-cell">{{ scope.item.node.catType }}</div>
                 </div>
               </div>
             </template>
             <template slot="photo" slot-scope="scope">
-              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                <div class="img-container photo-thumb-sm" v-if="scope.item.photo !== null">
-                  <img class="rounded-circle img-fluid" :src="'media/' + scope.item.photo" alt="thumb">
+              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.node.name),getMedications(scope.item.node.name)">
+                <div class="img-container photo-thumb-sm" v-if="scope.item.node.photo !== null">
+                  <img class="rounded-circle img-fluid" :src="'media/' + scope.item.node.photo" alt="thumb">
                 </div>
                 <div class="img-container photo-thumb-sm" v-else>
                   <img class="rounded-circle img-fluid" src="/static/img/cat_n_mouse.png" alt="bastet">
@@ -78,28 +78,28 @@
               </div>
             </template>
             <template slot="name" slot-scope="scope">
-              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                {{ scope.item.name }}
+              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.node.name),getMedications(scope.item.node.name)">
+                {{ scope.item.node.name }}
               </div>
             </template>
             <template slot="gender" slot-scope="scope">
-              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                {{ scope.item.gender }}
+              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.node.name),getMedications(scope.item.node.name)">
+                {{ scope.item.node.gender }}
               </div>
             </template>
             <template slot="birthday" slot-scope="scope">
-              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                {{ scope.value | moment("MM-DD-YYYY") }}
+              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.node.name),getMedications(scope.item.node.name)">
+                {{ scope.item.node.birthday | moment("MM-DD-YYYY") }}
               </div>
             </template>
             <template slot="age" slot-scope="scope">
-              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                {{ scope.item.birthday | moment("from", "now", true) }}
+              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.node.name),getMedications(scope.item.node.name)">
+                {{ scope.item.node.birthday | moment("from", "now", true) }}
               </div>
             </template>
             <template slot="catType" slot-scope="scope">
-              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.name),getMedications(scope.item.name)">
-                {{ scope.item.catType }}
+              <div class="hand" @click.stop="scope.toggleDetails" @click="getFeedings(scope.item.node.name),getMedications(scope.item.node.name)">
+                {{ scope.item.node.catType }}
               </div>
             </template>
             <template slot="actions" slot-scope="scope">
@@ -124,46 +124,46 @@
                         <div class="container-fluid col-12">
                           <div class="divTable">
                             <div class="d-flex justify-content-around primary-cat-row row" role="button">
-                              <div class="col-auto img-container-lg photo-thumb-sm" v-if="scope.item.photo !== null">
-                                <img :src="'media/' + scope.item.photo" alt="thumb" class="rounded-circle img-fluid">
+                              <div class="col-auto img-container-lg photo-thumb-sm" v-if="scope.item.node.photo !== null">
+                                <img :src="'media/' + scope.item.node.photo" alt="thumb" class="rounded-circle img-fluid">
                               </div>
                               <div class="col-auto img-container-lg photo-thumb-sm" v-else>
                                 <img src="/static/img/cat_n_mouse.png" alt="default pic" class="rounded-circle img-fluid">
                               </div>
                               <div class="col-auto cat-name">
-                                <h4 style="color: #000;text-transform: capitalize;">{{scope.item.name}}</h4>
+                                <h4 style="color: #000;text-transform: capitalize;">{{scope.item.node.name}}</h4>
                                 <div class="col-12" style="border: 0px solid darkgrey; display: table" >
                                   <div class="d-flex justify-content-center">
                                     <div class="table-striped" style="display: table-row">
-                                      <div style="display: table-cell">{{scope.item.age}}</div>
+                                      <div style="display: table-cell">{{scope.item.node.age}}</div>
                                       <div style="display: table-cell">-</div>
-                                      <div style="display: table-cell">{{scope.item.weight}}</div>
-                                      <div style="display: table-cell">{{scope.item.gender}}</div>
-                                      <div style="display: table-cell">{{scope.item.catType}}</div>
+                                      <div style="display: table-cell">{{scope.item.node.weight}}</div>
+                                      <div style="display: table-cell">{{scope.item.node.gender}}</div>
+                                      <div style="display: table-cell">{{scope.item.node.catType}}</div>
                                     </div>
                                   </div>
                                 </div>
-                                <span v-if="scope.item.gender === 'M' " style="color: black;">Male</span>
-                                <span v-if="scope.item.gender === 'F' " style="color: black;">Female</span>
-                                <p style="color: black;">{{scope.item.birthday | moment("from", "now", true)}}</p>
+                                <span v-if="scope.item.node.gender === 'M' " style="color: black;">Male</span>
+                                <span v-if="scope.item.node.gender === 'F' " style="color: black;">Female</span>
+                                <p style="color: black;">{{scope.item.node.birthday | moment("from", "now", true)}}</p>
                               </div>
                               <!--TODO sparkline chart goes here-->
                               <div class="col-sm-4 col-md-5">
                                 <!--<div v-if="modals['custom']">-->
-                                <GattoChart :message="scope.item.name"></GattoChart>
+                                <GattoChart :message="scope.item.node.name"></GattoChart>
                                 <!--</div>-->
                               </div>
                               <div class="col-auto cat-litter">
-                                <div class="btn-group" v-if="scope.item.litter !== null">
+                                <div class="btn-group" v-if="scope.item.node.litter !== null">
                                   <button type="button" class="btn btn-warning btn-outline">Litter:</button>
                                   <button type="button" class="btn btn-warning btn-outline">
-                                    {{scope.item.litter ? scope.item.litter : 'none'}}
+                                    {{scope.item.node.litter ? scope.item.node.litter : 'none'}}
                                   </button>
                                 </div>
                                 <div class="btn-group" v-else>
                                   <button type="button" class="btn btn-default btn-outline">Litter:</button>
                                   <button type="button" class="btn btn-default btn-outline">
-                                    {{scope.item.litter ? scope.item.litter : 'none'}}
+                                    {{scope.item.node.litter ? scope.item.node.litter : 'none'}}
                                   </button>
                                 </div>
                               </div>
@@ -196,7 +196,7 @@
                                       <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="food_type"
                                                 v-validate="'required'" v-model="food_type" type="text"
                                                 :placeholder="fed.foodType" :error="getError('food_type')"></fg-input>
-                                      <span v-if="!fed.showRow">{{fed.foodType}}</span>
+                                      <span v-if="!fed.showRow">{{fed.node}}</span>
                                     </div>
                                     <div class="col-1">
                                       <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_before_food"
@@ -906,37 +906,46 @@
       getCats () {
         axios.post('http://localhost:8000/graphql', {
           query: `{
-              allCats {
-              weight
-              name
-              photo
-              birthday
-              gender
-              catType
-              litter{
-                name
-              }
-              carelogSet{
-                foodType
-                amountOfFoodTaken
-                stimulated
-                weightBeforeFood
-                weightAfterFood
-                stimulated
-                stimulationType
-                medicationDosageGiven
-                medication{
+            allCats{
+              edges {
+                node {
+                  weight
                   name
-                  duration
-                  frequency
-                  dosageGuidelines
-                  notes
+                  photo
+                  birthday
+                  gender
+                  catType
+                  litter{
+                    name
+                  }
+                  carelogSet {
+                    edges {
+                        node {
+                          id
+                          foodType
+                          amountOfFoodTaken
+                          stimulated
+                          weightBeforeFood
+                          weightAfterFood
+                          stimulated
+                          stimulationType
+                          medicationDosageGiven
+                          medication{
+                            name
+                            duration
+                            frequency
+                            dosageGuidelines
+                            notes
+                          }
+                      }
+                    }
+                  }
                 }
               }
             }
           }`
         }).then((result) => {
-          this.cats = result.data.data.allCats;
+          this.cats = result.data.data.allCats.edges;
           this.fuseSearch = new Fuse(this.cats, {keys: ['name', 'gender']})
         })
           .catch(error => console.log(error));
@@ -996,7 +1005,8 @@
             }
           }`
         }).then(response => {console.log("getFeedings: ");
-          console.log(response.data.data.cat.carelogSet); this.catFeedings = response.data.data.cat.carelogSet})
+          console.log(response.data.data.allCats.edges);
+          this.catFeedings = response.data.data.allCats.edges})
           .catch(error => console.log(error));
       },
       postFeedings(catID, catName) {

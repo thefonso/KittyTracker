@@ -185,19 +185,15 @@ class CareLog(models.Model):
 
     cat = models.ForeignKey(Cat)
     slug = AutoSlugField(max_length=255, unique=True, blank=True, null=True)
-
     foster_manager = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-
     weight_unit_measure = models.CharField(max_length=2, choices=WEIGHT_MEASURE_CHOICES, default=GRAMS)
     weight_before_food = models.IntegerField(blank=True, null=True)
     food_unit_measure = models.CharField(max_length=2, choices=WEIGHT_MEASURE_CHOICES, default=GRAMS)
     amount_of_food_taken = models.IntegerField(blank=True, null=True)
     food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES, blank=True, null=True)
     weight_after_food = models.IntegerField(blank=True, null=True)
-
     stimulated = models.BooleanField(default=False)
     stimulation_type = models.CharField(max_length=2, choices=STIMULATION_CHOICES, blank=True, null=True)
-
     medication = models.ForeignKey(Medication, blank=True, null=True)
     medication_dosage_given = models.FloatField(blank=True, null=True)
     medication_dosage_unit = models.CharField(max_length=2, choices=VOLUME_MEASURE_CHOICES, blank=True, null=True,
