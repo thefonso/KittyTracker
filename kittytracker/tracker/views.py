@@ -19,7 +19,6 @@ class DashboardView(TemplateView):
         return context
 
 
-
 class MedicationCreate(CreateView):
     model = Medication
     fields = ['name',
@@ -29,6 +28,7 @@ class MedicationCreate(CreateView):
                'dosage_unit',
                'dosage_guidelines',
                'notes']
+
 
 class MedicationUpdate(UpdateView):
     model = Medication
@@ -40,14 +40,15 @@ class MedicationUpdate(UpdateView):
               'dosage_guidelines',
               'notes']
 
+
 class MedicationDelete(DeleteView):
     model = Medication
     success_url = reverse_lazy('meds-list')
 
+
 class MedicationList(ListView):
     model = Medication
     # paginate_by = 100
-
 
 
 class LitterCreate(CreateView):
@@ -61,6 +62,7 @@ class LitterCreate(CreateView):
         form.instance.foster_manager = self.request.user
         return super().form_valid(form)
 
+
 class LitterUpdate(UpdateView):
     model = Litter
     fields = ['name',
@@ -73,10 +75,10 @@ class LitterDelete(DeleteView):
     model = Litter
     success_url = reverse_lazy('litter-list')
 
+
 class LitterList(ListView):
     model = Litter
     # paginate_by = 100
-
 
 
 class CatCreate(CreateView):
@@ -87,6 +89,7 @@ class CatCreate(CreateView):
         form.instance.foster_manager = self.request.user
         return super().form_valid(form)
 
+
 class CatUpdate(UpdateView):
     model = Cat
     form_class = CatForm
@@ -96,10 +99,10 @@ class CatDelete(DeleteView):
     model = Cat
     success_url = reverse_lazy('cat-list')
 
+
 class CatList(ListView):
     model = Cat
     # paginate_by = 100
-
 
 
 class CareLogCreate(CreateView):
@@ -110,18 +113,20 @@ class CareLogCreate(CreateView):
         form.instance.foster_manager = self.request.user
         return super().form_valid(form)
 
+
 class CareLogUpdate(UpdateView):
     model = CareLog
     exclude = ['created']
+
 
 class CareLogDelete(DeleteView):
     model = CareLog
     success_url = reverse_lazy('log-list')
 
+
 class CareLogList(ListView):
     model = CareLog
     # paginate_by = 100
-
 
 
 from django.contrib.auth.mixins import LoginRequiredMixin

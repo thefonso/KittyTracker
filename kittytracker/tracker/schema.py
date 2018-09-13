@@ -1,55 +1,76 @@
 # cookbook/ingredients/schema.py
-import graphene
-
+# import graphene
+from graphene import relay, ObjectType
 from graphene_django.types import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
 
 from .models import Medication, Litter, Cat, CareLog, FosterAlert, VetVisit, User
 
 
-class UserType(DjangoObjectType):
+class UserNode(DjangoObjectType):
     class Meta:
         model = User
+        filter_fields = ['name']
+        interfaces = (relay.Node,)
 
 
-class MedicationType(DjangoObjectType):
+class MedicationNode(DjangoObjectType):
     class Meta:
         model = Medication
+        filter_fields = ['name']
+        interfaces = (relay.Node,)
 
 
-class LitterType(DjangoObjectType):
+class LitterNode(DjangoObjectType):
     class Meta:
         model = Litter
+        filter_fields = ['name']
+        interfaces = (relay.Node,)
 
 
-class CatType(DjangoObjectType):
+class CatNode(DjangoObjectType):
     class Meta:
         model = Cat
+        filter_fields = ['name']
+        interfaces = (relay.Node,)
 
 
-class CareLogType(DjangoObjectType):
+class CareLogNode(DjangoObjectType):
     class Meta:
         model = CareLog
+        filter_fields = ['cat']
+        interfaces = (relay.Node,)
 
 
-class FosterAlertType(DjangoObjectType):
+class FosterAlertNode(DjangoObjectType):
     class Meta:
         model = FosterAlert
+        filter_fields = ['cat']
+        interfaces = (relay.Node,)
 
 
-class VetVisitType(DjangoObjectType):
+class VetVisitNode(DjangoObjectType):
     class Meta:
         model = VetVisit
+        filter_fields = ['cat']
+        interfaces = (relay.Node,)
 
 
 class Query(object):
-    all_users = graphene.List(UserType)
-    all_medications = graphene.List(MedicationType)
-    all_litters = graphene.List(LitterType)
-    all_cats = graphene.List(CatType)
-    all_carelogs = graphene.List(CareLogType)
-    medication = graphene.Field(MedicationType, id=graphene.Int())
-    cat = graphene.Field(CatType, name=graphene.String())
-    carelog = graphene.Field(CareLogType, id=graphene.Int())
+    users = relay.Node.Field(UserNode)
+    all_users = DjangoFilterConnectionField(UserNode)
+
+    medication = relay.Node.Field(MedicationNode)
+    all_medications = DjangoFilterConnectionField(MedicationNode)
+
+    litters = relay.Node.Field(LitterNode)
+    all_litters = DjangoFilterConnectionField(LitterNode)
+
+    cat = relay.Node.Field(CatNode)
+    all_cats = DjangoFilterConnectionField(CatNode)
+
+    carelog = relay.Node.Field(CareLogNode)
+    all_carelogs = DjangoFilterConnectionField(CareLogNode)
 
     def resolve_all_users(self, info, **kwargs):
         return User.objects.all()

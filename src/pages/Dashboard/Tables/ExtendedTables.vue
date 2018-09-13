@@ -969,21 +969,29 @@
       getFeedings(value) {
         axios.post('http://localhost:8000/graphql', {
           query:`{
-            cat(name: "${value}"){
-              id
-              name
-              litter{
-                name
-              }
-              carelogSet{
-                id
-                foodType
-                amountOfFoodTaken
-                stimulated
-                weightBeforeFood
-                weightAfterFood
-                stimulated
-                stimulationType
+           	allCats(name: "${value}"){
+              edges {
+                node {
+                  id
+                  name
+                  litter{
+                    name
+                  }
+                  carelogSet {
+                    edges {
+                        node {
+                          id
+                          foodType
+                          amountOfFoodTaken
+                          stimulated
+                          weightBeforeFood
+                          weightAfterFood
+                          stimulated
+                          stimulationType
+                      }
+                    }
+                  }
+                }
               }
             }
           }`
@@ -1066,6 +1074,44 @@
           .catch(error => console.log(error));
       },
       addCarelogs(catID, catName){
+        axios.post('http://localhost:8000/graphql',{
+          mutation:`{
+            cat(name: "${catName}"){
+              id
+              name
+              litter{
+                name
+              }
+              carelogSet{
+                id
+                foodType
+                amountOfFoodTaken
+                stimulated
+                weightBeforeFood
+                weightAfterFood
+                stimulated
+                stimulationType
+              }
+            }
+          }`,
+          cat: {id: catID, name: catName},
+          medication: {name: this.name, duration: this.duration, frequency: this.frequency, dosage: this.dosage, notes: this.notes},
+          medication_dosage_unit: 'ML',
+          medication_dosage_given: this.dosage,
+          notes: this.notes
+        })
+          .then(response => {
+            console.log(response);console.log(this.showButton);
+            this.showButton = true;
+            response.status === 201 ? this.showSwal('success-message','CareLog Medication added') : console.log(response);
+            this.getMedications(catName);
+          })
+          .catch(error => {
+            console.log(error);
+            this.showSwal('auto-close', error);
+          })
+      },
+      addCarelogs_old(catID, catName){
         axios.post(`/api/v1/carelogs/`,{
           cat: {id: catID, name: catName},
           medication: {name: this.name, duration: this.duration, frequency: this.frequency, dosage: this.dosage, notes: this.notes},

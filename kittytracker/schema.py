@@ -1,12 +1,17 @@
 import graphene
-# from graphene_django import DjangoObjectType
+from graphene_django import DjangoObjectType
 
 import kittytracker.tracker.schema
 from graphene_django.debug import DjangoDebug
 
-# from graphene_django.rest_framework.mutation import SerializerMutation
-# from kittytracker.tracker.api.serializers import MedicationSerializer, LitterSerializer, CatSerializer, CareLogSerializer
+from graphene_django.rest_framework.mutation import SerializerMutation
+from kittytracker.tracker.api.serializers import MedicationSerializer, LitterSerializer, CatSerializer, CareLogSerializer
 # from kittytracker.tracker.models import Cat
+
+
+class catMutations(SerializerMutation):
+    class Meta:
+        serializer_class = CatSerializer
 
 
 class Query(kittytracker.tracker.schema.Query, graphene.ObjectType):
