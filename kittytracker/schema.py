@@ -27,6 +27,11 @@ class MyMutations(graphene.ObjectType):
     create_cat = CreateCat.Field()
 
 
+# class MyAwesomeMutation(SerializerMutation):
+#     class Meta:
+#         serializer_class = CatSerializer
+
+
 class Query(kittytracker.tracker.schema.Query, graphene.ObjectType):
     # This class will inherit from multiple Queries
     # as we begin to add more apps to our project
