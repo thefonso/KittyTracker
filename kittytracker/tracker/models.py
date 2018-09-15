@@ -198,7 +198,7 @@ class CareLog(models.Model):
     stimulated = models.BooleanField(default=False)
     stimulation_type = models.CharField(max_length=2, choices=STIMULATION_CHOICES, blank=True, null=True)
 
-    medication = models.ForeignKey(Medication, blank=True, null=True)
+    medication = models.ForeignKey(Medication, blank=True, null=True, on_delete=models.SET_NULL)
     medication_dosage_given = models.FloatField(blank=True, null=True)
     medication_dosage_unit = models.CharField(max_length=2, choices=VOLUME_MEASURE_CHOICES, blank=True, null=True,
                                               help_text="If left blank this will default to "
