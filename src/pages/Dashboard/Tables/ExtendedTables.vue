@@ -306,7 +306,6 @@
                                              v-model="stimulation_type" v-validate="'required|alpha'"
                                              :error="getError('stimulation_type')" placeholder="STT">
                                     <el-option value="Choose..." selected>Choose...</el-option>
-                                    <!--<el-option value="NA">None / Not Entered</el-option>-->
                                     <el-option value="UR">Urine</el-option>
                                     <el-option value="FE">Feces</el-option>
                                     <el-option value="UF">Urine/Feces</el-option>
@@ -784,17 +783,9 @@
           })
           .catch(error => console.log(error));
       },
-      // openCat (catID) {
-      //   this.getOneCat(catID)
-      // },
       openCat (index, row) {
         this.getOneCat(row.id)
       },
-      // getCats () {
-      //   axios.get(`/api/v1/cats/`)
-      //     .then(response => {this.cats = response.data.results})
-      //     .catch(error => console.log(error));
-      // },
       getCats () {
         axios.post('http://localhost:8000/graphql', {
           query: `{
@@ -843,19 +834,9 @@
           })
           .catch(error => console.log(error));
       },
-      // deleteCat(catID){
-      //   axios.delete('http://localhost:8000/graphql', {
-      //    What is the delete sequence???
-      //   })
-      // },
       deleteFeeding (feedID) {
         axios.delete(`/api/v1/carelogs/${feedID}/`)
           .then(response => {console.log("feeding gone:"); console.log(response);})
-          .catch(error => console.log(error));
-      },
-      deleteMedication (medID) {
-        axios.delete(`/api/v1/carelogs/${medID}/`)
-          .then(response => {console.log("medication gone:"); console.log(response);})
           .catch(error => console.log(error));
       },
       getFeedings(value) {
@@ -986,47 +967,6 @@
             this.showButton = true;
             response.status === 201 ? this.showSwal('success-message','CareLog Medication added') : console.log(response);
             this.getMedications(catName);
-          })
-          .catch(error => {
-            console.log(error);
-            this.showSwal('auto-close', error);
-          })
-      },
-      addMedications(catID, catName){
-        axios.post(`/api/v1/medications/`,{
-          cat: {id: catID, name: catName},
-          name: this.name,
-          duration: this.duration,
-          frequency: this.frequency,
-          dosage_unit: 'ML',
-          dosage: this.dosage,
-          notes: this.notes
-        })
-          .then(response => {
-            console.log(response);console.log(this.showButton);
-            this.showButton = true;
-            response.status === 201 ? this.showSwal('success-message','Medication added') : console.log(response);
-            this.getMedications(catName);
-          })
-          .catch(error => {
-            console.log(error);
-            this.showSwal('auto-close', error);
-          })
-      },
-      editMedications(medID, medName, catID, catName){
-        console.log("edit meds called:");
-        axios.put(`/api/v1/carelogs/`,{
-          cat: {id: catID, name: catName},
-          medication: {id: this.id, name: this.name, duration: this.duration, frequency: this.frequency, dosage_unit: 'ML', dosage: this.dosage, notes: this.notes},
-          medication_dosage_unit: 'ML',
-          medication_dosage_given: this.dosage,
-          notes: this.notes
-        })
-          .then(response => {
-            console.log("editMedications success");
-            console.log(response);
-            response.status === 201 ? this.showSwal('success-message','record updated') : null;
-            this.handleEdit(true);
           })
           .catch(error => {
             console.log(error);
