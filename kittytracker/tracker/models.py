@@ -308,3 +308,4 @@ class VetVisit(models.Model):
     def __str__(self):
         return "{cat}: {practice} {timestamp}".format(cat=self.cat.name, timestamp=self.appointment,
                                                       practice=self.practice_name)
+
