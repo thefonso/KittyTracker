@@ -178,163 +178,176 @@
                         <card>
                           <vue-tabs value="Description">
                             <v-tab title="Carelog">
-                              <div id="fedsTable" class="table table-striped table-bordered">
-                                <div class="fedRow d-flex justify-content-start top-row">
-                                  <div class="col-1" v-tooltip.top-center="'food type'">Food Type</div>
-                                  <div class="col-1" v-tooltip.top-center="'weight before food'">WBF</div>
-                                  <div class="col-1" v-tooltip.top-center="'amount of food taken'">AFT</div>
-                                  <div class="col-1" v-tooltip.top-center="'weight after food'">WAF</div>
-                                  <div class="col-1" v-tooltip.top-center="'stimulated'">Stimulated</div>
-                                  <div class="col-2" v-tooltip.top-center="'stimulation type'">Stimulation Type</div>
-                                  <div class="col-1" v-tooltip.top-center="'Medication'">Medication</div>
-                                  <div class="col-1" v-tooltip.top-center="'Medication Dosage'">Med. Dosage</div>
-                                  <div class="col-1">Actions</div>
-                                </div>
-                                <div id="feedtable" class="" v-for="fed in catFeedings" :key="fed.id">
-                                  <form :id="'form'+fed.id"
-                                        @submit.prevent="updateDeleteFeedsSubmit(fed.id, fed.name, scope.item.id, scope.item.name)">
-                                    <div class="medRow d-flex justify-content-start">
-                                      <div class="col-1">
-                                        <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="food_type"
-                                                  v-validate="'required'" v-model="food_type" type="text"
-                                                  :placeholder="fed.foodType" :error="getError('food_type')"></fg-input>
-                                        <span v-if="!fed.showRow">{{fed.foodType}}</span>
-                                      </div>
-                                      <div class="col-1">
-                                        <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_before_food"
-                                                  v-validate="'required'" v-model="weight_before_food" type="text"
-                                                  :placeholder="fed.weightBeforeFood" :error="getError('weight_before_food')"></fg-input>
-                                        <span v-if="!fed.showRow">{{fed.weightBeforeFood}}</span>
-                                      </div>
-                                      <div class="col-1">
-                                        <fg-input v-if="fed.showRow && food_type !== 'MN'" :form="'form'+fed.id" name="amount_of_food_taken"
-                                                  v-validate="'required'" v-model="amount_of_food_taken" type="text"
-                                                  :placeholder="fed.amount_of_food_taken" :error="getError('amount_of_food_taken')"></fg-input>
-                                        <span v-if="!fed.showRow">{{fed.amountOfFoodTaken}}</span>
-                                      </div>
-                                      <div class="col-1">
-                                        <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_after_food"
-                                                  v-model="weight_after_food" v-validate="'required|integer'"
-                                                  :placeholder="fed.weightAfterFood":error="getError('weight_after_food')"/>
-                                        <span v-if="!fed.showRow">{{fed.weightAfterFood}}</span>
-                                      </div>
-                                      <div class="col-1">
-                                        <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulated"
-                                                  v-validate="'required'" v-model="stimulated" :error="getError('stimulated')" type="text"
-                                                  :placeholder="fed.stimulated"></fg-input>
-                                        <span v-if="!fed.showRow">{{fed.stimulated}}</span>
-                                      </div>
-                                      <div class="col-2">
-                                        <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulation_type"
-                                                  v-validate="'required'" v-model="stimulation_type" :error="getError('stimulation_type')" type="text"
-                                                  :placeholder="fed.stimulationType"></fg-input>
-                                        <span v-if="!fed.showRow">{{fed.stimulationType}}</span>
-                                      </div>
-                                      <div class="col-1">
-                                        <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="medication"
-                                                  v-validate="'required'" v-model="medication" type="text"
-                                                  :placeholder="fed.medication.name" :error="getError('medication')"></fg-input>
-                                        <span v-if="!fed.showRow">{{fed.medication.name}}</span>
-                                      </div>
-                                      <div class="col-1">
-                                        <fg-input v-if="fed.showRow" :form="'form'+fed.id" name="medicationDosageGiven"
-                                                  v-validate="'required'" v-model="medicationDosageGiven" type="text"
-                                                  :placeholder="fed.medicationDosageGiven" :error="getError('medicationDosageGiven')"></fg-input>
-                                        <span v-if="!fed.showRow">{{fed.medicationDosageGiven}}</span>
-                                      </div>
-                                      <div class="col-1 d-flex align-items-center cancel-submit">
-                                        <button class="btn btn-sm btn-warning" @click='fed.showRow = !fed.showRow' v-if="fed.showRow">Cancel</button>
-                                        <button type="submit" class="btn btn-sm btn-success" v-if="fed.showRow">Submit</button>
+                              <!--<div id="fedsTable" class="table table-striped table-bordered">-->
+                                <!--<div class="fedRow d-flex justify-content-start top-row">-->
+                                  <!--<div class="col-1" v-tooltip.top-center="'food type'">Food Type</div>-->
+                                  <!--<div class="col-1" v-tooltip.top-center="'weight before food'">WBF</div>-->
+                                  <!--<div class="col-1" v-tooltip.top-center="'amount of food taken'">AFT</div>-->
+                                  <!--<div class="col-1" v-tooltip.top-center="'weight after food'">WAF</div>-->
+                                  <!--<div class="col-1" v-tooltip.top-center="'stimulated'">Stimulated</div>-->
+                                  <!--<div class="col-2" v-tooltip.top-center="'stimulation type'">Stimulation Type</div>-->
+                                  <!--<div class="col-1" v-tooltip.top-center="'Medication'">Medication</div>-->
+                                  <!--<div class="col-1" v-tooltip.top-center="'Medication Dosage'">Med. Dosage</div>-->
+                                  <!--<div class="col-1">Actions</div>-->
+                                <!--</div>-->
+                                <!--<div id="feedtable" class="" v-for="fed in catFeedings" :key="fed.id">-->
+                                  <!--<form :id="'form'+fed.id"-->
+                                        <!--@submit.prevent="updateDeleteFeedsSubmit(fed.id, fed.name, scope.item.id, scope.item.name)">-->
+                                    <!--<div class="medRow d-flex justify-content-start">-->
+                                      <!--<div class="col-1">-->
+                                        <!--<fg-input v-if="fed.showRow" :form="'form'+fed.id" name="food_type"-->
+                                                  <!--v-validate="'required'" v-model="food_type" type="text"-->
+                                                  <!--:placeholder="fed.foodType" :error="getError('food_type')"></fg-input>-->
+                                        <!--<span v-if="!fed.showRow">{{fed.foodType}}</span>-->
+                                      <!--</div>-->
+                                      <!--<div class="col-1">-->
+                                        <!--<fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_before_food"-->
+                                                  <!--v-validate="'required'" v-model="weight_before_food" type="text"-->
+                                                  <!--:placeholder="fed.weightBeforeFood" :error="getError('weight_before_food')"></fg-input>-->
+                                        <!--<span v-if="!fed.showRow">{{fed.weightBeforeFood}}</span>-->
+                                      <!--</div>-->
+                                      <!--<div class="col-1">-->
+                                        <!--<fg-input v-if="fed.showRow && food_type !== 'MN'" :form="'form'+fed.id" name="amount_of_food_taken"-->
+                                                  <!--v-validate="'required'" v-model="amount_of_food_taken" type="text"-->
+                                                  <!--:placeholder="fed.amount_of_food_taken" :error="getError('amount_of_food_taken')"></fg-input>-->
+                                        <!--<span v-if="!fed.showRow">{{fed.amountOfFoodTaken}}</span>-->
+                                      <!--</div>-->
+                                      <!--<div class="col-1">-->
+                                        <!--<fg-input v-if="fed.showRow" :form="'form'+fed.id" name="weight_after_food"-->
+                                                  <!--v-model="weight_after_food" v-validate="'required|integer'"-->
+                                                  <!--:placeholder="fed.weightAfterFood":error="getError('weight_after_food')"/>-->
+                                        <!--<span v-if="!fed.showRow">{{fed.weightAfterFood}}</span>-->
+                                      <!--</div>-->
+                                      <!--<div class="col-1">-->
+                                        <!--<fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulated"-->
+                                                  <!--v-validate="'required'" v-model="stimulated" :error="getError('stimulated')" type="text"-->
+                                                  <!--:placeholder="fed.stimulated"></fg-input>-->
+                                        <!--<span v-if="!fed.showRow">{{fed.stimulated}}</span>-->
+                                      <!--</div>-->
+                                      <!--<div class="col-2">-->
+                                        <!--<fg-input v-if="fed.showRow" :form="'form'+fed.id" name="stimulation_type"-->
+                                                  <!--v-validate="'required'" v-model="stimulation_type" :error="getError('stimulation_type')" type="text"-->
+                                                  <!--:placeholder="fed.stimulationType"></fg-input>-->
+                                        <!--<span v-if="!fed.showRow">{{fed.stimulationType}}</span>-->
+                                      <!--</div>-->
+                                      <!--<div class="col-1">-->
+                                        <!--<fg-input v-if="fed.showRow" :form="'form'+fed.id" name="medication"-->
+                                                  <!--v-validate="'required'" v-model="medication" type="text"-->
+                                                  <!--:placeholder="fed.medication.name" :error="getError('medication')"></fg-input>-->
+                                        <!--<span v-if="!fed.showRow">{{fed.medication.name}}</span>-->
+                                      <!--</div>-->
+                                      <!--<div class="col-1">-->
+                                        <!--<fg-input v-if="fed.showRow" :form="'form'+fed.id" name="medicationDosageGiven"-->
+                                                  <!--v-validate="'required'" v-model="medicationDosageGiven" type="text"-->
+                                                  <!--:placeholder="fed.medicationDosageGiven" :error="getError('medicationDosageGiven')"></fg-input>-->
+                                        <!--<span v-if="!fed.showRow">{{fed.medicationDosageGiven}}</span>-->
+                                      <!--</div>-->
+                                      <!--<div class="col-1 d-flex align-items-center cancel-submit">-->
+                                        <!--<button class="btn btn-sm btn-warning" @click='fed.showRow = !fed.showRow' v-if="fed.showRow">Cancel</button>-->
+                                        <!--<button type="submit" class="btn btn-sm btn-success" v-if="fed.showRow">Submit</button>-->
 
-                                        <a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"
-                                           @click='fed.showRow = !fed.showRow' v-if="!fed.showRow"><i
-                                          class="fa fa-edit"></i></a>
-                                        <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link" v-if="!fed.showRow"
-                                           @click="handleDelete(fed.slug, fed.name, 'feedingRow')">
-                                          <i class="fa fa-times"></i>
-                                        </a>
+                                        <!--<a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"-->
+                                           <!--@click='fed.showRow = !fed.showRow' v-if="!fed.showRow"><i-->
+                                          <!--class="fa fa-edit"></i></a>-->
+                                        <!--<a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link" v-if="!fed.showRow"-->
+                                           <!--@click="handleDelete(fed.slug, fed.name, 'feedingRow')">-->
+                                          <!--<i class="fa fa-times"></i>-->
+                                        <!--</a>-->
 
-                                      </div>
-                                    </div>
-                                  </form>
-                                </div>
-                                <!--TODO: ADD a FEEDING-->
-                                <div class="fedRow d-flex justify-content-start">
-                                  <div class="col-1">
-                                    <el-select name="food_type"
-                                               v-if="!showButton"
-                                               form="formaddfeed"
-                                               v-validate="'required|alpha'" v-model="food_type"
-                                               placeholder="FT" :error="getError('food_type')">
-                                      <el-option value="Choose..." selected>Choose...</el-option>
-                                      <el-option value="NA" >None / Not Entered</el-option>
-                                      <el-option value="MN" >Mom (Nursing)</el-option>
-                                      <el-option value="BO" >Bottle</el-option>
-                                      <el-option value="BS" >Bottle/Syringe</el-option>
-                                      <el-option value="SG" >Syringe Gruel</el-option>
-                                      <el-option value="GG" >Syringe Gruel / Gruel</el-option>
-                                      <el-option value="G" >Gruel</el-option>
-                                    </el-select>
-                                    <span v-if="showButton">&nbsp;</span>
-                                  </div>
-                                  <div class="col-1">
-                                    <fg-input name="weight_before_food"
-                                              id="weight_before_food"
-                                              v-if="!showButton && food_type !== 'MN'"
-                                              form="formaddfeed" v-validate="'required|integer'"
-                                              v-model="weight_before_food" type="text"
-                                              placeholder="WBF" :error="getError('requiredText')"
-                                              v-on:change="fivePercenter"/>
-                                    <span v-if="showButton"> </span>
-                                    <div v-if="food_type !== 'G' && food_type !== 'MN' && !showButton" class="form-group">
-                                      <div id="target_weight_after_food"></div>
-                                    </div>
-                                  </div>
-                                  <div class="col-1">
-                                    <fg-input name="amount_of_food_taken"
-                                              form="formaddfeed" v-if="!showButton"
-                                              v-validate="'required'" v-model="amount_of_food_taken"
-                                              type="text" placeholder="AFT" :error="getError('amount_of_food_taken')"/>
-                                    <span v-if="showButton"> </span>
-                                  </div>
-                                  <div class="col-1">
-                                    <fg-input name="weight_after_food"
-                                              v-model="weight_after_food" v-if="!showButton"
-                                              v-validate="'required|integer'"  id="weight_after_food"
-                                              placeholder="WAF" :error="getError('weight_after_food')"/>
-                                    <span v-if="showButton"> </span>
-                                  </div>
-                                  <div class="col-1">
-                                    <el-select name="stimulated" v-if="!showButton" form="formaddfeed"
-                                               v-on:change="checkFoodType(food_type)" v-validate="'required|alpha'"
-                                               v-model="stimulated"  placeholder="ST" :error="getError('stimulated')">
-                                      <el-option value="Choose..." selected>Choose...</el-option>
-                                      <el-option value="true">True</el-option>
-                                      <el-option value="false">False</el-option>
-                                    </el-select>
-                                    <span v-if="showButton">&nbsp;</span></div>
-                                  <div class="col-2 form-group">
-                                    <!--TODO: move data into data area-->
-                                    <el-select name="stimulation_type" v-if="!showButton" form="formaddfeed"  id="stimulation_type"
-                                               v-model="stimulation_type" v-validate="'required|alpha'"
-                                               :error="getError('stimulation_type')" placeholder="STT">
-                                      <el-option value="Choose..." selected>Choose...</el-option>
-                                      <el-option value="UR">Urine</el-option>
-                                      <el-option value="FE">Feces</el-option>
-                                      <el-option value="UF">Urine/Feces</el-option>
-                                    </el-select>
-                                    <span v-if="showButton">&nbsp;</span></div>
-                                  <div class="col-2 fed-submit-buttons">
-                                    <button class="btn btn-sm btn-info btn-outline" @click='showButton = !showButton' v-if="showButton">Add</button>
-                                    <button type="reset" class="btn btn-sm btn-warning" @click='showButton = !showButton' v-if="!showButton">Cancel</button>
-                                    <!--TODO: make default null values for when "Mom" is selected as Type Of Food taken (TFT)-->
-                                    <button type="submit" class="btn btn-sm btn-success" v-if="food_type !== 'MN' && !showButton"
-                                            v-on:click="validateSubmitNoMom(scope.item.id, scope.item.name)" @click='showButton = !showButton'>Submit</button>
-                                    <button type="submit" class="btn btn-sm btn-success" v-if="food_type === 'MN' && !showButton"
-                                            v-on:click="validateSubmitMom(scope.item.id, scope.item.name)">Submit mom</button>
-                                  </div>
-                                </div>
-                              </div>
+                                      <!--</div>-->
+                                    <!--</div>-->
+                                  <!--</form>-->
+                                <!--</div>-->
+                                <!--&lt;!&ndash;TODO: ADD a FEEDING&ndash;&gt;-->
+                                <!--<div class="fedRow d-flex justify-content-start">-->
+                                  <!--<div class="col-1">-->
+                                    <!--<el-select name="food_type"-->
+                                               <!--v-if="!showButton"-->
+                                               <!--form="formaddfeed"-->
+                                               <!--v-validate="'required|alpha'" v-model="food_type"-->
+                                               <!--placeholder="FT" :error="getError('food_type')">-->
+                                      <!--<el-option value="Choose..." selected>Choose...</el-option>-->
+                                      <!--<el-option value="NA" >None / Not Entered</el-option>-->
+                                      <!--<el-option value="MN" >Mom (Nursing)</el-option>-->
+                                      <!--<el-option value="BO" >Bottle</el-option>-->
+                                      <!--<el-option value="BS" >Bottle/Syringe</el-option>-->
+                                      <!--<el-option value="SG" >Syringe Gruel</el-option>-->
+                                      <!--<el-option value="GG" >Syringe Gruel / Gruel</el-option>-->
+                                      <!--<el-option value="G" >Gruel</el-option>-->
+                                    <!--</el-select>-->
+                                    <!--<span v-if="showButton">&nbsp;</span>-->
+                                  <!--</div>-->
+                                  <!--<div class="col-1">-->
+                                    <!--<fg-input name="weight_before_food"-->
+                                              <!--id="weight_before_food"-->
+                                              <!--v-if="!showButton && food_type !== 'MN'"-->
+                                              <!--form="formaddfeed" v-validate="'required|integer'"-->
+                                              <!--v-model="weight_before_food" type="text"-->
+                                              <!--placeholder="WBF" :error="getError('requiredText')"-->
+                                              <!--v-on:change="fivePercenter"/>-->
+                                    <!--<span v-if="showButton"> </span>-->
+                                    <!--<div v-if="food_type !== 'G' && food_type !== 'MN' && !showButton" class="form-group">-->
+                                      <!--<div id="target_weight_after_food"></div>-->
+                                    <!--</div>-->
+                                  <!--</div>-->
+                                  <!--<div class="col-1">-->
+                                    <!--<fg-input name="amount_of_food_taken"-->
+                                              <!--form="formaddfeed" v-if="!showButton"-->
+                                              <!--v-validate="'required'" v-model="amount_of_food_taken"-->
+                                              <!--type="text" placeholder="AFT" :error="getError('amount_of_food_taken')"/>-->
+                                    <!--<span v-if="showButton"> </span>-->
+                                  <!--</div>-->
+                                  <!--<div class="col-1">-->
+                                    <!--<fg-input name="weight_after_food"-->
+                                              <!--v-model="weight_after_food" v-if="!showButton"-->
+                                              <!--v-validate="'required|integer'"  id="weight_after_food"-->
+                                              <!--placeholder="WAF" :error="getError('weight_after_food')"/>-->
+                                    <!--<span v-if="showButton"> </span>-->
+                                  <!--</div>-->
+                                  <!--<div class="col-1">-->
+                                    <!--<el-select name="stimulated" v-if="!showButton" form="formaddfeed"-->
+                                               <!--v-on:change="checkFoodType(food_type)" v-validate="'required|alpha'"-->
+                                               <!--v-model="stimulated"  placeholder="ST" :error="getError('stimulated')">-->
+                                      <!--<el-option value="Choose..." selected>Choose...</el-option>-->
+                                      <!--<el-option value="true">True</el-option>-->
+                                      <!--<el-option value="false">False</el-option>-->
+                                    <!--</el-select>-->
+                                    <!--<span v-if="showButton">&nbsp;</span></div>-->
+                                  <!--<div class="col-2 form-group">-->
+                                    <!--&lt;!&ndash;TODO: move data into data area&ndash;&gt;-->
+                                    <!--<el-select name="stimulation_type" v-if="!showButton" form="formaddfeed"  id="stimulation_type"-->
+                                               <!--v-model="stimulation_type" v-validate="'required|alpha'"-->
+                                               <!--:error="getError('stimulation_type')" placeholder="STT">-->
+                                      <!--<el-option value="Choose..." selected>Choose...</el-option>-->
+                                      <!--<el-option value="UR">Urine</el-option>-->
+                                      <!--<el-option value="FE">Feces</el-option>-->
+                                      <!--<el-option value="UF">Urine/Feces</el-option>-->
+                                    <!--</el-select>-->
+                                    <!--<span v-if="showButton">&nbsp;</span></div>-->
+                                  <!--<div class="col-2 fed-submit-buttons">-->
+                                    <!--<button class="btn btn-sm btn-info btn-outline" @click='showButton = !showButton' v-if="showButton">Add</button>-->
+                                    <!--<button type="reset" class="btn btn-sm btn-warning" @click='showButton = !showButton' v-if="!showButton">Cancel</button>-->
+                                    <!--&lt;!&ndash;TODO: make default null values for when "Mom" is selected as Type Of Food taken (TFT)&ndash;&gt;-->
+                                    <!--<button type="submit" class="btn btn-sm btn-success" v-if="food_type !== 'MN' && !showButton"-->
+                                            <!--v-on:click="validateSubmitNoMom(scope.item.id, scope.item.name)" @click='showButton = !showButton'>Submit</button>-->
+                                    <!--<button type="submit" class="btn btn-sm btn-success" v-if="food_type === 'MN' && !showButton"-->
+                                            <!--v-on:click="validateSubmitMom(scope.item.id, scope.item.name)">Submit mom</button>-->
+                                  <!--</div>-->
+                                <!--</div>-->
+                              <!--</div>-->
+                              <b-table striped bordered hover :fields="careLogColumns" :items="catFeedings">
+                                <template slot="medication" slot-scope="data">
+                                  {{data.value.name}}
+                                </template>
+                                <template slot="actions" slot-scope="scope">
+                                    <a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"
+                                       @click="handleLike(scope.$index, scope)"><i class="fa fa-heart"></i></a>
+                                    <a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"
+                                       @click="handleEditCatList(scope.$index, scope)"><i class="fa fa-edit"></i></a>
+                                    <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link"
+                                       @click="handleDelete(scope.$index, scope, 'catRow')"><i class="fa fa-times"></i></a>
+                                </template>
+                              </b-table>
                             </v-tab>
                           </vue-tabs>
                         </card>
@@ -513,6 +526,17 @@
         catFeedings: [],
         catMedications: [],
         careLogTableColumns: [],
+        careLogColumns: [
+          'foodType',
+          'amountOfFoodTaken',
+          'stimulated',
+          'weightBeforeFood',
+          'weightAfterFood',
+          'stimulationType',
+          'medication',
+          'medicationDosageGiven',
+          'actions',
+        ],
         tableColumns: [
           {
             key: 'id',
