@@ -193,7 +193,7 @@ class CareLog(models.Model):
     food_unit_measure = models.CharField(max_length=2, choices=WEIGHT_MEASURE_CHOICES, default=GRAMS)
     amount_of_food_taken = models.IntegerField(blank=True, null=True)
     food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES, blank=True, null=True)
-    weight_after_food = models.IntegerField(blank=True, null=True)
+    weight_after_food = models.IntegerField(blank=True, null=True, default=0)
 
     stimulated = models.BooleanField(default=False)
     stimulation_type = models.CharField(max_length=2, choices=STIMULATION_CHOICES, blank=True, null=True)
@@ -223,9 +223,8 @@ class CareLog(models.Model):
                 if feedings[0] == self:
                     feedings = feedings[1:]
 
-                # TODO You broke it you fix it:
                 # If the feeding is a weight loss log it as the first/second/third
-                if self.weight_after_food < feedings[0].weight_after_food:
+                if feedings[0].weight_after_food is not None and self.weight_after_food < feedings[0].weight_after_food:
                     if self.cat.first_weight_loss:
                         self.cat.second_weight_loss = True
                     elif self.cat.second_weight_loss:
