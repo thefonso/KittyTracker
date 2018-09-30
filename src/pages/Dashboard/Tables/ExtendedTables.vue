@@ -18,20 +18,40 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a class="dropdown-item" href="#" id="rectangle-255" v-b-toggle.collapse1>Cat</a>
-                <a class="dropdown-item" href="#">Litter</a>
-                <a class="dropdown-item" href="#">Medication</a>
-                <a class="dropdown-item" href="#">Care Log</a>
+                <a class="dropdown-item" href="#" id="litter-close" v-b-toggle.collapse2>Litter</a>
+                <a class="dropdown-item" href="#" id="medicaton-close" v-b-toggle.collapse3>Medication</a>
               </div>
             </div>
         </div>
-        <!--TODO: install new Add-a-Cat here-->
+
         <b-collapse id="collapse1" class="mt-2">
           <b-card>
             <div class="col-sm-12 no-padding">
               <div class="divTable">
                 <div class="divTableHeading">
-                  <!--<Wizard v-show="handleAdd"></Wizard>-->
                   <AddCat></AddCat>
+                </div>
+              </div>
+            </div>
+          </b-card>
+        </b-collapse>
+        <b-collapse id="collapse2" class="mt-2">
+          <b-card>
+            <div class="col-sm-12 no-padding">
+              <div class="divTable">
+                <div class="divTableHeading">
+                  <AddLitter></AddLitter>
+                </div>
+              </div>
+            </div>
+          </b-card>
+        </b-collapse>
+        <b-collapse id="collapse3" class="mt-2">
+          <b-card>
+            <div class="col-sm-12 no-padding">
+              <div class="divTable">
+                <div class="divTableHeading">
+                  <AddMedications></AddMedications>
                 </div>
               </div>
             </div>
@@ -247,6 +267,8 @@
   import VueTabs from 'vue-nav-tabs'
   import Wizard from  '../Forms/Wizard'
   import AddCat from  '../Forms/AddCat'
+  import AddLitter from  '../Forms/AddLitter'
+  import AddMedication from  '../Forms/AddMedication'
   import ElSelectDropdown from "element-ui/packages/select/src/select-dropdown";
 
   Vue.use(VueTabs);
@@ -256,6 +278,8 @@
   export default{
     components: {
       AddCat,
+      AddLitter,
+      AddMedication,
       GattoChart,
       GattoInfo,
       ElSelectDropdown,
@@ -965,13 +989,12 @@
         });
       },
       handleDelete (id, propRow, row) {
-        // alert(`You want to delete ${id}`);
+        // alert(`You want to delete ${propRow.slug}`);
         // this.showSwal('basic', `You want to delete ${name}`);
         if (row === 'catRow'){
-          // this.showSwal('basic','un gatto gone');
-          console.log("propRow " + propRow.id);
-          console.log("row " + row);
-          // this.deleteCat(propRow);//delete cat from database
+          console.log("propRow " + propRow.slug);
+          // console.log("row " + row);
+          this.deleteCat(propRow.slug);//delete cat from database
           let indexToDelete = this.cats.findIndex((tableRow) => tableRow.id === propRow.id);
           if (indexToDelete >= 0) {
             this.cats.splice(indexToDelete, 1) // remove it from array visually
