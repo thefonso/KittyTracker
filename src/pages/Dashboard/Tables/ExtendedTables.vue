@@ -195,6 +195,7 @@
                       <card>
                         <vue-tabs value="Description">
                           <v-tab title="Carelog">
+
                             <b-table striped bordered hover :fields="careLogColumns" :items="catFeedings">
                               <template slot="medication" slot-scope="data">
                                 {{data.value.name}}
@@ -207,7 +208,65 @@
                                   <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link"
                                      @click="handleDelete(scope.$index, scope, 'catRow')"><i class="fa fa-times"></i></a>
                               </template>
+                              <row>ping</row>
                             </b-table>
+                            <b-container fluid>
+                              <b-form-row>
+                                <b-form inline>
+                                  <b-col>
+                                    <b-form-group>
+                                      <b-form-select v-model="food_type" :options="foodOptions"></b-form-select>
+                                    </b-form-group>
+                                  </b-col>
+                                  <b-col>
+                                    <b-form-group>
+                                      <b-input v-model="amount_of_food_taken" placeholder="AMOUNT OF FOOD TAKEN"></b-input>
+                                    </b-form-group>
+                                  </b-col>
+                                  <b-col>
+                                    <b-form-group>
+                                      <b-form-select v-model="stimulated" :options="stimulatedOps">
+                                      </b-form-select>
+                                    </b-form-group>
+                                  </b-col>
+                                  <b-col>
+                                    <b-form-group>
+                                      <b-form-input v-model="weight_before_food" placeholder="Weight Before Food"></b-form-input>
+                                    </b-form-group>
+                                  </b-col>
+                                  <b-col>
+                                    <b-form-group>
+                                      <b-input v-model="weight_after_food" placeholder="Weight After Food"></b-input>
+                                    </b-form-group>
+                                  </b-col>
+                                  <b-col>
+                                    <b-form-group>
+                                      <b-form-select v-model="stimulationType" :options="stimulationTypeOps">
+                                      </b-form-select>
+                                    </b-form-group>
+                                  </b-col>
+                                  <b-col>
+                                    <b-form-group>
+                                      <b-input v-model="medication" placeholder="Medication"></b-input>
+                                    </b-form-group>
+                                  </b-col>
+                                  <b-col>
+                                    <b-form-group>
+                                      <b-input v-model="medication_dosage_given" placeholder="Med. Dosage"></b-input>
+                                    </b-form-group>
+                                  </b-col>
+                                  <b-col>
+                                      <b-button class="btn btn-sm btn-info btn-outline" @click='showButton = !showButton' v-if="showButton">Add</b-button>
+                                      <b-button type="reset" class="btn btn-sm btn-warning" @click='showButton = !showButton' v-if="!showButton">Cancel</b-button>
+                                      <!--TODO: make default null values for when "Mom" is selected as Type Of Food taken (TFT)-->
+                                      <b-button type="submit" class="btn btn-sm btn-success" v-if="food_type !== 'MN' && !showButton"
+                                            v-on:click="validateSubmitNoMom(cat.id, cat.name)" @click='showButton = !showButton'>Submit</b-button>
+                                      <b-button type="submit" class="btn btn-sm btn-success" v-if="food_type === 'MN' && !showButton"
+                                            v-on:click="validateSubmitMom(cat.id, cat.name)">Submit mom</b-button>
+                                  </b-col>
+                                </b-form>
+                              </b-form-row>
+                            </b-container>
                           </v-tab>
                         </vue-tabs>
                       </card>
@@ -460,10 +519,21 @@
         weight_before_food: '',
         weight_after_food: '',
         amount_of_food_taken: '',
-        food_type: '',
+        food_type: null,
         notes:    '',
-        stimulated: '',
-        stimulation_type: '',
+        stimulated: null,
+        stimulatedOps: [
+          { value: null, text: 'Stimulated' },
+          'true',
+          'false'
+        ],
+        stimulationType: null,
+        stimulationTypeOps: [
+          { value: null, text: 'Stimulation Type' },
+          { value: 'UR', text: 'Urine'},
+          { value: 'FE', text: 'feces'},
+          { value: 'UF', text: 'Urine / Feces'},
+        ],
         showSuccess: false,
         showDanger: false,
         constant: 0,
@@ -484,7 +554,18 @@
         weightBeforeFood: '',
         amountOfFoodTaken: '',
         foodType: '',
-        stimulationType: '',
+        medication: '',
+        medication_dosage_given: '',
+        foodOptions:[
+          { value: null, text: 'Food Type' },
+          { value: 'MN', text: 'Mom (Nursing)' },
+          { value: 'BO', text: 'Bottle' },
+          { value: 'BS', text: 'Bottle/Syringe' },
+          { value: 'SG', text: 'Syringe Gruel'},
+          { value: 'GG', text: 'Syringe Gruel / Gruel'},
+          { value: 'G', text: 'Gruel'},
+        ],
+
       }
     },
     beforeMount () {
@@ -781,7 +862,7 @@
       },
       postFeedings(catID, catName) {
         axios.post(`/api/v1/carelogs/`,{
-          cat: {id: catID, name: catName},
+          cat: {id: catID, name: catName, slug: catName},
           weight_unit_measure: 'G',
           weight_before_food: this.weight_before_food,
           food_unit_measure: 'G',
@@ -790,7 +871,10 @@
           weight_after_food: this.weight_after_food,
           stimulated: this.stimulated,
           stimulation_type: this.stimulation_type,
-          notes: this.notes,
+          medication: {name: this.name, duration: this.duration, frequency: this.frequency, dosage: this.dosage, notes: this.notes},
+          medication_dosage_unit: 'ML',
+          medication_dosage_given: this.dosage,
+          notes: this.notes
         })
           .then(response => {
             console.log(response);
@@ -858,7 +942,7 @@
       },
       addCarelogs(catID, catName){
         axios.post(`/api/v1/carelogs/`,{
-          cat: {id: catID, name: catName},
+          cat: {id: catID, name: catName, slug: catName},
           medication: {name: this.name, duration: this.duration, frequency: this.frequency, dosage: this.dosage, notes: this.notes},
           medication_dosage_unit: 'ML',
           medication_dosage_given: this.dosage,
