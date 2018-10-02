@@ -18,8 +18,8 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a class="dropdown-item" href="#" id="rectangle-255" v-b-toggle.collapse1>Cat</a>
-                <a class="dropdown-item" href="#" id="litter-close" v-b-toggle.collapse2>Litter</a>
-                <a class="dropdown-item" href="#" id="medicaton-close" v-b-toggle.collapse3>Medication</a>
+                <!--<a class="dropdown-item" href="#" id="litter-close" v-b-toggle.collapse2>Litter</a>-->
+                <!--<a class="dropdown-item" href="#" id="medicaton-close" v-b-toggle.collapse3>Medication</a>-->
               </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
                     <div class="card-header">
                       <!--TODO: CAT big one begins here-->
                       <b-btn id="fedMed" class="col btn btn-link" v-b-toggle.collapse3>
-                        <div class="container-fluid col-12">
+                        <div class="container-fluid col-">
                           <div class="divTable">
                             <div class="d-flex justify-content-around primary-cat-row row" role="button">
                               <div class="col-auto img-container-lg photo-thumb-sm" v-if="scope.item.photo !== null">
@@ -149,7 +149,7 @@
                               </div>
                               <div class="col-auto cat-name">
                                 <h4 style="color: #000;text-transform: capitalize;">{{scope.item.name}}</h4>
-                                <div class="col-12" style="border: 0px solid darkgrey; display: table" >
+                                <div class="col-" style="border: 0px solid darkgrey; display: table" >
                                   <div class="d-flex justify-content-center">
                                     <div class="table-striped" style="display: table-row">
                                       <div style="display: table-cell">{{scope.item.age}}</div>
@@ -190,83 +190,78 @@
                       </b-btn>
                       <!--TODO: CAT big one ends here-->
                     </div>
-                    <!--TODO: Sub rows START here-->
+                    <!--TODO: Carelog rows START here-->
                     <b-collapse id="collapse3" class="collapse" visible>
                       <card>
                         <vue-tabs value="Description">
                           <v-tab title="Carelog">
-
-                            <b-table striped bordered hover :fields="careLogColumns" :items="catFeedings">
+                            <b-table striped
+                                     bordered
+                                     stacked="sm"
+                                     hover :fields="careLogColumns" :items="catFeedings">
                               <template slot="medication" slot-scope="data">
                                 {{data.value.name}}
                               </template>
                               <template slot="actions" slot-scope="scope">
                                   <a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"
-                                     @click="handleLike(scope.$index, scope)"><i class="fa fa-heart"></i></a>
+                                     @click="handleLike(scope.$index, scope.index)"><i class="fa fa-heart"></i></a>
                                   <!--<a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"-->
                                      <!--@click="handleEditCatList(scope.$index, scope)"><i class="fa fa-edit"></i></a>-->
                                   <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link"
-                                     @click="handleDelete(scope.$index, scope, 'catRow')"><i class="fa fa-times"></i></a>
+                                     @click="handleDelete(scope.$index, scope.item, 'carelogRow')"><i class="fa fa-times"></i></a>
                               </template>
-                              <row>ping</row>
                             </b-table>
-                            <b-container fluid>
-                              <b-form-row>
-                                <b-form inline>
-                                  <b-col>
-                                    <b-form-group>
+                            <!--TODO: add a carelog-->
+
+                            <form id="carelogAddForm">
+                              <b-collapse id="collapseForm" class="mt-2">
+                                <fg-input label="Create New Carelog"
+                                          class="column-sizing">
+                                  <div class="row">
+                                    <div class="col-md-2">
                                       <b-form-select v-model="food_type" :options="foodOptions"></b-form-select>
-                                    </b-form-group>
-                                  </b-col>
-                                  <b-col>
-                                    <b-form-group>
-                                      <b-input v-model="amount_of_food_taken" placeholder="AMOUNT OF FOOD TAKEN"></b-input>
-                                    </b-form-group>
-                                  </b-col>
-                                  <b-col>
-                                    <b-form-group>
-                                      <b-form-select v-model="stimulated" :options="stimulatedOps">
-                                      </b-form-select>
-                                    </b-form-group>
-                                  </b-col>
-                                  <b-col>
-                                    <b-form-group>
+                                    </div>
+                                    <div class="col-md-2">
+                                      <b-input v-model="amount_of_food_taken" placeholder="Amount food taken"></b-input>
+                                    </div>
+                                    <div class="col-md-2">
+                                      <b-form-select v-model="stimulated" :options="stimulatedOps"></b-form-select>
+                                    </div>
+                                    <div class="col-md-2">
                                       <b-form-input v-model="weight_before_food" placeholder="Weight Before Food"></b-form-input>
-                                    </b-form-group>
-                                  </b-col>
-                                  <b-col>
-                                    <b-form-group>
+                                    </div>
+                                    <div class="col-md-2">
                                       <b-input v-model="weight_after_food" placeholder="Weight After Food"></b-input>
-                                    </b-form-group>
-                                  </b-col>
-                                  <b-col>
-                                    <b-form-group>
-                                      <b-form-select v-model="stimulationType" :options="stimulationTypeOps">
+                                    </div>
+                                    <div class="col-md-2">
+                                      <b-form-select v-model="stimulationType" :options="stimulationTypeOps"></b-form-select>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-sm-2">
+                                      <b-form-select v-model="medication">
+                                        <option selected :value="null">Medication</option>
+                                        <option :value=catMed.medication.name v-for="catMed in catMedications">{{catMed.medication.name}}</option>
                                       </b-form-select>
-                                    </b-form-group>
-                                  </b-col>
-                                  <b-col>
-                                    <b-form-group>
-                                      <b-input v-model="medication" placeholder="Medication"></b-input>
-                                    </b-form-group>
-                                  </b-col>
-                                  <b-col>
-                                    <b-form-group>
+                                    </div>
+                                    <div class="col-sm-2">
                                       <b-input v-model="medication_dosage_given" placeholder="Med. Dosage"></b-input>
-                                    </b-form-group>
-                                  </b-col>
-                                  <b-col>
-                                      <b-button class="btn btn-sm btn-info btn-outline" @click='showButton = !showButton' v-if="showButton">Add</b-button>
-                                      <b-button type="reset" class="btn btn-sm btn-warning" @click='showButton = !showButton' v-if="!showButton">Cancel</b-button>
-                                      <!--TODO: make default null values for when "Mom" is selected as Type Of Food taken (TFT)-->
-                                      <b-button type="submit" class="btn btn-sm btn-success" v-if="food_type !== 'MN' && !showButton"
-                                            v-on:click="validateSubmitNoMom(cat.id, cat.name)" @click='showButton = !showButton'>Submit</b-button>
-                                      <b-button type="submit" class="btn btn-sm btn-success" v-if="food_type === 'MN' && !showButton"
-                                            v-on:click="validateSubmitMom(cat.id, cat.name)">Submit mom</b-button>
-                                  </b-col>
-                                </b-form>
-                              </b-form-row>
-                            </b-container>
+                                    </div>
+                                  </div>
+                                </fg-input>
+                              </b-collapse>
+                              <div class="row">
+                                <div class="col-sm-12">
+                                <button class="btn btn-sm btn-info float-right" @click='showButton = !showButton' v-if="showButton" v-b-toggle.collapseForm>Add New Log</button>
+                                <button type="reset" class="btn btn-sm btn-warning float-right" @click='showButton = !showButton' v-if="!showButton" v-b-toggle.collapseForm>Cancel</button>
+                                <button type="submit" class="btn btn-sm btn-success float-right" v-if="food_type !== 'MN' && !showButton"
+                                          v-on:click="validateSubmitNoMom(scope.item.id, scope.item.name, scope.item.slug)" @click='showButton = !showButton'>Submit</button>
+                                <button type="submit" class="btn btn-sm btn-success float-right" v-if="food_type === 'MN' && !showButton"
+                                          v-on:click="validateSubmitMom(scope.item.id, scope.item.name)">Submit mom</button>
+                                </div>
+                              </div>
+                            </form>
+
                           </v-tab>
                         </vue-tabs>
                       </card>
@@ -529,7 +524,7 @@
         ],
         stimulationType: null,
         stimulationTypeOps: [
-          { value: null, text: 'Stimulation Type' },
+          { value: null, text: 'Stim. Type' },
           { value: 'UR', text: 'Urine'},
           { value: 'FE', text: 'feces'},
           { value: 'UF', text: 'Urine / Feces'},
@@ -545,16 +540,16 @@
         showRow: true,
         showButton: true,
         showButton2: true,
-        name:   '',
-        duration: '',
-        frequency: '',
         dosage_unit: 'ML',
         dosage:    '',
         dosageGuidelines: '',
         weightBeforeFood: '',
         amountOfFoodTaken: '',
         foodType: '',
-        medication: '',
+        medication: null,
+        duration: '',
+        frequency: '',
+        name:   '',
         medication_dosage_given: '',
         foodOptions:[
           { value: null, text: 'Food Type' },
@@ -823,9 +818,9 @@
           })
           .catch(error => console.log(error));
       },
-      deleteFeeding (feedID) {
-        axios.delete(`/api/v1/carelogs/${feedID}/`)
-          .then(response => {console.log("feeding gone:"); console.log(response);})
+      deleteFeeding (slug) {
+        axios.delete(`/api/v1/carelogs/${slug}/`)
+          .then(response => {console.log("carelog gone:"); console.log(response);})
           .catch(error => console.log(error));
       },
       getFeedings(value) {
@@ -862,7 +857,7 @@
       },
       postFeedings(catID, catName) {
         axios.post(`/api/v1/carelogs/`,{
-          cat: {id: catID, name: catName, slug: catName},
+          cat: {id: catID, name: catName},
           weight_unit_measure: 'G',
           weight_before_food: this.weight_before_food,
           food_unit_measure: 'G',
@@ -870,15 +865,15 @@
           food_type: this.food_type,
           weight_after_food: this.weight_after_food,
           stimulated: this.stimulated,
-          stimulation_type: this.stimulation_type,
-          medication: {name: this.name, duration: this.duration, frequency: this.frequency, dosage: this.dosage, notes: this.notes},
+          stimulation_type: this.stimulationType,
+          medication: {name: this.medication, duration: this.duration, frequency: this.medication_dosage_given, dosage: this.dosage, notes: this.notes},
           medication_dosage_unit: 'ML',
-          medication_dosage_given: this.dosage,
+          medication_dosage_given: this.medication_dosage_given,
           notes: this.notes
         })
           .then(response => {
             console.log(response);
-            response.status === 201 ? this.showSwal('success-message','Feeding added') : null;
+            response.status === 201 ? this.showSwal('success-message','Carelog added') : null;
             this.getFeedings(catName);
           })
           .catch(error => {
@@ -988,10 +983,13 @@
           }else{console.log('it blew up: ');}
         });
       },
-      validateSubmitNoMom(catID, catName) {
+      validateSubmitNoMom(catID, catName, catSlug) {
         this.$validator.validateAll()
           .then((result) => {
-            this.postFeedings(catID, catName);console.log("validatedNoMom: ");console.log(result);
+            this.postFeedings(catID, catName, catSlug);
+            console.log(catSlug);
+            console.log("validatedNoMom: ");
+            console.log(result);
           })
           .catch(error => {
             console.log('it blew up 1: ');
@@ -1001,7 +999,9 @@
       validateSubmitMom(catID, catName) {
         this.$validator.validateAll()
           .then((result) => {
-            this.postFeedingsMom(catID, catName);console.log("validatedNoMom: ");console.log(result);
+            this.postFeedingsMom(catID, catName);
+            console.log("validatedNoMom: ")
+            ;console.log(result);
           })
           .catch(error => {
             console.log('it blew up 1: ');
@@ -1072,21 +1072,25 @@
           return fedToChange.id == medID;
         });
       },
-      handleDelete (id, propRow, row) {
-        // alert(`You want to delete ${propRow.slug}`);
+      handleDelete (id, propRow, row, slug) {
+        console.log(propRow);
         // this.showSwal('basic', `You want to delete ${name}`);
         if (row === 'catRow'){
           console.log("propRow " + propRow.slug);
-          // console.log("row " + row);
           this.deleteCat(propRow.slug);//delete cat from database
           let indexToDelete = this.cats.findIndex((tableRow) => tableRow.id === propRow.id);
           if (indexToDelete >= 0) {
             this.cats.splice(indexToDelete, 1) // remove it from array visually
           }
-        }else if (row === 'feedingRow'){
-          this.showSwal('basic', 'feeding deleted');
-          let i = this.catFeedings.map(item => item.id).indexOf(id); // find index of your object
-          this.catFeedings.splice(i, 1) // remove it from array visually
+        }else if (row === 'carelogRow'){
+          console.log("carelogRow " + propRow.slug);
+         this.deleteFeeding(propRow.slug);//delete cat from database
+          this.showSwal('basic', 'carelog deleted');
+          let indexToDelete = this.catFeedings.findIndex((tableRow) => tableRow.id === propRow.id);
+          console.log(indexToDelete);
+          if (indexToDelete >= 0) {
+            this.catFeedings.splice(indexToDelete, 1) // remove it from array visually
+          }
         }else if (row === 'medicationRow'){
           this.showSwal('basic', 'medication removed');
           let i = this.catMedications.map(item => item.id).indexOf(id); // find index of your object
@@ -1483,5 +1487,8 @@
   .card .table tbody td:last-child, .card .table thead th:last-child {
     padding-right: 15px;
     display: table-cell;
+  }
+  #carelogAddForm .form-control{
+    font-size: 0.8rem !important;
   }
 </style>
