@@ -18,8 +18,8 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a class="dropdown-item" href="#" id="rectangle-255" v-b-toggle.collapse1>Cat</a>
-                <!--<a class="dropdown-item" href="#" id="litter-close" v-b-toggle.collapse2>Litter</a>-->
-                <!--<a class="dropdown-item" href="#" id="medicaton-close" v-b-toggle.collapse3>Medication</a>-->
+                <a class="dropdown-item" href="#" id="litter-close" v-b-toggle.collapse2>Litter</a>
+                <a class="dropdown-item" href="#" id="medicaton-close" v-b-toggle.collapse3>Medication</a>
               </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
             <div class="col-sm-12 no-padding">
               <div class="divTable">
                 <div class="divTableHeading">
-                  <AddMedications></AddMedications>
+                  <AddMedication></AddMedication>
                 </div>
               </div>
             </div>
