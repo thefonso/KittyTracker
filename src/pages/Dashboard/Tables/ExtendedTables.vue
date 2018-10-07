@@ -137,7 +137,7 @@
                   <div class="card">
                     <div class="card-header">
                       <!--TODO: CAT big one begins here-->
-                      <b-btn id="fedMed" class="col btn btn-link" v-b-toggle.collapse3>
+                      <b-btn id="fedMed" class="col btn btn-link" v-b-toggle.collapse4>
                         <div class="container-fluid col-">
                           <div class="divTable">
                             <div class="d-flex justify-content-around primary-cat-row row" role="button">
@@ -191,7 +191,7 @@
                       <!--TODO: CAT big one ends here-->
                     </div>
                     <!--TODO: Carelog rows START here-->
-                    <b-collapse id="collapse3" class="collapse" visible>
+                    <b-collapse id="collapse4" class="collapse" visible>
                       <card>
                         <vue-tabs value="Description">
                           <v-tab title="Carelog">

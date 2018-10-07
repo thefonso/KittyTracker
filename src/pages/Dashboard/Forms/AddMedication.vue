@@ -22,11 +22,11 @@
       <!--alerts ENDS-->
       <div class="container-fluid">
         <div class="row">
-          <div class="col center">
+          <div class="divTableCell col center">
             <div>
               <fg-input label="Add A Medication" id="newMedication">
                 <div class="row">
-                    <div class="col-md-1"></div>
+                    <div class="col-sm-2"></div>
                     <div class="col-md-2">
                       <b-form-input onfocus="this.value=''"
                                           v-model="name" v-validate="'required'" placeholder="Name"></b-form-input>
@@ -43,18 +43,18 @@
                       <b-form-input onfocus="this.value=''"
                                           v-model="frequency" v-validate="'required'" placeholder="Frequency"></b-form-input>
                     </div>
-                    <div class="col-md-2">
-                      <b-form-select v-model="dosage_unit" :options="dosage_options"></b-form-select>
-                    </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-2">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                      <b-form-select v-model="dosage_unit" :options="dosage_options"></b-form-select>
+                    </div>
+                    <div class="col-sm-2">
                       <b-form-textarea onfocus="this.value=''"
                                           v-model="dosage_guidelines" v-validate="'required'" placeholder="Dosage Guidelines"
                                        :rows="3" :max-rows="6"></b-form-textarea>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-4">
                       <b-form-textarea onfocus="this.value=''"
                                           v-model="Notes" v-validate="'required'" placeholder="Notes"
                                        :rows="3" :max-rows="6"></b-form-textarea>
@@ -66,17 +66,31 @@
           </div>
         </div>
       </div>
+      <div class="row align-center">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 center">
+          <!--photo upload-->
+          <span v-if="window.width < 500">
+            <input style="display: none" type="file" @change="onFileChanged" ref="fileInput1">
+            <button class="btn" @click="$refs.fileInput1.click()">Upload Image 1</button>
+          </span>
+          <span v-else>
+            <input class="btn btn-primary" type="file" @change="onFileChanged">
+          </span>
+        </div>
+        <div class="col-4"></div>
+      </div>
       <div class="col form-group container-fluid">
         <div class="d-flex justify-content-center row">
           <button :disabled="errors.any()"
                   type="submit"
                   name="cat-button"
                   value="button1"
-                  class="btn btn-primary submit-button save-button rectangle-79 save">Save</button>
+                  class="btn btn-primary submit-button rectangle-79 save">Save</button>
           <button type="reset"
                   name="cat-exit"
                   value="button2"
-                  class="btn btn-primary submit-button exit-button rectangle-79 exit" @click="hideMe">Exit</button>
+                  class="btn btn-primary submit-button rectangle-79 exit" v-b-toggle.collapse3>Exit</button>
         </div>
       </div>
     </form>
@@ -102,7 +116,7 @@
 
   export default {
     name: "AddMedication",
-        data () {
+    data () {
       return {
         catType: '',
         name: '',
@@ -128,9 +142,17 @@
         showDanger: false,
         showSuccess_litter: false,
         showDanger_litter: false,
+        window: {
+          width: 0,
+          height: 0
+        }
       }
     },
     methods: {
+      handleResize() {
+        this.window.width = window.innerWidth;
+        this.window.height = window.innerHeight;
+      },
       resetWindow (){
         this.$data = initialStateAddaCat();
       },
@@ -142,20 +164,22 @@
         // upload file, get it from this.selectedFile
         const formData = new FormData();
         formData.append('name', this.name);
-        formData.append('photo', this.selectedFile, this.selectedFile.name);
+        formData.append('package_photo_1', this.selectedFile, this.selectedFile.name);
+        formData.append('package_photo_2', this.selectedFile, this.selectedFile.name);
+        formData.append('package_photo_3', this.selectedFile, this.selectedFile.name);
         axios.put(`/api/v1/medications/${this.$route.params.catID}/`,formData,{
           onUploadProgress: progressEvent => {
             console.log('Upload progress: ' + Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
           }
         })
           .then(response => {
-            console.log(response.data.photo);
-            // response.status === 201 ? this.showSuccess = true : this.showDanger = true
+            console.log(response.data.package_photo_1);
+            response.status === 201 ? this.showSuccess = true : this.showDanger = true;
             this.singleCat = response.data;
           })
           .catch(error => {
             console.log(error);
-            // this.showDanger = true;
+            this.showDanger = true;
           })
       },
       onSubmitted() {
@@ -214,6 +238,13 @@
     },
     beforeMount() {
       this.getLitterNames()
+    },
+    created() {
+      window.addEventListener('resize', this.handleResize)
+      this.handleResize();
+    },
+    destroyed() {
+      window.removeEventListener('resize', this.handleResize)
     },
     components: {
       SecondStep,
