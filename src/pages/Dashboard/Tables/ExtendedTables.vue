@@ -1488,7 +1488,7 @@
     padding-right: 15px;
     display: table-cell;
   }
-  #carelogAddForm .form-control{
+  .form-control{
     font-size: 0.8rem !important;
   }
 </style>

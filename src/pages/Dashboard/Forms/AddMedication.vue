@@ -26,6 +26,7 @@
             <div>
               <fg-input label="Add A Medication" id="newMedication">
                 <div class="row">
+                    <div class="col-md-1"></div>
                     <div class="col-md-2">
                       <b-form-input onfocus="this.value=''"
                                           v-model="name" v-validate="'required'" placeholder="Name"></b-form-input>
@@ -43,19 +44,23 @@
                                           v-model="frequency" v-validate="'required'" placeholder="Frequency"></b-form-input>
                     </div>
                     <div class="col-md-2">
-                      <b-form-select v-model="selected" :options="dosage_unit"></b-form-select>
+                      <b-form-select v-model="dosage_unit" :options="dosage_options"></b-form-select>
                     </div>
-                    <div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
                       <b-form-textarea onfocus="this.value=''"
                                           v-model="dosage_guidelines" v-validate="'required'" placeholder="Dosage Guidelines"
                                        :rows="3" :max-rows="6"></b-form-textarea>
                     </div>
-                    <div>
+                    <div class="col-md-6">
                       <b-form-textarea onfocus="this.value=''"
                                           v-model="Notes" v-validate="'required'" placeholder="Notes"
                                        :rows="3" :max-rows="6"></b-form-textarea>
                     </div>
-                </div>
+                  </div>
+
               </fg-input>
             </div>
           </div>
@@ -105,8 +110,8 @@
         duration: '',
         manufacturer: '',
         frequency: '',
-        selected: null,
-        dosage_unit: [
+        dosage_unit: null,
+        dosage_options: [
           {value: null, text: 'Dosage Unit'},
           {value:'ml', text:'Milliliters'},
           {value:'cc', text:'Cubic Centimeters'},
@@ -114,9 +119,9 @@
           {value:'G', text:'Grams'},
         ],
         dosage_guidelines: '',
-        package_photo_1: '',
-        package_photo_2: '',
-        package_photo_3: '',
+        package_photo_1: null,
+        package_photo_2: null,
+        package_photo_3: null,
         cats: [],
         singleCat: [],
         showSuccess: false,
@@ -170,7 +175,7 @@
           .then(response => {
             console.log(response);
             response.status === 201 ? this.showSuccess = true : this.showDanger = true;
-            this.profilePic = true;
+            // this.profilePic = true;
           })
           .catch(error => {
             console.log(error);
@@ -186,49 +191,8 @@
           this.showDanger = true;
         });
       },
-      onSubmittedLitter() {
-        axios.post(`/api/v1/litter/`, {
-          litter_name: this.litter_name,
-          mom_cat: this.name,
-        })
-          .then(response => {
-            console.log(response);
-            response.status === 201 ? this.showSuccess_litter = true : this.showDanger_litter = true;
-            this.cat_form = true;
-          })
-          .catch(error => {
-            console.log(error);
-            this.showDanger_litter = true;
-          })
-      },
-      validateBeforeSubmitLitter() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.onSubmittedLitter();
-          } else {
-            // this.showDanger = true;
-          }
-        });
-      },
-      getLitterNames() {
-        axios.get(`/api/v1/litter/`)
-          .then(request => {
-            console.log("litter_value: ");
-            this.litter = request.data.results;
-            console.log(this.litter);
-          })
-          .catch(error => console.log(error));
-      },
-      getLitterNamesObserv() {
-        const litter$ = Observable.from(axios.get(`/api/v1/litter/`)
-          .catch(error => console.log(error)))
-          .pluck("data", "results");
-        console.log(litter$);
-        return {litter: litter$}
-      },
       showModal () {
         this.$refs.myModalRef.show();
-        // TODO: turn validate off here
         this.cat_form = false;
       },
       hideModal () {
