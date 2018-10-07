@@ -106,7 +106,7 @@
                            name="litter_set"
                            v-model="litter_mates">
                   <el-option selected value="none">none</el-option>
-                  <el-option v-for="item in litter" :value="item.litter_name" :key="item.id">{{item.litter_name}}</el-option>
+                  <el-option v-for="item in litter" :value="item.name" :key="item.id">{{item.name}}</el-option>
                 </el-select>
               </div>
             </div>
