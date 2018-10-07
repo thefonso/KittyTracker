@@ -104,7 +104,7 @@
               <div>
                 <el-select class="select-secondary"
                            name="litter_set"
-                           v-model="litter_mates">
+                           v-model="litter">
                   <el-option selected value="none">none</el-option>
                   <el-option v-for="item in litter" :value="item.name" :key="item.id">{{item.name}}</el-option>
                 </el-select>
@@ -355,7 +355,7 @@
           age: this.age,
           gender: this.gender,
           catType: this.catType,
-          litter_mates: this.litter_mates,
+          litter: this.litter,
           weight: this.weight,
           birthday: this.birthday,
           weight_unit: this.weight_unit

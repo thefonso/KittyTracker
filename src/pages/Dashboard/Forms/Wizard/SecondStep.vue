@@ -96,7 +96,7 @@
         const formData = new FormData();
         formData.append('name', this.singleCat.name);
         formData.append('photo', this.selectedFile, this.selectedFile.name);
-        axios.put(`api/v1/cats/${this.singleCat.id}/`,formData,{
+        axios.put(`api/v1/cats/${this.singleCat.name}/`,formData,{
           onUploadProgress: progressEvent => {
             console.log('Upload progress: ' + Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
           }
