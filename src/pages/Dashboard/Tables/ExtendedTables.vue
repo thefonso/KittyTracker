@@ -121,12 +121,12 @@
             </template>
             <template slot="actions" slot-scope="scope">
               <div>
-                <a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"
-                   @click="handleLike(scope.$index, scope)">
-                  <i class="fa fa-heart"></i></a>
-                <a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"
-                   @click="handleEditCatList(scope.$index, scope)"><i
-                  class="fa fa-edit"></i></a>
+                <!--<a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"-->
+                   <!--@click="handleLike(scope.$index, scope)">-->
+                  <!--<i class="fa fa-heart"></i></a>-->
+                <!--<a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"-->
+                   <!--@click="handleEditCatList(scope.$index, scope)"><i-->
+                  <!--class="fa fa-edit"></i></a>-->
                 <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link"
                    @click="handleDelete(scope.$index, scope.item, 'catRow')"><i class="fa fa-times"></i></a>
               </div>
@@ -203,8 +203,8 @@
                                 {{data.value.name}}
                               </template>
                               <template slot="actions" slot-scope="scope">
-                                  <a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"
-                                     @click="handleLike(scope.$index, scope.index)"><i class="fa fa-heart"></i></a>
+                                  <!--<a v-tooltip.top-center="'Like'" class="btn-info btn-simple btn-link"-->
+                                     <!--@click="handleLike(scope.$index, scope.index)"><i class="fa fa-heart"></i></a>-->
                                   <!--<a v-tooltip.top-center="'Edit'" class="btn-warning btn-simple btn-link"-->
                                      <!--@click="handleEditCatList(scope.$index, scope)"><i class="fa fa-edit"></i></a>-->
                                   <a v-tooltip.top-center="'Delete'" class="btn-danger btn-simple btn-link"
