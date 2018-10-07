@@ -1,10 +1,7 @@
 <template>
-  <div v-if="profilePic">
-    <second-step v-show="profilePic"></second-step>
-  </div>
   <div v-else>
 
-    <form id="cat_form" @submit.prevent="validateBeforeSubmit">
+    <form enctype="multipart/form-data" id="med_form" @submit.prevent="validateBeforeSubmit">
       <!--alerts BEGINS-->
       <div class="row">
         <div class=""></div>
@@ -56,7 +53,7 @@
                     </div>
                     <div class="col-sm-4">
                       <b-form-textarea onfocus="this.value=''"
-                                          v-model="Notes" v-validate="'required'" placeholder="Notes"
+                                          v-model="notes" v-validate="'required'" placeholder="Notes"
                                        :rows="3" :max-rows="6"></b-form-textarea>
                     </div>
                   </div>
@@ -71,11 +68,17 @@
         <div class="col-sm-4 center">
           <!--photo upload-->
           <span v-if="window.width < 500">
-            <input style="display: none" type="file" @change="onFileChanged" ref="fileInput1">
+            <input style="display: none" type="file" @change="onFileChanged1" ref="fileInput1">
             <button class="btn" @click="$refs.fileInput1.click()">Upload Image 1</button>
+            <input style="display: none" type="file" @change="onFileChanged2" ref="fileInput2">
+            <button class="btn" @click="$refs.fileInput2.click()">Upload Image 2</button>
+            <input style="display: none" type="file" @change="onFileChanged3" ref="fileInput3">
+            <button class="btn" @click="$refs.fileInput3.click()">Upload Image 3</button>
           </span>
           <span v-else>
-            <input class="btn btn-primary" type="file" @change="onFileChanged">
+            <input class="btn btn-primary" type="file" @change="onFileChanged1">
+            <input class="btn btn-primary" type="file" @change="onFileChanged2">
+            <input class="btn btn-primary" type="file" @change="onFileChanged3">
           </span>
         </div>
         <div class="col-4"></div>
@@ -127,15 +130,16 @@
         dosage_unit: null,
         dosage_options: [
           {value: null, text: 'Dosage Unit'},
-          {value:'ml', text:'Milliliters'},
-          {value:'cc', text:'Cubic Centimeters'},
-          {value:'oz', text:'Ounces'},
+          {value:'ML', text:'Milliliters'},
+          {value:'CC', text:'Cubic Centimeters'},
+          {value:'OZ', text:'Ounces'},
           {value:'G', text:'Grams'},
         ],
         dosage_guidelines: '',
         package_photo_1: null,
         package_photo_2: null,
         package_photo_3: null,
+        selectedFile: null,
         cats: [],
         singleCat: [],
         showSuccess: false,
@@ -156,18 +160,26 @@
       resetWindow (){
         this.$data = initialStateAddaCat();
       },
-      onFileChanged (event) {
-        this.selectedFile = event.target.files[0];
-        this.onUpload();
+      onFileChanged1 (event) {
+        this.package_photo_1 = event.target.files[0];
+        // this.onUpload();
+      },
+      onFileChanged2 (event) {
+        this.package_photo_2 = event.target.files[0];
+        // this.onUpload();
+      },
+      onFileChanged3 (event) {
+        this.package_photo_3 = event.target.files[0];
+        // this.onUpload();
       },
       onUpload() {
         // upload file, get it from this.selectedFile
         const formData = new FormData();
         formData.append('name', this.name);
-        formData.append('package_photo_1', this.selectedFile, this.selectedFile.name);
-        formData.append('package_photo_2', this.selectedFile, this.selectedFile.name);
-        formData.append('package_photo_3', this.selectedFile, this.selectedFile.name);
-        axios.put(`/api/v1/medications/${this.$route.params.catID}/`,formData,{
+        formData.append('package_photo_1', this.package_photo_1, this.package_photo_1.name);
+        formData.append('package_photo_2', this.package_photo_2, this.package_photo_2.name);
+        formData.append('package_photo_3', this.package_photo_3, this.package_photo_3.name);
+        axios.put(`/api/v1/medications/`,formData,{
           onUploadProgress: progressEvent => {
             console.log('Upload progress: ' + Math.round(progressEvent.loaded / progressEvent.total * 100) + '%')
           }
@@ -183,23 +195,26 @@
           })
       },
       onSubmitted() {
-        axios.post(`/api/v1/medications/`, {
-          name: this.name,
-          notes: this.notes,
-          duration: this.duration,
-          catType: this.catType,
-          manufacturer: this.manufacturer,
-          frequency: this.frequency,
-          dosage_unit: this.dosage_unit,
-          dosage_guidelines: this.dosage_guidelines,
-          package_photo_1: this.package_photo_1,
-          package_photo_2: this.package_photo_2,
-          package_photo_3: this.package_photo_3,
+        let formData = new FormData();
+        formData.append('name', this.name);
+        formData.append('duration', this.duration);
+        formData.append('manufacturer', this.manufacturer);
+        formData.append('frequency', this.frequency);
+        formData.append('dosage_unit', this.dosage_unit);
+        formData.append('dosage_guidelines', this.dosage_guidelines);
+        formData.append('notes', this.notes);
+        formData.append('package_photo_1', this.package_photo_1, this.package_photo_1.name);
+        formData.append('package_photo_2', this.package_photo_2, this.package_photo_2.name);
+        formData.append('package_photo_3', this.package_photo_3, this.package_photo_3.name);
+        axios.post(`/api/v1/medications/`, formData,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
         })
           .then(response => {
             console.log(response);
             response.status === 201 ? this.showSuccess = true : this.showDanger = true;
-            // this.profilePic = true;
+
           })
           .catch(error => {
             console.log(error);

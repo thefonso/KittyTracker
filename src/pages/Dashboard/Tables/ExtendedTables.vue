@@ -19,7 +19,7 @@
               <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a class="dropdown-item" href="#" id="rectangle-255" v-b-toggle.collapse1>Cat</a>
                 <a class="dropdown-item" href="#" id="litter-close" v-b-toggle.collapse2>Litter</a>
-                <a class="dropdown-item" href="#" id="medicaton-close" v-b-toggle.collapse3>Medication</a>
+                <a class="dropdown-item" href="#" id="medication-close" v-b-toggle.collapse3>Medication</a>
               </div>
             </div>
         </div>
@@ -241,7 +241,7 @@
                                     <div class="col-sm-2">
                                       <b-form-select v-model="medication">
                                         <option selected :value="null">Medication</option>
-                                        <option :value=catMed.medication.name v-for="catMed in catMedications">{{catMed.medication.name}}</option>
+                                        <option :value=catMed.name v-for="catMed in catMedications">{{catMed.name}}</option>
                                       </b-form-select>
                                     </div>
                                     <div class="col-sm-2">
@@ -909,30 +909,13 @@
       getMedications(value) {
         axios.post('http://localhost:8000/graphql', {
           query:`{
-            cat(name: "${value}"){
-              id
-              slug
-              carelogSet{
-                id
-                slug
-                medication{
-                  slug
-                  name
-                  duration
-                  frequency
-                  dosageUnit
-                  dosageGuidelines
-                  notes
-                }
-                medicationDosageGiven
-                medicationDosageUnit
-                notes
-              }
+            allMedications{
+              name
             }
           }`
         }).then(response => {console.log("getMedications: ");
-          console.log(response.data.data.cat.carelogSet);
-          this.catMedications = response.data.data.cat.carelogSet})
+          console.log(response.data.data.allMedications);
+          this.catMedications = response.data.data.allMedications})
           .catch(error => console.log(error));
       },
       addCarelogs(catID, catName){
