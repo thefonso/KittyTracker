@@ -1,6 +1,7 @@
 from kittytracker.tracker.models import Medication, Litter, Cat, CareLog, FosterAlert, VetVisit
 from kittytracker.users.models import User
 from rest_framework import serializers
+from graphene_django.rest_framework.mutation import SerializerMutation
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,9 +14,40 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
 
+class CatSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Cat
+        depth = 1
+        fields = (
+            'name',
+            'slug',
+            'foster_manager',
+            'litter',
+            'gender',
+            'cat_type',
+            'color',
+            'weight_unit',
+            'weight',
+            'birthday',
+            'photo',
+            'first_weight_loss',
+            'second_weight_loss',
+            'third_weight_loss',
+            'many_weight_losses',
+            'adoption_date',
+            'adopted',
+            'notes',
+            'created',
+            'modified',
+        )
+
+
 class MedicationSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Medication
+        depth = 1
         fields = (
             'name',
             'slug',
@@ -53,37 +85,9 @@ class LitterSerializer(serializers.HyperlinkedModelSerializer):
         }
 
 
-class CatSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Cat
-        depth = 1
-        fields = (
-            'name',
-            'slug',
-            'foster_manager',
-            'litter',
-            'gender',
-            'cat_type',
-            'color',
-            'weight_unit',
-            'weight',
-            'birthday',
-            'photo',
-            'first_weight_loss',
-            'second_weight_loss',
-            'third_weight_loss',
-            'many_weight_losses',
-            'adoption_date',
-            'adopted',
-            'notes',
-            'created',
-            'modified',
-        )
-
-
 class CareLogSerializer(serializers.HyperlinkedModelSerializer):
     cat = CatSerializer()
+    medication = MedicationSerializer()
     # cat = CatSerializer(read_only=True) this allows put BUT TURNS OFF POST
 
     class Meta:
@@ -99,7 +103,6 @@ class CareLogSerializer(serializers.HyperlinkedModelSerializer):
             'food_type',
             'weight_after_food',
             'stimulated',
-            'stimulation_type',
             'medication',
             'medication_dosage_given',
             'medication_dosage_unit',
@@ -108,23 +111,30 @@ class CareLogSerializer(serializers.HyperlinkedModelSerializer):
             'photo',
         )
         extra_kwargs = {
-            'cat': {
+            'foster_manager': {
+                'read_only': True,
+                'required': False,
+                'lookup_field': 'id',
+            },
+            'medication': {
                 'read_only': True,
                 'required': False,
                 'lookup_field': 'slug',
             },
-            'foster_manager': {
+            'cat': {
               'read_only': True,
               'required': False,
-              'lookup_field': 'id',
-          }
+              'lookup_field': 'slug',
+            },
         }
 
     @staticmethod
     def create(validated_data):
         cat_data = validated_data.pop('cat')
         cat_obj = Cat.objects.get(**cat_data)
-        return CareLog.objects.create(cat=cat_obj, **validated_data)
+        med_data = validated_data.pop('medication')
+        med_obj = Medication.objects.create(**med_data)
+        return CareLog.objects.create(cat=cat_obj, medication=med_obj, **validated_data)
 
     @staticmethod
     def update(instance, validated_data):

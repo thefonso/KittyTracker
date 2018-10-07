@@ -33,6 +33,6 @@ export default {
     Vue.use(SideBar)
     Vue.use(Notifications)
     Vue.use(VueTabs)
-    Vue.use(VeeValidate)
+    Vue.use(VeeValidate, { inject: 'false' })
   }
 }

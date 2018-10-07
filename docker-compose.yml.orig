@@ -8,7 +8,11 @@ services:
 #  web:
 #    build:
 #      context: .
+<<<<<<< HEAD
+#      dockerfile: ./compose/local/django/Dockerfile (MAKE A SPECIFIC DOCKERFILE FOR THIS WEB SECTION)
+=======
 #      dockerfile: ./compose/local/django/Dockerfile (MAKE A SPECIFIC DOCKERFILE FOR THIS WEB SECTION. FOR FRONT-END)
+>>>>>>> endpoints
 #    command: npm run dev
 #    ports:
 #      - "8080:8080"

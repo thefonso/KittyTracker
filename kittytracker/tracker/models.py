@@ -8,47 +8,6 @@ from kittytracker.users.models import User
 __admin__ = ['Medication', 'Litter', 'Cat', 'CareLog', 'FosterAlert', 'VetVisit']
 
 
-class Medication(models.Model):
-    MEASURE_CHOICES = (
-        ('ML', '(ml) Milliliters'),
-        ('CC', '(cc) Cubic Centimeters'),
-        ('OZ', '(oz) Ounces'),
-        ('G', '(G) Grams')
-    )
-    MILLILITERS = 'ML'
-    CUBIC_CENTIMETERS = 'CC'
-    OUNCES = 'OZ'
-    GRAMS = 'G'
-
-    name = models.CharField(max_length=255)
-    manufacturer = models.CharField(max_length=255, blank=True, null=True)
-    slug = AutoSlugField(max_length=255, unique=True, blank=True, null=True)
-    duration = models.TextField(blank=True, null=True)
-    frequency = models.CharField(max_length=2)
-    dosage_unit = models.CharField(max_length=2, choices=MEASURE_CHOICES, blank=True, null=True)
-    dosage_guidelines = models.TextField(blank=True, null=True)
-
-    notes = models.TextField(blank=True, null=True)
-
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(blank=True, null=True)
-
-    package_photo_1 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
-    package_photo_2 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
-    package_photo_3 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        self.modified = datetime.datetime.now()
-
-        super(Medication, self).save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return reverse('medication', kwargs={'slug': self.slug})
-
-    def __str__(self):
-        return "{medication}: {manufacturer}".format(medication=self.name, manufacturer=self.manufacturer)
-
-
 class Litter(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     slug = AutoSlugField(max_length=255, unique=True, blank=True, null=True)
@@ -68,27 +27,27 @@ class Litter(models.Model):
 
 class Cat(models.Model):
     MEASURE_CHOICES = (
-        ('OZ', '(oz) Ounces'),
-        ('LB', '(lb) Pounds'),
-        ('G', '(G) Grams')
+      ('OZ', '(oz) Ounces'),
+      ('LB', '(lb) Pounds'),
+      ('G', '(G) Grams')
     )
     OUNCES = 'OZ'
     POUNDS = 'LB'
     GRAMS = 'G'
 
     GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female')
+      ('M', 'Male'),
+      ('F', 'Female')
     )
     MALE = 'M'
     FEMALE = 'F'
 
     CAT_TYPE = (
-        ('O', 'Orphan'),
-        ('P', 'Pregnant'),
-        ('NK', 'Nursing Kitten'),
-        ('NM', 'Nursing Mom'),
-        ('A', 'Adult')
+      ('O', 'Orphan'),
+      ('P', 'Pregnant'),
+      ('NK', 'Nursing Kitten'),
+      ('NM', 'Nursing Mom'),
+      ('A', 'Adult')
     )
     ORPHAN = 'O'
     PREGNANT = 'P'
@@ -139,6 +98,47 @@ class Cat(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Medication(models.Model):
+    MEASURE_CHOICES = (
+        ('ML', '(ml) Milliliters'),
+        ('CC', '(cc) Cubic Centimeters'),
+        ('OZ', '(oz) Ounces'),
+        ('G', '(G) Grams')
+    )
+    MILLILITERS = 'ML'
+    CUBIC_CENTIMETERS = 'CC'
+    OUNCES = 'OZ'
+    GRAMS = 'G'
+
+    name = models.CharField(max_length=255)
+    manufacturer = models.CharField(max_length=255, blank=True, null=True)
+    slug = AutoSlugField(max_length=255, unique=True, blank=True, null=True)
+    duration = models.TextField(blank=True, null=True)
+    frequency = models.CharField(max_length=2)
+    dosage_unit = models.CharField(max_length=2, choices=MEASURE_CHOICES, blank=True, null=True)
+    dosage_guidelines = models.TextField(blank=True, null=True)
+
+    notes = models.TextField(blank=True, null=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(blank=True, null=True)
+
+    package_photo_1 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
+    package_photo_2 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
+    package_photo_3 = models.FileField(upload_to="medication_package_photos", blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.modified = datetime.datetime.now()
+
+        super(Medication, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('medication', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return "{medication}: {manufacturer}".format(medication=self.name, manufacturer=self.manufacturer)
 
 
 class CareLog(models.Model):
@@ -193,12 +193,12 @@ class CareLog(models.Model):
     food_unit_measure = models.CharField(max_length=2, choices=WEIGHT_MEASURE_CHOICES, default=GRAMS)
     amount_of_food_taken = models.IntegerField(blank=True, null=True)
     food_type = models.CharField(max_length=2, choices=FOOD_TYPE_CHOICES, blank=True, null=True)
-    weight_after_food = models.IntegerField(blank=True, null=True)
+    weight_after_food = models.IntegerField(blank=True, null=True, default=0)
 
     stimulated = models.BooleanField(default=False)
     stimulation_type = models.CharField(max_length=2, choices=STIMULATION_CHOICES, blank=True, null=True)
 
-    medication = models.ForeignKey(Medication, blank=True, null=True)
+    medication = models.ForeignKey(Medication, blank=True, null=True, on_delete=models.SET_NULL)
     medication_dosage_given = models.FloatField(blank=True, null=True)
     medication_dosage_unit = models.CharField(max_length=2, choices=VOLUME_MEASURE_CHOICES, blank=True, null=True,
                                               help_text="If left blank this will default to "
@@ -223,17 +223,16 @@ class CareLog(models.Model):
                 if feedings[0] == self:
                     feedings = feedings[1:]
 
-                # You broke it you fix it:
                 # If the feeding is a weight loss log it as the first/second/third
-                # if self.weight_after_food < feedings[0].weight_after_food:
-                #     if self.cat.first_weight_loss:
-                #         self.cat.second_weight_loss = True
-                #     elif self.cat.second_weight_loss:
-                #         self.cat.third_weight_loss = True
-                #     elif self.cat.third_weight_loss:
-                #         self.cat.many_weight_losses = True
-                #     elif not self.cat.first_weight_loss:
-                #         self.cat.first_weight_loss = True
+                if feedings[0].weight_after_food is not None and self.weight_after_food < feedings[0].weight_after_food:
+                    if self.cat.first_weight_loss:
+                        self.cat.second_weight_loss = True
+                    elif self.cat.second_weight_loss:
+                        self.cat.third_weight_loss = True
+                    elif self.cat.third_weight_loss:
+                        self.cat.many_weight_losses = True
+                    elif not self.cat.first_weight_loss:
+                        self.cat.first_weight_loss = True
 
                 # Save Cat Object
                 self.cat.save()
@@ -308,3 +307,4 @@ class VetVisit(models.Model):
     def __str__(self):
         return "{cat}: {practice} {timestamp}".format(cat=self.cat.name, timestamp=self.appointment,
                                                       practice=self.practice_name)
+
